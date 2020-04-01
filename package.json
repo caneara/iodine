@@ -1,0 +1,24 @@
+{
+    "name": "iodine",
+    "version": "1.0.0",
+    "description": "A micro client-side validation library",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mattkingshott/iodine.git"
+    },
+    "scripts": {
+        "build": "microbundle",
+        "test": "jest"
+    },
+    "main": "dist/iodine.min.js",
+    "source": "src/iodine.js",
+    "author": "Matt Kingshott",
+    "license": "MIT",
+    "devDependencies": {
+        "@babel/core": "^7.9.0",
+        "@babel/preset-env": "^7.9.0",
+        "babel-jest": "^25.2.4",
+        "jest": "^25.2.4",
+        "microbundle": "^0.11.0"
+    }
+}
