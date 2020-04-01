@@ -44,8 +44,8 @@ Iodine's rules are prefixed with the `is` keyword. So, to check if an item is an
 let item_1 = 7;
 let item_2 = 'string';
 
-Iodine.isInteger(item_1);    // true
-Iodine.isInteger(item_2);    // false
+Iodine.isInteger(item_1); // true
+Iodine.isInteger(item_2); // false
 ```
 
 ## Multiple checks
