@@ -1,6 +1,7 @@
 <!-- Screenshot -->
 <p align="center">
-    <img src="resources/example.png" alt="Code example" height="300">
+    <img src="resources/example.png" alt="Code example" height="250"
+		 style="box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)">
 </p>
 
 <!-- Badges -->
