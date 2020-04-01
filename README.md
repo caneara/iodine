@@ -126,7 +126,7 @@ Thank you for considering a contribution to Iodine. You are welcome to submit a 
 
 ## Support the project
 
-If you'd like to support the continued development of Iodine, then please consider [sponsoring me](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YBEHLHPF3GUVY&source=url) through PayPal. Thanks so much!
+If you'd like to support the development of Iodine, then please consider [sponsoring me](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YBEHLHPF3GUVY&source=url) through PayPal. Thanks so much!
 
 ## License
 
