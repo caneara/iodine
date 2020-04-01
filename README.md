@@ -1,18 +1,16 @@
 <!-- Screenshot -->
 <p align="center">
-    <img src="resources/example.png" alt="Code example" height="250"
-		 style="box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)">
+    <img src="resources/example.png" alt="Code example" height="250">
 </p>
 
 <!-- Badges -->
 <p align="center">
-  <img src="resources/size.svg" alt="Size" style="margin-right: 4px">
-  <img src="resources/build.svg" alt="Build" style="margin-right: 4px">
-  <img src="resources/coverage.svg" alt="Coverage" style="margin-right: 4px">
-  <img src="resources/version.svg" alt="Version" style="margin-right: 4px">
+  <img src="resources/size.svg" alt="Size">
+  <img src="resources/build.svg" alt="Build">
+  <img src="resources/coverage.svg" alt="Coverage">
+  <img src="resources/version.svg" alt="Version">
   <img src="resources/license.svg" alt="License">
 </p>
-
 
 # Iodine
 
@@ -23,7 +21,7 @@ Iodine.js is a micro client-side validation library. It has no dependencies and 
 The easiest way to pull Iodine into your project is via a CDN:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/mattkingshott/iodine@v1.x.x/dist/alpine.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/mattkingshott/iodine@v1.x.x/dist/iodine.min.js" defer></script>
 ```
 
 Alternatively, you can use NPM:
@@ -40,7 +38,7 @@ Iodine is automatically added to the `window` namespace, making it available any
 
 ## Single checks
 
-Iodine's rules are prefixed with the `is` keyword. So, if you wanted to check whether an item is an `integer`, you'd use the following code:
+Iodine's rules are prefixed with the `is` keyword. So, to check if an item is an `integer`, you'd use the following code:
 
 ```js
 let item_1 = 7;
@@ -52,9 +50,7 @@ Iodine.isInteger(item_2);    // false
 
 ## Multiple checks
 
-If you want to verify whether an item passes a set of rules, you should use the main `is` method.
-
-This method accepts two parameters. The first, is the item you want to check. The second, is an array of rules that should be run in sequence e.g.
+If you want to verify whether an item passes a set of rules, you should use the main `is` method. This method accepts two parameters. The first, is the item you want to check. The second, is an array of rules that should be run in sequence e.g.
 
 ```js
 let item_1 = 7;
@@ -64,13 +60,13 @@ Iodine.is(item_1, ['required', 'integer']); // true
 Iodine.is(item_2, ['required', 'integer']); // false
 ```
 
-The `is` method will return `true` if the item passes every rule. Alternatively, the name of the first rule that failed will be returned e.g. `'integer'`.
+The `is` method will return `true` if the item passes every rule.
 
-You are then free to interpret the rule name and display a (localised) error message.
+Alternatively, the name of the first rule that failed will be returned e.g. `'integer'`. You are then free to interpret the rule name and display a (localised) error message.
 
 ## Additional parameters
 
-Some rules require extra parameters e.g. minimum and maximum. You can supply these parameters by adding them to the rule with a semicolon separator e.g.
+Some rules require extra parameters. You can supply them by adding them to the rule with a semicolon separator e.g.
 
 ```js
 let item_1 = 7;
@@ -94,7 +90,7 @@ Iodine.is(item_2, ['optional', 'integer']); // true
 Iodine.is(item_3, ['optional', 'integer']); // false
 ```
 
-**IMPORTANT**: If you wish to allow for optional values, then you must supply `'optional'` as the first rule in the list (see above).
+**IMPORTANT**: If you wish to allow for optional values, then you must supply `'optional'` as the first rule in the list.
 
 ## Available rules
 
@@ -134,7 +130,7 @@ Examine the tests for examples of how to use each rule.
 
 ## Contributing
 
-Thank you for considering a contribution to Iodine. You are welcome to submit pull requests containing additional rules, however to be accepted, they must explain what they do, be useful to others, and include a suitable test to confirm they work correctly.
+Thank you for considering a contribution to Iodine. You are welcome to submit a PR containing additional rules, however to be accepted, they must explain what they do, be useful to others, and include a suitable test to confirm they work correctly.
 
 ## Support the project
 
