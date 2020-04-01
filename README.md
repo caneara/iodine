@@ -24,14 +24,6 @@ The easiest way to pull Iodine into your project is via a CDN:
 <script src="https://cdn.jsdelivr.net/gh/mattkingshott/iodine@v1.x.x/dist/iodine.min.js" defer></script>
 ```
 
-Alternatively, you can use NPM:
-
-```js
-npm i iodine
-
-import 'iodine'
-```
-
 ## Usage
 
 Iodine is automatically added to the `window` namespace, making it available anywhere on the page / within your application.
