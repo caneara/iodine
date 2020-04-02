@@ -11,6 +11,17 @@ export default class Iodine
 {
 
 	/**
+	 * Constructor.
+	 *
+	 **/
+	constructor()
+	{
+		this.messages = this._defaultMessages();
+	}
+
+
+
+	/**
 	 * @internal.
 	 *
 	 **/
@@ -26,6 +37,67 @@ export default class Iodine
 		if (type === 'less' && ! equals) return first.getTime() < second;
 		if (type === 'more' && equals) return first.getTime() >= second;
 		if (type === 'more' && ! equals) return first.getTime() > second;
+	}
+
+
+
+	/**
+	 * @internal.
+	 *
+	 **/
+	_defaultMessages()
+	{
+		return {
+			after         : `The date must be after: '[PARAM]'`,
+			afterOrEqual  : `The date must be after or equal to: '[PARAM]'`,
+			array         : `Field must be an array`,
+			before        : `The date must be before: '[PARAM]'`,
+			beforeOrEqual : `The date must be before or equal to: '[PARAM]'`,
+			boolean       : `Field must be true or false`,
+			date          : `Field must be a date`,
+			different     : `Field must be different to '[PARAM]'`,
+			endingWith    : `Field must end with '[PARAM]'`,
+			email         : `Field must be a valid email address`,
+			falsy         : `Field must be a falsy value (false, 'false', 0 or '0')`,
+			in     		  : `Field must be one of the following options: [PARAM]`,
+			integer       : `Field must be an integer`,
+			json          : `Field must be a parsable JSON object string`,
+			maximum       : `Field must not be greater than '[PARAM]' in size or character length`,
+			minimum       : `Field must not be less than '[PARAM]' in size or character length`,
+			notIn         : `Field must not be one of the following options: [PARAM]`,
+			numeric       : `Field must be numeric`,
+			optional      : `Field is optional`,
+			regexMatch    : `Field must satisify the regular expression: [PARAM]`,
+			required      : `Field must be present`,
+			same          : `Field must be '[PARAM]'`,
+			startingWith  : `Field must start with '[PARAM]'`,
+			string        : `Field must be a string`,
+			truthy        : `Field must be a truthy value (true, 'true', 1 or '1')`,
+			url           : `Field must be a valid url`,
+			uuid          : `Field must be a valid UUID`,
+		};
+	}
+
+
+
+	/**
+	 * Retrieve an error message for the given rule.
+	 *
+	 **/
+	getErrorMessage(rule, arg = null)
+	{
+		let key   = rule.split(':')[0];
+		let param = arg || rule.split(':')[1];
+
+		if (['after', 'afterOrEqual', 'before', 'beforeOrEqual'].includes(key)) {
+			param = new Date(parseInt(param)).toLocaleTimeString(undefined, {
+				year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: 'numeric'
+			});
+		}
+
+		return param === undefined
+			 ? this.messages[key]
+			 : this.messages[key].replace("[PARAM]", param);
 	}
 
 
@@ -157,6 +229,10 @@ export default class Iodine
 	 **/
 	isIn(value, options)
 	{
+		options = typeof options === 'string'
+				? options.split(",")
+				: options;
+
 		return options.includes(value);
 	}
 
@@ -220,7 +296,7 @@ export default class Iodine
 	 **/
 	isNotIn(value, options)
 	{
-		return ! options.includes(value);
+		return ! this.isIn(value, options);
 	}
 
 
@@ -363,12 +439,23 @@ export default class Iodine
 			let result = this[`is${rule}`].apply(this, [value, rules[index].split(':')[1]]);
 
 			// Check if the value failed validation
-			if (! result) return rules[index].split(':')[0];
+			if (! result) return rules[index];
 
 		}
 
 		// Otherwise, the value is valid
 		return true;
+	}
+
+
+
+	/**
+	 * Replace the default error messages with a new set.
+	 *
+	 **/
+	setErrorMessages(messages)
+	{
+		this.messages = messages;
 	}
 
 }

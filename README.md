@@ -21,7 +21,7 @@ Iodine.js is a micro client-side validation library. It has no dependencies and 
 The easiest way to pull Iodine into your project is via a CDN:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/mattkingshott/iodine@1/dist/iodine.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/mattkingshott/iodine@2/dist/iodine.min.js" defer></script>
 ```
 
 ## Usage
@@ -54,7 +54,9 @@ Iodine.is(item_2, ['required', 'integer']); // false
 
 The `is` method will return `true` if the item passes every rule.
 
-Alternatively, the name of the first rule that failed will be returned e.g. `'integer'`. You are then free to interpret the rule name and display a (localised) error message.
+Alternatively, the name of the first rule that failed will be returned e.g. `'integer'`.
+
+> Version 1 of Iodine only returned the rule name e.g. 'minimum'. Version 2+ returns the rule name and any supplied parameter e.g. 'minimum:7'.
 
 ## Additional parameters
 
@@ -83,6 +85,32 @@ Iodine.is(item_3, ['optional', 'integer']); // false
 ```
 
 **IMPORTANT**: If you wish to allow for optional values, then you must supply `'optional'` as the first rule in the list.
+
+## Error messages
+
+Iodine includes a default set of error messages for the English language. To retrieve an error message for a rule, use the `getErrorMessage` method:
+
+```js
+Iodine.getErrorMessage('array'); // string
+```
+
+When dealing with parameters, the `getErrorMessage` method allows you to supply the rule either as a single `string` or as two arguments (the rule and parameter) e.g.
+
+```js
+Iodine.getErrorMessage('minimum:7'); // string
+Iodine.getErrorMessage('minimum', 7); // string
+```
+
+## Custom messages (localisation)
+
+You can easily replace the default error messages with your own via the `setErrorMessages` method. This method requires a single parameter, which is an `object` containing the messages. See the [_defaultMessages](src/iodine.js) method for an example of this object.
+
+Iodine will automatically swap `[PARAM]` placeholders with the parameters supplied in the `getErrorMessage` method. As such, you should insert this placeholder at the appropriate position in your new error message e.g.
+
+```js
+Iodine.setErrorMessages({ same: `Field must be '[PARAM]'` });   // English
+Iodine.setErrorMessages({ same: `Champ doit être '[PARAM]'` }); // French
+```
 
 ## Available rules
 

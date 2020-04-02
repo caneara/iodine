@@ -14,7 +14,7 @@
     <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="110">
         <text x="165" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="210">size</text>
         <text x="165" y="140" transform="scale(.1)" textLength="210">size</text>
-        <text x="505" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="310">1.1 kB</text>
-        <text x="505" y="140" transform="scale(.1)" textLength="310">1.1 kB</text>
+        <text x="505" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="310">1.6 kB</text>
+        <text x="505" y="140" transform="scale(.1)" textLength="310">1.6 kB</text>
     </g>
 </svg>

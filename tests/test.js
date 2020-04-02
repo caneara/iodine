@@ -173,7 +173,9 @@ test('it validates falsy values', () => {
  *
  **/
 test('it validates in list values', () => {
+    expect(Iodine.isIn('a', 'a,b,c')).toBe(true);
     expect(Iodine.isIn('a', ['a', 'b', 'c'])).toBe(true);
+    expect(Iodine.isIn('d', 'a,b,c')).toBe(false);
     expect(Iodine.isIn('d', ['a', 'b', 'c'])).toBe(false);
 });
 
@@ -239,7 +241,9 @@ test('it validates minimum values', () => {
  *
  **/
 test('it validates not in list values', () => {
+    expect(Iodine.isNotIn('d', 'a,b,c')).toBe(true);
     expect(Iodine.isNotIn('d', ['a', 'b', 'c'])).toBe(true);
+    expect(Iodine.isNotIn('a', 'a,b,c')).toBe(false);
     expect(Iodine.isNotIn('a', ['a', 'b', 'c'])).toBe(false);
 });
 
@@ -380,9 +384,37 @@ test('it validates UUID values', () => {
  **/
 test('it validates values against multiple rules', () => {
     expect(Iodine.is('5', ['required', 'string', 'minimum:1', 'maximum:5'])).toBe(true);
-    expect(Iodine.is(5, ['required', 'integer', 'minimum:7', 'maximum:10'])).toBe('minimum');
-    expect(Iodine.is(5, ['optional', 'integer', 'minimum:7', 'maximum:10'])).toBe('minimum');
+    expect(Iodine.is(5, ['required', 'integer', 'minimum:7', 'maximum:10'])).toBe('minimum:7');
+    expect(Iodine.is(5, ['optional', 'integer', 'minimum:7', 'maximum:10'])).toBe('minimum:7');
     expect(Iodine.is('', ['optional', 'integer', 'minimum:7', 'maximum:10'])).toBe(true);
     expect(Iodine.is(null, ['optional', 'integer', 'minimum:7', 'maximum:10'])).toBe(true);
     expect(Iodine.is(undefined, ['optional', 'integer', 'minimum:7', 'maximum:10'])).toBe(true);
+});
+
+
+
+/**
+ * Confirm that the 'getErrorMessage' method works correctly.
+ *
+ **/
+test('it retrieves formatted error messages for rules', () => {
+	let time = Date.UTC(2020, 4, 2, 3, 17, 0);
+    expect(Iodine.getErrorMessage('array')).toBe('Field must be an array');
+    expect(Iodine.getErrorMessage('endingWith:world')).toBe(`Field must end with 'world'`);
+    expect(Iodine.getErrorMessage('endingWith', 'world')).toBe(`Field must end with 'world'`);
+    expect(Iodine.getErrorMessage(`after:${time}`)).toBe(`The date must be after: '2 May 2020, 04:17'`);
+    expect(Iodine.getErrorMessage(`after`, time)).toBe(`The date must be after: '2 May 2020, 04:17'`);
+});
+
+
+
+/**
+ * Confirm that the default error messages can be replaced.
+ *
+ **/
+test('it can replace the default error messages', () => {
+	Iodine.setErrorMessages({ array : 'Hello world', endingWith : 'Hello, [PARAM]' })
+    expect(Iodine.getErrorMessage('array')).toBe('Hello world');
+    expect(Iodine.getErrorMessage('endingWith:John')).toBe('Hello, John');
+    expect(Iodine.getErrorMessage('endingWith', "John")).toBe('Hello, John');
 });
