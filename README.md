@@ -21,7 +21,7 @@ Iodine.js is a micro client-side validation library. It has no dependencies and 
 The easiest way to pull Iodine into your project is via a CDN:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/mattkingshott/iodine@2/dist/iodine.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/mattkingshott/iodine@3/dist/iodine.min.js" defer></script>
 ```
 
 You can also pull Iodine into your project via NPM:
@@ -145,7 +145,7 @@ The following validation rules are available:
 | isBeforeOrEqual(date/integer) | Verify that the item is a `Date` before or equal to a given `Date` or timestamp
 | isBoolean             		| Verify that the item is either `true` or `false`
 | isDate                		| Verify that the item is a `Date` object
-| isDifferent(value)       		| Verify that the item is different to the supplied value (uses strict compare)
+| isDifferent(value)       		| Verify that the item is different to the supplied value (uses loose compare)
 | isEndingWith(value)      		| Verify that the item ends with the given value
 | isEmail                		| Verify that the item is a valid email address
 | isFalsy               		| Verify that the item is either `false`, `'false'`, `0` or `'0'`
@@ -159,7 +159,7 @@ The following validation rules are available:
 | isOptional            		| Allow for optional values (only for use with multiple checks)
 | isRegexMatch(exp)        		| Verify that the item satisifies the given regular expression
 | isRequired            		| Verify that the item is not `null`, `undefined` or an empty `string`
-| isSame(value)       			| Verify that the item is the same as the supplied value (uses strict compare)
+| isSame(value)       			| Verify that the item is the same as the supplied value (uses loose compare)
 | isStartingWith(value)    		| Verify that the item starts with the given value
 | isString              		| Verify that the item is a `string`
 | isTruthy              		| Verify that the item is either `true`, `'true'`, `1` or `'1'`
@@ -167,6 +167,34 @@ The following validation rules are available:
 | isUuid                		| Verify that the item is a `UUID`
 
 Examine the tests for examples of how to use each rule.
+
+## Custom rules
+
+Iodine allows you to add your own custom validation rules through the `addRule` method. This method excepts two parameters. The first, is the name of the rule. The second, is the `closure` that Iodine should execute when calling the rule e.g.
+
+```js
+Iodine.addRule('lowerCase', (value) => value === value.toLowerCase());
+```
+
+**IMPORTANT**: Iodine will automatically make the first letter of the rule's name uppercase and prefix it with 'is'. You should therefore avoid adding the prefix yourself e.g.
+
+```js
+Iodine.addRule('lowerCase');   // correct
+Iodine.addRule('isLowerCase'); // wrong
+```
+
+If your rule needs to accept a parameter, simply include it in your `closure` as the second argument e.g.
+
+```js
+Iodine.addRule('equals', (value, param) => value == param);
+```
+
+You can also add error messages for your custom rules e.g.
+
+```js
+Iodine.addRule('equals', (value, param) => value == param);
+Iodine.setErrorMessages({ equals : `Value must be equal to '[PARAM]'` });
+```
 
 ## Contributing
 

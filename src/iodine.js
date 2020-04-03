@@ -50,32 +50,43 @@ export default class Iodine
 		return {
 			after         : `The date must be after: '[PARAM]'`,
 			afterOrEqual  : `The date must be after or equal to: '[PARAM]'`,
-			array         : `Field must be an array`,
+			array         : `Value must be an array`,
 			before        : `The date must be before: '[PARAM]'`,
 			beforeOrEqual : `The date must be before or equal to: '[PARAM]'`,
-			boolean       : `Field must be true or false`,
-			date          : `Field must be a date`,
-			different     : `Field must be different to '[PARAM]'`,
-			endingWith    : `Field must end with '[PARAM]'`,
-			email         : `Field must be a valid email address`,
-			falsy         : `Field must be a falsy value (false, 'false', 0 or '0')`,
-			in     		  : `Field must be one of the following options: [PARAM]`,
-			integer       : `Field must be an integer`,
-			json          : `Field must be a parsable JSON object string`,
-			maximum       : `Field must not be greater than '[PARAM]' in size or character length`,
-			minimum       : `Field must not be less than '[PARAM]' in size or character length`,
-			notIn         : `Field must not be one of the following options: [PARAM]`,
-			numeric       : `Field must be numeric`,
-			optional      : `Field is optional`,
-			regexMatch    : `Field must satisify the regular expression: [PARAM]`,
-			required      : `Field must be present`,
-			same          : `Field must be '[PARAM]'`,
-			startingWith  : `Field must start with '[PARAM]'`,
-			string        : `Field must be a string`,
-			truthy        : `Field must be a truthy value (true, 'true', 1 or '1')`,
-			url           : `Field must be a valid url`,
-			uuid          : `Field must be a valid UUID`,
+			boolean       : `Value must be true or false`,
+			date          : `Value must be a date`,
+			different     : `Value must be different to '[PARAM]'`,
+			endingWith    : `Value must end with '[PARAM]'`,
+			email         : `Value must be a valid email address`,
+			falsy         : `Value must be a falsy value (false, 'false', 0 or '0')`,
+			in     		  : `Value must be one of the following options: [PARAM]`,
+			integer       : `Value must be an integer`,
+			json          : `Value must be a parsable JSON object string`,
+			maximum       : `Value must not be greater than '[PARAM]' in size or character length`,
+			minimum       : `Value must not be less than '[PARAM]' in size or character length`,
+			notIn         : `Value must not be one of the following options: [PARAM]`,
+			numeric       : `Value must be numeric`,
+			optional      : `Value is optional`,
+			regexMatch    : `Value must satisify the regular expression: [PARAM]`,
+			required      : `Value must be present`,
+			same          : `Value must be '[PARAM]'`,
+			startingWith  : `Value must start with '[PARAM]'`,
+			string        : `Value must be a string`,
+			truthy        : `Value must be a truthy value (true, 'true', 1 or '1')`,
+			url           : `Value must be a valid url`,
+			uuid          : `Value must be a valid UUID`,
 		};
+	}
+
+
+
+	/**
+	 * Attach a custom validation rule to the library.
+	 *
+	 **/
+	addRule(name, closure)
+	{
+		Iodine.prototype[`is${name[0].toUpperCase()}${name.slice(1)}`] = closure;
 	}
 
 
@@ -185,7 +196,7 @@ export default class Iodine
 	 **/
 	isDifferent(value, different)
 	{
-		return value !== different;
+		return value != different;
 	}
 
 
@@ -349,9 +360,9 @@ export default class Iodine
 	 * Determine if the given value is the same as another given value.
 	 *
 	 **/
-	isSame(value, different)
+	isSame(value, same)
 	{
-		return value === different;
+		return value == same;
 	}
 
 

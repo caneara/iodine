@@ -399,10 +399,10 @@ test('it validates values against multiple rules', () => {
  **/
 test('it retrieves formatted error messages for rules', () => {
 	let time = Date.UTC(2020, 4, 2, 3, 17, 0);
-    expect(Iodine.getErrorMessage('array')).toBe('Field must be an array');
-    expect(Iodine.getErrorMessage('endingWith')).toBe(`Field must end with '[PARAM]'`);
-    expect(Iodine.getErrorMessage('endingWith:world')).toBe(`Field must end with 'world'`);
-    expect(Iodine.getErrorMessage('endingWith', 'world')).toBe(`Field must end with 'world'`);
+    expect(Iodine.getErrorMessage('array')).toBe('Value must be an array');
+    expect(Iodine.getErrorMessage('endingWith')).toBe(`Value must end with '[PARAM]'`);
+    expect(Iodine.getErrorMessage('endingWith:world')).toBe(`Value must end with 'world'`);
+    expect(Iodine.getErrorMessage('endingWith', 'world')).toBe(`Value must end with 'world'`);
     expect(Iodine.getErrorMessage(`after:${time}`)).toBe(`The date must be after: '2 May 2020, 04:17'`);
     expect(Iodine.getErrorMessage(`after`, time)).toBe(`The date must be after: '2 May 2020, 04:17'`);
 });
@@ -414,8 +414,45 @@ test('it retrieves formatted error messages for rules', () => {
  *
  **/
 test('it can replace the default error messages', () => {
-	Iodine.setErrorMessages({ array : 'Hello world', endingWith : 'Hello, [PARAM]' })
+	Iodine.setErrorMessages({ array : 'Hello world', endingWith : 'Hello, [PARAM]' });
     expect(Iodine.getErrorMessage('array')).toBe('Hello world');
     expect(Iodine.getErrorMessage('endingWith:John')).toBe('Hello, John');
     expect(Iodine.getErrorMessage('endingWith', "John")).toBe('Hello, John');
+});
+
+
+
+/**
+ * Confirm that the 'addRule' method works correctly for simple rules.
+ *
+ **/
+test('it can add simple custom rules', () => {
+	Iodine.addRule('lowerCase', (value) => value === value.toLowerCase());
+	Iodine.setErrorMessages({ lowerCase : 'Value must be in lower case' });
+    expect(Iodine.isLowerCase('hello')).toBe(true);
+    expect(Iodine.isLowerCase('Hello')).toBe(false);
+    expect(Iodine.isLowerCase('HELLO')).toBe(false);
+	expect(Iodine.is('hello', ['required', 'lowerCase'])).toBe(true);
+	expect(Iodine.is('Hello', ['required', 'lowerCase'])).toBe('lowerCase');
+	expect(Iodine.is('HELLO', ['required', 'lowerCase'])).toBe('lowerCase');
+    expect(Iodine.getErrorMessage('lowerCase')).toBe('Value must be in lower case');
+});
+
+
+
+/**
+ * Confirm that the 'addRule' method works correctly for advanced rules.
+ *
+ **/
+test('it can add advanced custom rules', () => {
+	Iodine.addRule('equals', (value, param) => value == param);
+	Iodine.setErrorMessages({ equals : `Value must be equal to '[PARAM]'` });
+    expect(Iodine.isEquals(1, 1)).toBe(true);
+    expect(Iodine.isEquals(1, 2)).toBe(false);
+    expect(Iodine.isEquals(1, 3)).toBe(false);
+	expect(Iodine.is(1, ['required', 'equals:1'])).toBe(true);
+	expect(Iodine.is(1, ['required', 'equals:2'])).toBe('equals:2');
+	expect(Iodine.is(1, ['required', 'equals:3'])).toBe('equals:3');
+    expect(Iodine.getErrorMessage('equals:2')).toBe(`Value must be equal to '2'`);
+    expect(Iodine.getErrorMessage('equals', 2)).toBe(`Value must be equal to '2'`);
 });
