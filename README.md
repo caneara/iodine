@@ -48,6 +48,8 @@ Iodine.isInteger(item_1); // true
 Iodine.isInteger(item_2); // false
 ```
 
+Single checks return a `true` or `false` value, indicating whether the item passed validation.
+
 ## Multiple checks
 
 If you want to verify whether an item passes a set of rules, you should use the main `is` method. This method accepts two parameters. The first, is the item you want to check. The second, is an array of rules that should be run in sequence e.g.
@@ -57,30 +59,40 @@ let item_1 = 7;
 let item_2 = 'string';
 
 Iodine.is(item_1, ['required', 'integer']); // true
-Iodine.is(item_2, ['required', 'integer']); // false
+Iodine.is(item_2, ['required', 'integer']); // string - 'integer'
 ```
 
 The `is` method will return `true` if the item passes every rule.
 
-Alternatively, the name of the first rule that failed will be returned e.g. `'integer'`.
+If the item fails to validate, the first rule that it failed to satisfy will be returned e.g. `'integer'`.
 
 > Version 1 of Iodine only returned the rule name e.g. 'minimum'. Version 2+ returns the rule name and any supplied parameter e.g. 'minimum:7'.
 
 ## Additional parameters
 
-Some rules require extra parameters. You can supply them by adding them to the rule with a semicolon separator e.g.
+Some rules require extra parameters e.g.
 
 ```js
 let item_1 = 7;
-let item_2 = 'string';
+let item_2 = 4;
 
-Iodine.is(item_1, ['required', 'integer', 'minimum:5', 'maximum:10']); // true
-Iodine.is(item_2, ['required', 'integer', 'minimum:5', 'maximum:10']); // false
+Iodine.isMinimum(item_1, 5); // true
+Iodine.isMinimum(item_2, 5); // false
+```
+
+For multiple checks, you can supply the parameters by appending them to the rule with a semicolon separator e.g.
+
+```js
+let item_1 = 7;
+let item_2 = 4;
+
+Iodine.is(item_1, ['required', 'integer', 'minimum:5']); // true
+Iodine.is(item_2, ['required', 'integer', 'minimum:5']); // string - 'minimum:5'
 ```
 
 ## Optional values
 
-Sometimes, you may wish to allow for optional values. Iodine supports this with the `optional` rule:
+When performing multiple checks, you may wish to allow for optional values. Iodine supports this with the `optional` rule:
 
 ```js
 let item_1 = 7;
@@ -89,7 +101,7 @@ let item_3 = 'string';
 
 Iodine.is(item_1, ['optional', 'integer']); // true
 Iodine.is(item_2, ['optional', 'integer']); // true
-Iodine.is(item_3, ['optional', 'integer']); // false
+Iodine.is(item_3, ['optional', 'integer']); // string - 'integer'
 ```
 
 **IMPORTANT**: If you wish to allow for optional values, then you must supply `'optional'` as the first rule in the list.
@@ -102,10 +114,10 @@ Iodine includes a default set of error messages for the English language. To ret
 Iodine.getErrorMessage('array'); // string
 ```
 
-When dealing with parameters, the `getErrorMessage` method allows you to supply the rule either as a single `string` or as two arguments (the rule and parameter) e.g.
+When dealing with rules that have parameters, the `getErrorMessage` method allows you to supply the rule either as a combined `string` or as two arguments (the rule and parameter) e.g.
 
 ```js
-Iodine.getErrorMessage('minimum:7'); // string
+Iodine.getErrorMessage('minimum:7');  // string
 Iodine.getErrorMessage('minimum', 7); // string
 ```
 

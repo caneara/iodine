@@ -84,7 +84,7 @@ export default class Iodine
 	 * Retrieve an error message for the given rule.
 	 *
 	 **/
-	getErrorMessage(rule, arg = null)
+	getErrorMessage(rule, arg = undefined)
 	{
 		let key   = rule.split(':')[0];
 		let param = arg || rule.split(':')[1];
@@ -95,7 +95,7 @@ export default class Iodine
 			});
 		}
 
-		return param === undefined
+		return [null, undefined].includes(param)
 			 ? this.messages[key]
 			 : this.messages[key].replace("[PARAM]", param);
 	}
