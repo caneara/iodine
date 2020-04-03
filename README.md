@@ -24,6 +24,14 @@ The easiest way to pull Iodine into your project is via a CDN:
 <script src="https://cdn.jsdelivr.net/gh/mattkingshott/iodine@2/dist/iodine.min.js" defer></script>
 ```
 
+You can also pull Iodine into your project via NPM:
+
+```js
+npm i @kingshott/iodine
+
+import Iodine from '@kingshott/iodine';
+```
+
 ## Usage
 
 Iodine is automatically added to the `window` namespace, making it available anywhere on the page / within your application.
@@ -103,7 +111,7 @@ Iodine.getErrorMessage('minimum', 7); // string
 
 ## Custom messages (localisation)
 
-You can easily replace the default error messages with your own via the `setErrorMessages` method. This method requires a single parameter, which is an `object` containing the messages. See the [_defaultMessages](src/iodine.js) method for an example of this object.
+You can easily replace the default error messages with your own via the `setErrorMessages` method. This method requires a single parameter, which is an `object` containing the messages. See the [_defaultMessages](src/iodine.js) method for an example of this.
 
 Iodine will automatically swap `[PARAM]` placeholders with the parameters supplied in the `getErrorMessage` method. As such, you should insert this placeholder at the appropriate position in your new error message e.g.
 
