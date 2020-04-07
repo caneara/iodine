@@ -437,7 +437,7 @@ export default class Iodine
 		if (rules[0] === 'optional' && this.isOptional(value)) return true;
 
 		// Iterate through the rules
-		for (let index = 0; index < rules.length; index++) {
+		for (index in rules) {
 
 			// Ignore optional rules
 			if (rules[index] === 'optional') continue;
