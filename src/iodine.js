@@ -431,7 +431,7 @@ export default class Iodine
 	is(value, rules = [])
 	{
 		// Check if no rules were specified
-		if (rules.length === 0) return true;
+		if (!rules.length) return true;
 
 		// Check for an optional value
 		if (rules[0] === 'optional' && this.isOptional(value)) return true;
