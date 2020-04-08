@@ -1,5 +1,5 @@
 // Import Iodine
-import '../src/iodine.js';
+import '../dist/iodine.min.js';
 
 
 

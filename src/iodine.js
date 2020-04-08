@@ -7,7 +7,7 @@
 | be used to quickly verify whether items meet certain conditions.
 |
 */
-export default class Iodine
+class Iodine
 {
 
 	/**
@@ -431,13 +431,13 @@ export default class Iodine
 	is(value, rules = [])
 	{
 		// Check if no rules were specified
-		if (rules.length === 0) return true;
+		if (! rules.length) return true;
 
 		// Check for an optional value
 		if (rules[0] === 'optional' && this.isOptional(value)) return true;
 
 		// Iterate through the rules
-		for (let index = 0; index < rules.length; index++) {
+		for (let index in rules) {
 
 			// Ignore optional rules
 			if (rules[index] === 'optional') continue;

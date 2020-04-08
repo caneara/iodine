@@ -1,6 +1,6 @@
 <!-- Screenshot -->
 <p align="center">
-    <img src="resources/example.png" alt="Code example" height="250">
+    <img src="resources/example.png" alt="Code example">
 </p>
 
 <!-- Badges -->
