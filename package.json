@@ -1,6 +1,6 @@
 {
     "name": "@kingshott/iodine",
-    "version": "3.0.3",
+    "version": "3.0.4",
     "description": "A micro client-side validation library",
     "repository": {
         "type": "git",
