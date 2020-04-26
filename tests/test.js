@@ -1,4 +1,3 @@
-// Import Iodine
 import '../dist/iodine.min.js';
 
 
@@ -8,7 +7,7 @@ import '../dist/iodine.min.js';
  *
  **/
 test('it validates after date values', () => {
-	let year = new Date().getFullYear();
+    let year = new Date().getFullYear();
     expect(Iodine.isAfter(new Date(year + 1, 12, 18), new Date(year, 12, 18))).toBe(true);
     expect(Iodine.isAfter(new Date(year + 1, 12, 17), Date.now())).toBe(true);
     expect(Iodine.isAfter(new Date(`December 18, ${year + 1} 03:24:00`), new Date(year, 12, 18))).toBe(true);
@@ -25,7 +24,7 @@ test('it validates after date values', () => {
  *
  **/
 test('it validates after or equal date values', () => {
-	let year = new Date().getFullYear();
+    let year = new Date().getFullYear();
     expect(Iodine.isAfterOrEqual(new Date(year + 1, 12, 18), new Date(year, 12, 18))).toBe(true);
     expect(Iodine.isAfterOrEqual(new Date(year + 1, 12, 17), Date.now())).toBe(true);
     expect(Iodine.isAfterOrEqual(new Date(`December 18, ${year + 1} 03:24:00`), new Date(year, 12, 18))).toBe(true);
@@ -43,7 +42,7 @@ test('it validates after or equal date values', () => {
  *
  **/
 test('it validates before date values', () => {
-	let year = new Date().getFullYear();
+    let year = new Date().getFullYear();
     expect(Iodine.isBefore(new Date(year - 1, 12, 18), new Date(year, 12, 18))).toBe(true);
     expect(Iodine.isBefore(new Date(year - 1, 12, 17), Date.now())).toBe(true);
     expect(Iodine.isBefore(new Date(`December 18, ${year - 1} 03:24:00`), new Date(year, 12, 18))).toBe(true);
@@ -60,7 +59,7 @@ test('it validates before date values', () => {
  *
  **/
 test('it validates before or equal date values', () => {
-	let year = new Date().getFullYear();
+    let year = new Date().getFullYear();
     expect(Iodine.isBeforeOrEqual(new Date(year - 1, 12, 18), new Date(year, 12, 18))).toBe(true);
     expect(Iodine.isBeforeOrEqual(new Date(year - 1, 12, 17), Date.now())).toBe(true);
     expect(Iodine.isBeforeOrEqual(new Date(`December 18, ${year - 1} 03:24:00`), new Date(year, 12, 18))).toBe(true);
@@ -398,7 +397,7 @@ test('it validates values against multiple rules', () => {
  *
  **/
 test('it retrieves formatted error messages for rules', () => {
-	let time = Date.UTC(2020, 4, 2, 3, 17, 0);
+    let time = Date.UTC(2020, 4, 2, 3, 17, 0);
     expect(Iodine.getErrorMessage('array')).toBe('Value must be an array');
     expect(Iodine.getErrorMessage('endingWith')).toBe(`Value must end with '[PARAM]'`);
     expect(Iodine.getErrorMessage('endingWith:world')).toBe(`Value must end with 'world'`);
@@ -414,10 +413,10 @@ test('it retrieves formatted error messages for rules', () => {
  *
  **/
 test('it can replace the default error messages', () => {
-	Iodine.setErrorMessages({ array : 'Hello world', endingWith : 'Hello, [PARAM]' });
+    Iodine.setErrorMessages({ array : 'Hello world', endingWith : 'Hello, [PARAM]' });
     expect(Iodine.getErrorMessage('array')).toBe('Hello world');
     expect(Iodine.getErrorMessage('endingWith:John')).toBe('Hello, John');
-    expect(Iodine.getErrorMessage('endingWith', "John")).toBe('Hello, John');
+    expect(Iodine.getErrorMessage('endingWith', 'John')).toBe('Hello, John');
 });
 
 
@@ -427,14 +426,14 @@ test('it can replace the default error messages', () => {
  *
  **/
 test('it can add simple custom rules', () => {
-	Iodine.addRule('lowerCase', (value) => value === value.toLowerCase());
-	Iodine.setErrorMessages({ lowerCase : 'Value must be in lower case' });
+    Iodine.addRule('lowerCase', (value) => value === value.toLowerCase());
+    Iodine.setErrorMessages({ lowerCase : 'Value must be in lower case' });
     expect(Iodine.isLowerCase('hello')).toBe(true);
     expect(Iodine.isLowerCase('Hello')).toBe(false);
     expect(Iodine.isLowerCase('HELLO')).toBe(false);
-	expect(Iodine.is('hello', ['required', 'lowerCase'])).toBe(true);
-	expect(Iodine.is('Hello', ['required', 'lowerCase'])).toBe('lowerCase');
-	expect(Iodine.is('HELLO', ['required', 'lowerCase'])).toBe('lowerCase');
+    expect(Iodine.is('hello', ['required', 'lowerCase'])).toBe(true);
+    expect(Iodine.is('Hello', ['required', 'lowerCase'])).toBe('lowerCase');
+    expect(Iodine.is('HELLO', ['required', 'lowerCase'])).toBe('lowerCase');
     expect(Iodine.getErrorMessage('lowerCase')).toBe('Value must be in lower case');
 });
 
@@ -445,14 +444,14 @@ test('it can add simple custom rules', () => {
  *
  **/
 test('it can add advanced custom rules', () => {
-	Iodine.addRule('equals', (value, param) => value == param);
-	Iodine.setErrorMessages({ equals : `Value must be equal to '[PARAM]'` });
+    Iodine.addRule('equals', (value, param) => value == param);
+    Iodine.setErrorMessages({ equals : `Value must be equal to '[PARAM]'` });
     expect(Iodine.isEquals(1, 1)).toBe(true);
     expect(Iodine.isEquals(1, 2)).toBe(false);
     expect(Iodine.isEquals(1, 3)).toBe(false);
-	expect(Iodine.is(1, ['required', 'equals:1'])).toBe(true);
-	expect(Iodine.is(1, ['required', 'equals:2'])).toBe('equals:2');
-	expect(Iodine.is(1, ['required', 'equals:3'])).toBe('equals:3');
+    expect(Iodine.is(1, ['required', 'equals:1'])).toBe(true);
+    expect(Iodine.is(1, ['required', 'equals:2'])).toBe('equals:2');
+    expect(Iodine.is(1, ['required', 'equals:3'])).toBe('equals:3');
     expect(Iodine.getErrorMessage('equals:2')).toBe(`Value must be equal to '2'`);
     expect(Iodine.getErrorMessage('equals', 2)).toBe(`Value must be equal to '2'`);
 });

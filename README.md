@@ -136,35 +136,35 @@ Iodine.setErrorMessages({ same: `Champ doit être '[PARAM]'` }); // French
 
 The following validation rules are available:
 
-| Rule                  		| Description                                                                     |
+| Rule                          | Description                                                                     |
 | ----------------------------- | ------------------------------------------------------------------------------- |
-| isAfter(date/integer) 		| Verify that the item is a `Date` after a given `Date` or timestamp
-| isAfterOrEqual(date/integer) 	| Verify that the item is a `Date` after or equal to a given `Date` or timestamp
-| isArray 						| Verify that the item is an `array`
-| isBefore(date/integer) 		| Verify that the item is a `Date` before a given `Date` or timestamp
+| isAfter(date/integer)         | Verify that the item is a `Date` after a given `Date` or timestamp
+| isAfterOrEqual(date/integer)     | Verify that the item is a `Date` after or equal to a given `Date` or timestamp
+| isArray                         | Verify that the item is an `array`
+| isBefore(date/integer)         | Verify that the item is a `Date` before a given `Date` or timestamp
 | isBeforeOrEqual(date/integer) | Verify that the item is a `Date` before or equal to a given `Date` or timestamp
-| isBoolean             		| Verify that the item is either `true` or `false`
-| isDate                		| Verify that the item is a `Date` object
-| isDifferent(value)       		| Verify that the item is different to the supplied value (uses loose compare)
-| isEndingWith(value)      		| Verify that the item ends with the given value
-| isEmail                		| Verify that the item is a valid email address
-| isFalsy               		| Verify that the item is either `false`, `'false'`, `0` or `'0'`
-| isIn(array)           		| Verify that the item is within the given `array`
-| isInteger             		| Verify that the item is an `integer`
-| isJson             			| Verify that the item is a parsable JSON object `string`
-| isMaximum(limit)      		| Verify that the item does not exceed the given limit (number or char length)
-| isMinimum(limit)      		| Verify that the item is not under the given limit (number or char length)
-| isNotIn(array)           		| Verify that the item is not within the given `array`
-| isNumeric             		| Verify that the item is `number` or a numeric `string`
-| isOptional            		| Allow for optional values (only for use with multiple checks)
-| isRegexMatch(exp)        		| Verify that the item satisifies the given regular expression
-| isRequired            		| Verify that the item is not `null`, `undefined` or an empty `string`
-| isSame(value)       			| Verify that the item is the same as the supplied value (uses loose compare)
-| isStartingWith(value)    		| Verify that the item starts with the given value
-| isString              		| Verify that the item is a `string`
-| isTruthy              		| Verify that the item is either `true`, `'true'`, `1` or `'1'`
-| isUrl                			| Verify that the item is a valid URL
-| isUuid                		| Verify that the item is a `UUID`
+| isBoolean                     | Verify that the item is either `true` or `false`
+| isDate                        | Verify that the item is a `Date` object
+| isDifferent(value)               | Verify that the item is different to the supplied value (uses loose compare)
+| isEndingWith(value)              | Verify that the item ends with the given value
+| isEmail                        | Verify that the item is a valid email address
+| isFalsy                       | Verify that the item is either `false`, `'false'`, `0` or `'0'`
+| isIn(array)                   | Verify that the item is within the given `array`
+| isInteger                     | Verify that the item is an `integer`
+| isJson                         | Verify that the item is a parsable JSON object `string`
+| isMaximum(limit)              | Verify that the item does not exceed the given limit (number or char length)
+| isMinimum(limit)              | Verify that the item is not under the given limit (number or char length)
+| isNotIn(array)                   | Verify that the item is not within the given `array`
+| isNumeric                     | Verify that the item is `number` or a numeric `string`
+| isOptional                    | Allow for optional values (only for use with multiple checks)
+| isRegexMatch(exp)                | Verify that the item satisifies the given regular expression
+| isRequired                    | Verify that the item is not `null`, `undefined` or an empty `string`
+| isSame(value)                   | Verify that the item is the same as the supplied value (uses loose compare)
+| isStartingWith(value)            | Verify that the item starts with the given value
+| isString                      | Verify that the item is a `string`
+| isTruthy                      | Verify that the item is either `true`, `'true'`, `1` or `'1'`
+| isUrl                            | Verify that the item is a valid URL
+| isUuid                        | Verify that the item is a `UUID`
 
 Examine the tests for examples of how to use each rule.
 

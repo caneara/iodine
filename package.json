@@ -1,12 +1,12 @@
 {
     "name": "@kingshott/iodine",
-    "version": "3.0.2",
+    "version": "3.0.3",
     "description": "A micro client-side validation library",
     "repository": {
         "type": "git",
         "url": "https://github.com/mattkingshott/iodine.git"
     },
-	"keywords": [
+    "keywords": [
         "iodine",
         "validation",
         "data",
@@ -14,7 +14,7 @@
     ],
     "scripts": {
         "build": "microbundle",
-		"watch": "microbundle watch",
+        "watch": "microbundle watch",
         "test": "jest"
     },
     "main": "dist/iodine.min.js",
