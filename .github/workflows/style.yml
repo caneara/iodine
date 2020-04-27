@@ -12,12 +12,12 @@ jobs:
               uses: actions/checkout@v2
 
             - name: Install dependencies
-              run: yarn install
+              run: npm install
               env:
                   CI: true
 
             - name: Run prettier
-              run: yarn run prettier --write 'src/**/*.js' 'tests/**/*.js'
+              run: npm run prettier
 
             -   name: Extract branch name
                 shell: bash

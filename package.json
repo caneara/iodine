@@ -15,6 +15,7 @@
     "scripts": {
         "build": "microbundle",
         "watch": "microbundle watch",
+        "prettier": "prettier --write 'src/**/*.js' 'tests/**/*.js'",
         "test": "jest"
     },
     "main": "dist/iodine.min.js",
