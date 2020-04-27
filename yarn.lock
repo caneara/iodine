@@ -682,7 +682,7 @@
     core-js "^2.6.5"
     regenerator-runtime "^0.13.4"
 
-"@babel/preset-env@^7.9.0":
+"@babel/preset-env@^7.9.5":
   version "7.9.5"
   resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.9.5.tgz#8ddc76039bc45b774b19e2fc548f6807d8a8919f"
   integrity sha512-eWGYeADTlPJH+wq1F0wNfPbVS1w1wtmMJiYk55Td5Yu28AsdR9AsC97sZ0Qq8fHqQuslVSIYSGJMcblr345GfQ==
@@ -1343,7 +1343,7 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.9.1.tgz#7e33d8f7d449b3f673cd72deb9abdc552dbe528e"
   integrity sha512-wMHVg2EOHaMRxbzgFJ9gtjOOCrI80OHLG14rxi28XwOW8ux6IiEbRCGGGqCtdAIg4FQCbW20k9RsT4y3gJlFug==
 
-babel-jest@^25.2.4, babel-jest@^25.4.0:
+babel-jest@^25.4.0:
   version "25.4.0"
   resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-25.4.0.tgz#409eb3e2ddc2ad9a92afdbb00991f1633f8018d0"
   integrity sha512-p+epx4K0ypmHuCnd8BapfyOwWwosNCYhedetQey1awddtfmEX0MmdxctGl956uwUmjwXR5VSS5xJcGX9DvdIog==
@@ -1502,7 +1502,7 @@ braces@^2.3.1:
     split-string "^3.0.2"
     to-regex "^3.0.1"
 
-braces@^3.0.1:
+braces@^3.0.1, braces@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/braces/-/braces-3.0.2.tgz#3454e1a462ee8d599e236df336cd9ea4f8afe107"
   integrity sha512-b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==
@@ -3823,7 +3823,7 @@ jest-worker@^25.4.0:
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
 
-jest@^25.2.4:
+jest@^25.4.0:
   version "25.4.0"
   resolved "https://registry.yarnpkg.com/jest/-/jest-25.4.0.tgz#fb96892c5c4e4a6b9bcb12068849cddf4c5f8cc7"
   integrity sha512-XWipOheGB4wai5JfCYXd6vwsWNwM/dirjRoZgAa7H2wd8ODWbli2AiKjqG8AYhyx+8+5FBEdpO92VhGlBydzbw==
@@ -6044,6 +6044,11 @@ serialize-javascript@^1.5.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-1.9.1.tgz#cfc200aef77b600c47da9bb8149c943e798c2fdb"
   integrity sha512-0Vb/54WJ6k5v8sSWN09S0ora+Hnr+cX40r9F170nT+mSkaxltoE/7R3OrIdBSUv1OoiobH1QoWQbCnAO+e8J1A==
+
+serialize-javascript@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-3.0.0.tgz#492e489a2d77b7b804ad391a5f5d97870952548e"
+  integrity sha512-skZcHYw2vEX4bw90nAr2iTTsz6x2SrHEnfxgKYmZlvJYBEZrvbKtobJWlQ20zczKb3bsHHXXTYt48zBA7ni9cw==
 
 set-blocking@^2.0.0, set-blocking@~2.0.0:
   version "2.0.0"
