@@ -23,10 +23,13 @@
     "license": "MIT",
     "devDependencies": {
         "@babel/core": "^7.9.0",
-        "@babel/preset-env": "^7.9.0",
-        "babel-jest": "^25.2.4",
-        "jest": "^25.2.4",
+        "@babel/preset-env": "^7.9.5",
+        "babel-jest": "^25.4.0",
+        "braces": "^3.0.2",
+        "jest": "^25.4.0",
+        "js-yaml": "^3.13.1",
         "microbundle": "^0.11.0",
-        "prettier": "^2.0.5"
+        "prettier": "^2.0.5",
+        "serialize-javascript": "^3.0.0"
     }
 }
