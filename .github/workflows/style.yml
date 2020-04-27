@@ -16,9 +16,6 @@ jobs:
               env:
                   CI: true
 
-            - name: Install prettier
-              run: yarn global add prettier
-
             - name: Run prettier
               run: yarn run prettier --write 'src/**/*.js' 'tests/**/*.js'
 
