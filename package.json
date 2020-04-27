@@ -30,6 +30,6 @@
         "js-yaml": "^3.13.1",
         "microbundle": "^0.11.0",
         "prettier": "^2.0.5",
-        "serialize-javascript": "^3.0.0"
+        "serialize-javascript": "^2.1.1"
     }
 }
