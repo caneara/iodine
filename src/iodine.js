@@ -59,7 +59,7 @@ class Iodine
             endingWith    : `Value must end with '[PARAM]'`,
             email         : `Value must be a valid email address`,
             falsy         : `Value must be a falsy value (false, 'false', 0 or '0')`,
-            in               : `Value must be one of the following options: [PARAM]`,
+            in            : `Value must be one of the following options: [PARAM]`,
             integer       : `Value must be an integer`,
             json          : `Value must be a parsable JSON object string`,
             maximum       : `Value must not be greater than '[PARAM]' in size or character length`,

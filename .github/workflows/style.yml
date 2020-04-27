@@ -1,0 +1,33 @@
+# Credit to Stefan Zweifel
+name: styling
+
+on: [push, pull_request]
+
+jobs:
+    style:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Install
+              run: yarn install
+              env:
+                  CI: true
+
+            - name: Run prettier
+              run: yarn run prettier --write 'src/**/*.js' 'tests/**/*.js'
+
+            -   name: Extract branch name
+                shell: bash
+                run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+                id: extract_branch
+
+            -   name: Commit changes
+                uses: stefanzweifel/git-auto-commit-action@v2.3.0
+                with:
+                    commit_message: Fix styling
+                    branch: ${{ steps.extract_branch.outputs.branch }}
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

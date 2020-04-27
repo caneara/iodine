@@ -1,3 +1,10 @@
+build
+composer.lock
+vendor
 .DS_Store
+coverage
+.phpunit.result.cache
+.idea
+.php_cs.cache
 node_modules
 package-lock.json
