@@ -16,6 +16,7 @@ class Iodine
      **/
     constructor()
     {
+        this.locale   = undefined;
         this.messages = this._defaultMessages();
     }
 
@@ -101,7 +102,7 @@ class Iodine
         let param = arg || rule.split(':')[1];
 
         if (['after', 'afterOrEqual', 'before', 'beforeOrEqual'].includes(key)) {
-            param = new Date(parseInt(param)).toLocaleTimeString(undefined, {
+            param = new Date(parseInt(param)).toLocaleTimeString(this.locale, {
                 year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: 'numeric'
             });
         }
@@ -459,6 +460,17 @@ class Iodine
     setErrorMessages(messages)
     {
         this.messages = messages;
+    }
+
+
+
+    /**
+     * Replace the default locale with a new value.
+     *
+     **/
+    setLocale(locale)
+    {
+        this.locale = locale;
     }
 
 }

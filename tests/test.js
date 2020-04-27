@@ -398,12 +398,14 @@ test('it validates values against multiple rules', () => {
  **/
 test('it retrieves formatted error messages for rules', () => {
     let time = Date.UTC(2020, 4, 2, 3, 17, 0);
+    Iodine.setLocale('en-US');
+    let hour = new Date().getTimezoneOffset() === -60 ? 4 : 3;
     expect(Iodine.getErrorMessage('array')).toBe('Value must be an array');
     expect(Iodine.getErrorMessage('endingWith')).toBe(`Value must end with '[PARAM]'`);
     expect(Iodine.getErrorMessage('endingWith:world')).toBe(`Value must end with 'world'`);
     expect(Iodine.getErrorMessage('endingWith', 'world')).toBe(`Value must end with 'world'`);
-    expect(Iodine.getErrorMessage(`after:${time}`)).toBe(`The date must be after: '2 May 2020, 04:17'`);
-    expect(Iodine.getErrorMessage(`after`, time)).toBe(`The date must be after: '2 May 2020, 04:17'`);
+    expect(Iodine.getErrorMessage(`after:${time}`)).toBe(`The date must be after: 'May 2, 2020, 0${hour}:17 AM'`);
+    expect(Iodine.getErrorMessage(`after`, time)).toBe(`The date must be after: 'May 2, 2020, 0${hour}:17 AM'`);
 });
 
 

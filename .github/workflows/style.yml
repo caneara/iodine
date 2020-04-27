@@ -11,10 +11,13 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
-            - name: Install
+            - name: Install dependencies
               run: yarn install
               env:
                   CI: true
+
+            - name: Install prettier
+              run: yarn global add prettier
 
             - name: Run prettier
               run: yarn run prettier --write 'src/**/*.js' 'tests/**/*.js'
