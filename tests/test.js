@@ -284,7 +284,9 @@ test("it validates optional values", () => {
  **/
 test("it validates regular expression values", () => {
   expect(Iodine.isRegexMatch("P54655465", "^P\\d{3,}$")).toBe(true);
-  expect(Iodine.isRegexMatch("john@example.com", "^\\S+@\\S+[\\.][0-9a-z]+$")).toBe(true);
+  expect(
+    Iodine.isRegexMatch("john@example.com", "^\\S+@\\S+[\\.][0-9a-z]+$")
+  ).toBe(true);
   expect(Iodine.isRegexMatch("1234", "^\\S+@\\S+[\\.][0-9a-z]+$")).toBe(false);
 });
 
