@@ -406,10 +406,10 @@ test("it retrieves formatted error messages for rules", () => {
     `Value must end with 'world'`
   );
   expect(Iodine.getErrorMessage(`after:${time}`)).toBe(
-    `The date must be after: 'May 2, 2020, 11:17 AM'`
+    `The date must be after: 'May 2, 2020, 10:17 AM'`
   );
   expect(Iodine.getErrorMessage(`after`, time)).toBe(
-    `The date must be after: 'May 2, 2020, 11:17 AM'`
+    `The date must be after: 'May 2, 2020, 10:17 AM'`
   );
 });
 
