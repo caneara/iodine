@@ -276,7 +276,7 @@ class Iodine {
    *
    **/
   isRegexMatch(value, expression) {
-    return new RegExp(expression).test(String(value).toLowerCase());
+    return new RegExp(expression).test(String(value));
   }
 
   /**

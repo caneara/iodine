@@ -283,9 +283,8 @@ test("it validates optional values", () => {
  *
  **/
 test("it validates regular expression values", () => {
-  expect(
-    Iodine.isRegexMatch("john@example.com", "^\\S+@\\S+[\\.][0-9a-z]+$")
-  ).toBe(true);
+  expect(Iodine.isRegexMatch("P54655465", "^P\\d{3,}$")).toBe(true);
+  expect(Iodine.isRegexMatch("john@example.com", "^\\S+@\\S+[\\.][0-9a-z]+$")).toBe(true);
   expect(Iodine.isRegexMatch("1234", "^\\S+@\\S+[\\.][0-9a-z]+$")).toBe(false);
 });
 
@@ -395,7 +394,7 @@ test("it validates values against multiple rules", () => {
 test("it retrieves formatted error messages for rules", () => {
   let time = Date.UTC(2020, 4, 2, 10, 17, 0);
   Iodine.setLocale("en-US");
-  let hour = new Date().getTimezoneOffset() === -60 ? 11 : 10;
+
   expect(Iodine.getErrorMessage("array")).toBe("Value must be an array");
   expect(Iodine.getErrorMessage("endingWith")).toBe(
     `Value must end with '[PARAM]'`
@@ -407,10 +406,10 @@ test("it retrieves formatted error messages for rules", () => {
     `Value must end with 'world'`
   );
   expect(Iodine.getErrorMessage(`after:${time}`)).toBe(
-    `The date must be after: 'May 2, 2020, ${hour}:17 AM'`
+    `The date must be after: 'May 2, 2020, 11:17 AM'`
   );
   expect(Iodine.getErrorMessage(`after`, time)).toBe(
-    `The date must be after: 'May 2, 2020, ${hour}:17 AM'`
+    `The date must be after: 'May 2, 2020, 11:17 AM'`
   );
 });
 
