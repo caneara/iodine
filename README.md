@@ -29,7 +29,7 @@ You can also pull Iodine into your project via NPM:
 ```js
 npm i @kingshott/iodine
 
-import Iodine from '@kingshott/iodine';
+import '@kingshott/iodine';
 ```
 
 ## Usage
