@@ -7,7 +7,8 @@
 | be used to quickly verify whether items meet certain conditions.
 |
 */
-class Iodine {
+export class Iodine
+{
   /**
    * Constructor.
    *

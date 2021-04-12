@@ -1,4 +1,6 @@
-import "../dist/iodine.min.js";
+import { Iodine as Library } from '../src/iodine';
+
+window.Iodine = new Library();
 
 /**
  * Confirm that the 'isValid' method returns the right value against multiple rules.
@@ -420,7 +422,10 @@ test("it validates values against multiple rules", () => {
  **/
 test("it retrieves formatted error messages for rules", () => {
   let time = Date.UTC(2020, 4, 2, 10, 17, 0);
+
   Iodine.setLocale("en-US");
+
+  let hour = new Date(parseInt(time)).getHours();
 
   expect(Iodine.getErrorMessage("array")).toBe("Value must be an array");
   expect(Iodine.getErrorMessage("endingWith")).toBe(
@@ -433,10 +438,10 @@ test("it retrieves formatted error messages for rules", () => {
     `Value must end with 'world'`
   );
   expect(Iodine.getErrorMessage(`after:${time}`)).toBe(
-    `The date must be after: 'May 2, 2020, 10:17 AM'`
+    `The date must be after: 'May 2, 2020, ${hour}:17 AM'`
   );
   expect(Iodine.getErrorMessage(`after`, time)).toBe(
-    `The date must be after: 'May 2, 2020, 10:17 AM'`
+    `The date must be after: 'May 2, 2020, ${hour}:17 AM'`
   );
 });
 

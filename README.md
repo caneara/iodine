@@ -28,13 +28,17 @@ You can also pull Iodine into your project via NPM:
 
 ```js
 npm i @kingshott/iodine
-
-import '@kingshott/iodine';
 ```
 
 ## Usage
 
-Iodine is automatically added to the `window` namespace, making it available anywhere on the page / within your application.
+Iodine is automatically added to the `window` namespace, making it available anywhere. This is the recommended way to use Iodine if your project does not involve compilation or imports.
+
+Alternatively, if you are comfortable using imports, or your project uses a build tool, then you can import Iodine like so:
+
+```js
+import { Iodine } from '@kingshott/iodine';
+```
 
 ## Single checks
 
@@ -52,7 +56,7 @@ Single checks return a `true` or `false` value, indicating whether the item pass
 
 ## Multiple checks
 
-If you want to verify whether an item passes a set of rules, you should use the main `is` method. This method accepts two parameters. The first, is the item you want to check. The second, is an array of rules that should be run in sequence e.g.
+If you want to verify whether an item passes a set of rules, you can use the main `is` method. This method accepts two parameters. The first, is the item you want to check. The second, is an array of rules that should be run in sequence e.g.
 
 ```js
 let item_1 = 7;
@@ -67,6 +71,18 @@ The `is` method will return `true` if the item passes every rule.
 If the item fails to validate, the first rule that it failed to satisfy will be returned e.g. `'integer'`.
 
 > Version 1 of Iodine only returned the rule name e.g. 'minimum'. Version 2+ returns the rule name and any supplied parameter e.g. 'minimum:7'.
+
+### Strict checking
+
+If you want to know whether the value has passed the validation checks and don't care about which rule failed (if any), in other words you want the result purely as a `boolean`, then you can use the `isValid` helper method:
+
+```js
+let item_1 = 7;
+let item_2 = 'string';
+
+Iodine.isValid(item_1, ['required', 'integer']); // true
+Iodine.isValid(item_2, ['required', 'integer']); // false
+```
 
 ## Additional parameters
 
