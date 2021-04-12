@@ -1,4 +1,4 @@
-import { Iodine as Library } from '../src/iodine';
+import { Iodine as Library } from "../src/iodine";
 
 window.Iodine = new Library();
 
