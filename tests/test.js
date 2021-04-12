@@ -1,6 +1,31 @@
 import "../dist/iodine.min.js";
 
 /**
+ * Confirm that the 'isValid' method returns the right value against multiple rules.
+ *
+ **/
+ test("it validates values against multiple rules and return true/false", () => {
+  expect(Iodine.isValid("5", ["required", "string", "minimum:1", "maximum:5"])).toBe(
+    true
+  );
+  expect(Iodine.isValid(5, ["required", "integer", "minimum:7", "maximum:10"])).toBe(
+    false
+  );
+  expect(Iodine.isValid(5, ["optional", "integer", "minimum:7", "maximum:10"])).toBe(
+    false
+  );
+  expect(
+    Iodine.isValid("", ["optional", "integer", "minimum:7", "maximum:10"])
+  ).toBe(true);
+  expect(
+    Iodine.isValid(null, ["optional", "integer", "minimum:7", "maximum:10"])
+  ).toBe(true);
+  expect(
+    Iodine.isValid(undefined, ["optional", "integer", "minimum:7", "maximum:10"])
+  ).toBe(true);
+});
+
+/**
  * Confirm that the 'isAfter' method works correctly.
  *
  **/
