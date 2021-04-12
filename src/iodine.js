@@ -371,7 +371,7 @@ export class Iodine
    * Determine whether the given value meets the given rules.
    * @returns true if the item passes every rule, otherwise returns false
    **/
-   isValid(value, rules = []) {
+  isValid(value, rules = []) {
     return this.is(value, rules) === true;
   }
 
