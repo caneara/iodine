@@ -93,6 +93,7 @@ export class Iodine {
         day: "numeric",
         hour: "2-digit",
         minute: "numeric",
+        hour12: false,
       });
     }
 

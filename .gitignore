@@ -8,3 +8,4 @@ coverage
 .php_cs.cache
 node_modules
 package-lock.json
+yarn.lock
