@@ -434,19 +434,11 @@ describe("validate values against multiple rules", () => {
     ).toBe(true);
   });
 
-  test("parameter that contains semicolon(\":\")", () => {
-    expect(
-      Iodine.is(":b", ["required", "regexMatch:^:\\w$"])
-    ).toBe(true);
-    expect(
-      Iodine.is("a:b", ["required", "regexMatch:^:\\w$"])
-    ).not.toBe(true);
-    expect(
-      Iodine.is(":b", ["required", "regexMatch:^:\\w$"])
-    ).toBe(true);
-    expect(
-      Iodine.is("a:b", ["required", "regexMatch:^:\\w$"])
-    ).not.toBe(true);
+  test('parameter that contains semicolon(":")', () => {
+    expect(Iodine.is(":b", ["required", "regexMatch:^:\\w$"])).toBe(true);
+    expect(Iodine.is("a:b", ["required", "regexMatch:^:\\w$"])).not.toBe(true);
+    expect(Iodine.is(":b", ["required", "regexMatch:^:\\w$"])).toBe(true);
+    expect(Iodine.is("a:b", ["required", "regexMatch:^:\\w$"])).not.toBe(true);
   });
 });
 

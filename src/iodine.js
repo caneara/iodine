@@ -357,10 +357,7 @@ export class Iodine {
       const ruleName = chunks.shift();
       let rule = ruleName[0].toUpperCase() + ruleName.slice(1);
 
-      let result = this[`is${rule}`].apply(this, [
-        value,
-        chunks.join(":"),
-      ]);
+      let result = this[`is${rule}`].apply(this, [value, chunks.join(":")]);
 
       if (!result) return rules[index];
     }
