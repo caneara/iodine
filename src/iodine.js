@@ -83,8 +83,9 @@ export class Iodine {
    *
    **/
   getErrorMessage(rule, arg = undefined) {
-    let key = rule.split(":")[0];
-    let param = arg || rule.split(":")[1];
+    const chunks = rule.split(":");
+    let key = chunks.shift();
+    let param = arg || chunks.join(":");
 
     if (["after", "afterOrEqual", "before", "beforeOrEqual"].includes(key)) {
       param = new Date(parseInt(param)).toLocaleTimeString(this.locale, {
@@ -93,10 +94,11 @@ export class Iodine {
         day: "numeric",
         hour: "2-digit",
         minute: "numeric",
+        hour12: false,
       });
     }
 
-    return [null, undefined].includes(param)
+    return [null, undefined, ""].includes(param)
       ? this.messages[key]
       : this.messages[key].replace("[PARAM]", param);
   }
@@ -351,13 +353,13 @@ export class Iodine {
     for (let index in rules) {
       if (rules[index] === "optional") continue;
 
-      let rule =
-        rules[index].split(":")[0][0].toUpperCase() +
-        rules[index].split(":")[0].slice(1);
+      const chunks = rules[index].split(":");
+      const ruleName = chunks.shift();
+      let rule = ruleName[0].toUpperCase() + ruleName.slice(1);
 
       let result = this[`is${rule}`].apply(this, [
         value,
-        rules[index].split(":")[1],
+        chunks.join(":"),
       ]);
 
       if (!result) return rules[index];
