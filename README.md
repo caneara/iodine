@@ -38,6 +38,8 @@ Alternatively, if you are comfortable using imports, or your project uses a buil
 
 ```js
 import { Iodine } from '@kingshott/iodine';
+
+const iodine = new Iodine();
 ```
 
 ## Single checks
