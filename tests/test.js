@@ -4,8 +4,8 @@ window.Iodine = new Library();
 const defaultMessages = Iodine.messages;
 
 /**
-  * The library is being mutate throughout the tests for example by replacing
-  * the default messages. We ensure that for each test, we have a pristine version
+  * The library is being mutated throughout the tests for example by replacing
+  * the default messages. We ensure that for each test, we have the default version
   * of the messages
 **/
 afterEach(() => {
