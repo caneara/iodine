@@ -382,6 +382,14 @@ export class Iodine {
   }
 
   /**
+   * Add or replace an error message.
+   *
+   **/
+  setErrorMessage(key, message) {
+    this.messages[key] = message;
+  }
+
+  /**
    * Replace the default locale with a new value.
    *
    **/

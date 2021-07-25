@@ -1,6 +1,16 @@
 import { Iodine as Library } from "../src/iodine";
 
 window.Iodine = new Library();
+const defaultMessages = Iodine.messages;
+
+/**
+  * The library is being mutated throughout the tests for example by replacing
+  * the default messages. We ensure that for each test, we have the default version
+  * of the messages
+**/
+afterEach(() => {
+  Iodine.setErrorMessages(defaultMessages);
+})
 
 describe("validate available rules", () => {
   /**
@@ -443,6 +453,7 @@ describe("validate values against multiple rules", () => {
 });
 
 describe("error messages", () => {
+
   /**
    * Confirm that the 'getErrorMessage' method works correctly.
    *
@@ -485,6 +496,35 @@ describe("error messages", () => {
     expect(Iodine.getErrorMessage("endingWith:John")).toBe("Hello, John");
     expect(Iodine.getErrorMessage("endingWith", "John")).toBe("Hello, John");
   });
+
+
+  /**
+   * Confirm that a single error message can be replaced.
+   *
+  **/
+  test("it can replace a default error message", () => {
+    const messagesCount = Object.keys(Iodine.messages).length;
+
+    Iodine.setErrorMessage("email", "Does not look like a valid email");
+    expect(Iodine.getErrorMessage("email")).toBe("Does not look like a valid email");
+
+    // Sanity checks the we have not replaced all error messages
+    expect(Object.keys(Iodine.messages).length).toEqual(messagesCount);
+    expect(Iodine.getErrorMessage("date")).toBe("Value must be a date");
+  });
+
+  /**
+   * Confirm that a single error message can be added to the set.
+   *
+   **/
+  test("it can add an error message to the set", () => {
+    const messagesCount = Object.keys(Iodine.messages).length;
+
+    Iodine.setErrorMessage("passwordConfirmation", "Password confirmation needs to match");
+    expect(Iodine.getErrorMessage("passwordConfirmation")).toBe("Password confirmation needs to match");
+    expect(Object.keys(Iodine.messages).length).toEqual(messagesCount + 1);
+  });
+
 });
 
 describe("custom rules", () => {

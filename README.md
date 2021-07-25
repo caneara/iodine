@@ -150,6 +150,11 @@ Iodine.setErrorMessages({ same: `Field must be '[PARAM]'` });   // English
 Iodine.setErrorMessages({ same: `Champ doit être '[PARAM]'` }); // French
 ```
 
+You can also add or update a single error
+```js
+Iodine.setErrorMessage("passwordConfirmation", "Does not match password");
+```
+
 ## Available rules
 
 The following validation rules are available:
@@ -217,6 +222,17 @@ Iodine.setErrorMessages({ equals : `Value must be equal to '[PARAM]'` });
 ## Contributing
 
 Thank you for considering a contribution to Iodine. You are welcome to submit a PR containing additional rules, however to be accepted, they must explain what they do, be useful to others, and include a suitable test to confirm they work correctly.
+
+After pulling the project, to install the dependencies:
+
+```bash
+npm install
+```
+
+To run the tests
+```bash
+npm run test
+```
 
 ## Support the project
 
