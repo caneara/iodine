@@ -42,31 +42,31 @@ export class Iodine {
     return {
       after: `The date must be after: '[PARAM]'`,
       afterOrEqual: `The date must be after or equal to: '[PARAM]'`,
-      array: `Value must be an array`,
+      array: `[FIELD] must be an array`,
       before: `The date must be before: '[PARAM]'`,
       beforeOrEqual: `The date must be before or equal to: '[PARAM]'`,
-      boolean: `Value must be true or false`,
-      date: `Value must be a date`,
-      different: `Value must be different to '[PARAM]'`,
-      endingWith: `Value must end with '[PARAM]'`,
-      email: `Value must be a valid email address`,
-      falsy: `Value must be a falsy value (false, 'false', 0 or '0')`,
-      in: `Value must be one of the following options: [PARAM]`,
-      integer: `Value must be an integer`,
-      json: `Value must be a parsable JSON object string`,
-      maximum: `Value must not be greater than '[PARAM]' in size or character length`,
-      minimum: `Value must not be less than '[PARAM]' in size or character length`,
-      notIn: `Value must not be one of the following options: [PARAM]`,
-      numeric: `Value must be numeric`,
-      optional: `Value is optional`,
-      regexMatch: `Value must satisify the regular expression: [PARAM]`,
-      required: `Value must be present`,
-      same: `Value must be '[PARAM]'`,
-      startingWith: `Value must start with '[PARAM]'`,
-      string: `Value must be a string`,
-      truthy: `Value must be a truthy value (true, 'true', 1 or '1')`,
-      url: `Value must be a valid url`,
-      uuid: `Value must be a valid UUID`,
+      boolean: `[FIELD] must be true or false`,
+      date: `[FIELD] must be a date`,
+      different: `[FIELD] must be different to '[PARAM]'`,
+      endingWith: `[FIELD] must end with '[PARAM]'`,
+      email: `[FIELD] must be a valid email address`,
+      falsy: `[FIELD] must be a falsy value (false, 'false', 0 or '0')`,
+      in: `[FIELD] must be one of the following options: [PARAM]`,
+      integer: `[FIELD] must be an integer`,
+      json: `[FIELD] must be a parsable JSON object string`,
+      maximum: `[FIELD] must not be greater than '[PARAM]' in size or character length`,
+      minimum: `[FIELD] must not be less than '[PARAM]' in size or character length`,
+      notIn: `[FIELD] must not be one of the following options: [PARAM]`,
+      numeric: `[FIELD] must be numeric`,
+      optional: `[FIELD] is optional`,
+      regexMatch: `[FIELD] must satisify the regular expression: [PARAM]`,
+      required: `[FIELD] must be present`,
+      same: `[FIELD] must be '[PARAM]'`,
+      startingWith: `[FIELD] must start with '[PARAM]'`,
+      string: `[FIELD] must be a string`,
+      truthy: `[FIELD] must be a truthy value (true, 'true', 1 or '1')`,
+      url: `[FIELD] must be a valid url`,
+      uuid: `[FIELD] must be a valid UUID`,
     };
   }
 
@@ -82,10 +82,12 @@ export class Iodine {
    * Retrieve an error message for the given rule.
    *
    **/
-  getErrorMessage(rule, arg = undefined) {
+  getErrorMessage(rule, args = undefined) {
+    let { param, field } = typeof args === "object" ? args : { param: args, field: undefined };
+
     const chunks = rule.split(":");
     let key = chunks.shift();
-    let param = arg || chunks.join(":");
+    param = param || chunks.join(":");
 
     if (["after", "afterOrEqual", "before", "beforeOrEqual"].includes(key)) {
       param = new Date(parseInt(param)).toLocaleTimeString(this.locale, {
@@ -98,9 +100,13 @@ export class Iodine {
       });
     }
 
-    return [null, undefined, ""].includes(param)
+    let message = [null, undefined, ""].includes(param)
       ? this.messages[key]
       : this.messages[key].replace("[PARAM]", param);
+
+    return [null, undefined, ""].includes(field)
+      ? message.replace("[FIELD]", "Value")
+      : message.replace("[FIELD]", field);
   }
 
   /**
