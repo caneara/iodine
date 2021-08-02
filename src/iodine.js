@@ -15,6 +15,7 @@ export class Iodine {
   constructor() {
     this.locale = undefined;
     this.messages = this._defaultMessages();
+    this.defaultFieldName = 'Value';
   }
 
   /**
@@ -105,7 +106,7 @@ export class Iodine {
       : this.messages[key].replace("[PARAM]", param);
 
     return [null, undefined, ""].includes(field)
-      ? message.replace("[FIELD]", "Value")
+      ? message.replace("[FIELD]", this.defaultFieldName)
       : message.replace("[FIELD]", field);
   }
 
@@ -401,6 +402,13 @@ export class Iodine {
    **/
   setLocale(locale) {
     this.locale = locale;
+  }
+
+  /**
+   * Replace the default field name with a new value.
+   */
+  setDefaultFieldName(fieldName) {
+    this.defaultFieldName = fieldName;
   }
 }
 

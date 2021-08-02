@@ -2,6 +2,7 @@ import { Iodine as Library } from "../src/iodine";
 
 window.Iodine = new Library();
 const defaultMessages = Iodine.messages;
+const defaultFieldName = Iodine.defaultFieldName;
 
 /**
  * The library is being mutated throughout the tests for example by replacing
@@ -10,6 +11,7 @@ const defaultMessages = Iodine.messages;
  **/
 afterEach(() => {
   Iodine.setErrorMessages(defaultMessages);
+  Iodine.setDefaultFieldName(defaultFieldName);
 });
 
 describe("validate available rules", () => {
@@ -517,6 +519,24 @@ describe("error messages", () => {
     expect(Iodine.getErrorMessage("startingWith:Paul", { field: "Name" })).toBe("Name: Paul says, 'hello'");
     expect(Iodine.getErrorMessage("startingWith", { field: "Name", param: "Paul" })).toBe("Name: Paul says, 'hello'");
   });
+
+  /**
+   * Confirm the defualt field name can be replaced.
+   */
+  test("it can replace the default field name", () => {
+    Iodine.setDefaultFieldName("Input");
+
+    expect(Iodine.getErrorMessage("array")).toBe("Input must be an array");
+    expect(Iodine.getErrorMessage("endingWith")).toBe(
+      `Input must end with '[PARAM]'`
+    );
+    expect(Iodine.getErrorMessage("endingWith:world")).toBe(
+      `Input must end with 'world'`
+    );
+    expect(Iodine.getErrorMessage("endingWith", { param: 'world'})).toBe(
+      `Input must end with 'world'`
+    );
+  })
 
   /**
    * Confirm that a single error message can be replaced.
