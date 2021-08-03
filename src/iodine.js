@@ -57,6 +57,10 @@ export class Iodine {
       json: `[FIELD] must be a parsable JSON object string`,
       maximum: `[FIELD] must not be greater than '[PARAM]' in size or character length`,
       minimum: `[FIELD] must not be less than '[PARAM]' in size or character length`,
+      max: `[FIELD] must be less than or equal to [PARAM]`,
+      min: `[FIELD] must be greater than or equal to [PARAM]`,
+      maxlength: `[FIELD] must not be greater than '[PARAM]' in character length`,
+      minlength: `[FIELD] must not be less than '[PARAM]' character length`,
       notIn: `[FIELD] must not be one of the following options: [PARAM]`,
       numeric: `[FIELD] must be numeric`,
       optional: `[FIELD] is optional`,
@@ -242,6 +246,7 @@ export class Iodine {
    *
    **/
   isMaximum(value, limit) {
+    console.warn("isMaximum (maximum) is deprecated. Use isMax (max) for validating the maximum value of a number or isMaxLength (maxlength) for validating the length of a string");
     value = typeof value === "string" ? value.length : value;
 
     return parseFloat(value) <= limit;
@@ -252,9 +257,46 @@ export class Iodine {
    *
    **/
   isMinimum(value, limit) {
+    console.warn("isMinimum (minimum) is deprecated. Use isMin (min) for validating the minimum value of a number or isMinLength (minlength) for validating the length of a string");
     value = typeof value === "string" ? value.length : value;
 
     return parseFloat(value) >= limit;
+  }
+
+  /**
+   * Determine if the given number is less than or equal to the maximum limit.
+   * 
+   */
+  isMax(value, limit) {
+    return parseFloat(value) <= limit;
+  }
+
+  /**
+   * Determine if the given number is greater than or equal to the minimum limit.
+   * 
+   */
+  isMin(value, limit) {
+    return parseFloat(value) >= limit;
+  }
+
+  /**
+   * Determine if the given value string length is less than or equal to the maximum limit.
+   * 
+   */
+  isMaxLength(value, limit) {
+    if (typeof value !== "string") return false;
+
+    return value.length <= limit;
+  }
+
+  /**
+   * Determine if the given value string length is greater than or equal to the minimum limit.
+   * 
+   */
+  isMinLength(value, limit) {
+    if (typeof value !== "string") return false;
+  
+    return value.length >= limit;
   }
 
   /**

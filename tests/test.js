@@ -265,6 +265,58 @@ describe("validate available rules", () => {
   });
 
   /**
+   * Confirm that the 'isMax' method works correctly.
+   *
+   **/
+   test("maximum numeric values", () => {
+    expect(Iodine.isMax(1, 5)).toBe(true);
+    expect(Iodine.isMax(5, 5)).toBe(true);
+    expect(Iodine.isMax(6, 5)).toBe(false);
+    expect(Iodine.isMax("1", 5)).toBe(true);
+    expect(Iodine.isMax("5", 5)).toBe(true);
+    expect(Iodine.isMax("6", 5)).toBe(false);
+  });
+
+  /**
+   * Confirm that the 'isMin' method works correctly.
+   *
+   **/
+  test("minimum numeric values", () => {
+    expect(Iodine.isMin(6, 5)).toBe(true);
+    expect(Iodine.isMin(5, 5)).toBe(true);
+    expect(Iodine.isMin(4, 5)).toBe(false);
+    expect(Iodine.isMin("6", 5)).toBe(true);
+    expect(Iodine.isMin("5", 5)).toBe(true);
+    expect(Iodine.isMin("4", 5)).toBe(false);
+  });
+
+  /**
+   * Confirm that the 'isMaxLength' method works correctly.
+   *
+   **/
+   test("maximum string length", () => {
+    expect(Iodine.isMaxLength(1, 5)).toBe(false);
+    expect(Iodine.isMaxLength(5, 5)).toBe(false);
+    expect(Iodine.isMaxLength(6, 5)).toBe(false);
+    expect(Iodine.isMaxLength("1", 5)).toBe(true);
+    expect(Iodine.isMaxLength("12345", 5)).toBe(true);
+    expect(Iodine.isMaxLength("123456", 5)).toBe(false);
+  });
+
+  /**
+   * Confirm that the 'isMinLength' method works correctly.
+   *
+   **/
+  test("minimum string length", () => {
+    expect(Iodine.isMinLength(6, 5)).toBe(false);
+    expect(Iodine.isMinLength(5, 5)).toBe(false);
+    expect(Iodine.isMinLength(4, 5)).toBe(false);
+    expect(Iodine.isMinLength("123456", 5)).toBe(true);
+    expect(Iodine.isMinLength("12345", 5)).toBe(true);
+    expect(Iodine.isMinLength("1234", 5)).toBe(false);
+  });
+
+  /**
    * Confirm that the 'isNotIn' method works correctly.
    *
    **/
