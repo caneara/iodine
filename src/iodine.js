@@ -15,7 +15,7 @@ export class Iodine {
   constructor() {
     this.locale = undefined;
     this.messages = this._defaultMessages();
-    this.defaultFieldName = 'Value';
+    this.defaultFieldName = "Value";
   }
 
   /**
@@ -84,7 +84,8 @@ export class Iodine {
    *
    **/
   getErrorMessage(rule, args = undefined) {
-    let { param, field } = typeof args === "object" ? args : { param: args, field: undefined };
+    let { param, field } =
+      typeof args === "object" ? args : { param: args, field: undefined };
 
     const chunks = rule.split(":");
     let key = chunks.shift();

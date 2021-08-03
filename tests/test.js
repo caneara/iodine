@@ -477,16 +477,19 @@ describe("error messages", () => {
       `Value must end with 'world'`
     );
 
-    expect(Iodine.getErrorMessage("endingWith", { field: 'Song title'})).toBe(
+    expect(Iodine.getErrorMessage("endingWith", { field: "Song title" })).toBe(
       `Song title must end with '[PARAM]'`
     );
-    expect(Iodine.getErrorMessage("endingWith:world", { field: 'Song title' })).toBe(
-      `Song title must end with 'world'`
-    );
-    expect(Iodine.getErrorMessage("endingWith", { field: 'Song title', param: 'world'})).toBe(
-      `Song title must end with 'world'`
-    );
-    expect(Iodine.getErrorMessage("endingWith", { param: 'world'})).toBe(
+    expect(
+      Iodine.getErrorMessage("endingWith:world", { field: "Song title" })
+    ).toBe(`Song title must end with 'world'`);
+    expect(
+      Iodine.getErrorMessage("endingWith", {
+        field: "Song title",
+        param: "world",
+      })
+    ).toBe(`Song title must end with 'world'`);
+    expect(Iodine.getErrorMessage("endingWith", { param: "world" })).toBe(
       `Value must end with 'world'`
     );
 
@@ -506,18 +509,30 @@ describe("error messages", () => {
     Iodine.setErrorMessages({
       array: "Hello world",
       endingWith: "Hello, [PARAM]",
-      startingWith: "[FIELD]: [PARAM] says, 'hello'"
+      startingWith: "[FIELD]: [PARAM] says, 'hello'",
     });
     expect(Iodine.getErrorMessage("array")).toBe("Hello world");
     expect(Iodine.getErrorMessage("endingWith:John")).toBe("Hello, John");
     expect(Iodine.getErrorMessage("endingWith", "John")).toBe("Hello, John");
-    expect(Iodine.getErrorMessage("endingWith", { param: "John" })).toBe("Hello, John");
+    expect(Iodine.getErrorMessage("endingWith", { param: "John" })).toBe(
+      "Hello, John"
+    );
     expect(Iodine.getErrorMessage("endingWith", "John")).toBe("Hello, John");
-    expect(Iodine.getErrorMessage("startingWith:Paul")).toBe("Value: Paul says, 'hello'");
-    expect(Iodine.getErrorMessage("startingWith", "Paul")).toBe("Value: Paul says, 'hello'");
-    expect(Iodine.getErrorMessage("startingWith", { param: "Paul" })).toBe("Value: Paul says, 'hello'");
-    expect(Iodine.getErrorMessage("startingWith:Paul", { field: "Name" })).toBe("Name: Paul says, 'hello'");
-    expect(Iodine.getErrorMessage("startingWith", { field: "Name", param: "Paul" })).toBe("Name: Paul says, 'hello'");
+    expect(Iodine.getErrorMessage("startingWith:Paul")).toBe(
+      "Value: Paul says, 'hello'"
+    );
+    expect(Iodine.getErrorMessage("startingWith", "Paul")).toBe(
+      "Value: Paul says, 'hello'"
+    );
+    expect(Iodine.getErrorMessage("startingWith", { param: "Paul" })).toBe(
+      "Value: Paul says, 'hello'"
+    );
+    expect(Iodine.getErrorMessage("startingWith:Paul", { field: "Name" })).toBe(
+      "Name: Paul says, 'hello'"
+    );
+    expect(
+      Iodine.getErrorMessage("startingWith", { field: "Name", param: "Paul" })
+    ).toBe("Name: Paul says, 'hello'");
   });
 
   /**
@@ -533,10 +548,10 @@ describe("error messages", () => {
     expect(Iodine.getErrorMessage("endingWith:world")).toBe(
       `Input must end with 'world'`
     );
-    expect(Iodine.getErrorMessage("endingWith", { param: 'world'})).toBe(
+    expect(Iodine.getErrorMessage("endingWith", { param: "world" })).toBe(
       `Input must end with 'world'`
     );
-  })
+  });
 
   /**
    * Confirm that a single error message can be replaced.
