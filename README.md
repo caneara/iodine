@@ -191,7 +191,7 @@ The following validation rules are available:
 | isMaxLength(limit)              | Verify that the item's character length does not exceed the given limit
 | isMinLength(limit)              | Verify that the item's character length is not under the given limit
 | isMax(limit)                  | Verify that the item's numerical value does not exceed the given limit
-| isMinLength(limit)              | Verify that the item's numberical value is not under the given limit
+| isMin(limit)              | Verify that the item's numberical value is not under the given limit
 | isNotIn(array)                   | Verify that the item is not within the given `array`
 | isNumeric                     | Verify that the item is `number` or a numeric `string`
 | isOptional                    | Allow for optional values (only for use with multiple checks)
