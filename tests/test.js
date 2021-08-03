@@ -268,7 +268,7 @@ describe("validate available rules", () => {
    * Confirm that the 'isMax' method works correctly.
    *
    **/
-   test("maximum numeric values", () => {
+  test("maximum numeric values", () => {
     expect(Iodine.isMax(1, 5)).toBe(true);
     expect(Iodine.isMax(5, 5)).toBe(true);
     expect(Iodine.isMax(6, 5)).toBe(false);
@@ -294,7 +294,7 @@ describe("validate available rules", () => {
    * Confirm that the 'isMaxLength' method works correctly.
    *
    **/
-   test("maximum string length", () => {
+  test("maximum string length", () => {
     expect(Iodine.isMaxLength(1, 5)).toBe(false);
     expect(Iodine.isMaxLength(5, 5)).toBe(false);
     expect(Iodine.isMaxLength(6, 5)).toBe(false);

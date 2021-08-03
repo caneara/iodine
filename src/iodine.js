@@ -246,7 +246,9 @@ export class Iodine {
    *
    **/
   isMaximum(value, limit) {
-    console.warn("isMaximum (maximum) is deprecated. Use isMax (max) for validating the maximum value of a number or isMaxLength (maxlength) for validating the length of a string");
+    console.warn(
+      "isMaximum (maximum) is deprecated. Use isMax (max) for validating the maximum value of a number or isMaxLength (maxlength) for validating the length of a string"
+    );
     value = typeof value === "string" ? value.length : value;
 
     return parseFloat(value) <= limit;
@@ -257,7 +259,9 @@ export class Iodine {
    *
    **/
   isMinimum(value, limit) {
-    console.warn("isMinimum (minimum) is deprecated. Use isMin (min) for validating the minimum value of a number or isMinLength (minlength) for validating the length of a string");
+    console.warn(
+      "isMinimum (minimum) is deprecated. Use isMin (min) for validating the minimum value of a number or isMinLength (minlength) for validating the length of a string"
+    );
     value = typeof value === "string" ? value.length : value;
 
     return parseFloat(value) >= limit;
@@ -265,7 +269,7 @@ export class Iodine {
 
   /**
    * Determine if the given number is less than or equal to the maximum limit.
-   * 
+   *
    */
   isMax(value, limit) {
     return parseFloat(value) <= limit;
@@ -273,7 +277,7 @@ export class Iodine {
 
   /**
    * Determine if the given number is greater than or equal to the minimum limit.
-   * 
+   *
    */
   isMin(value, limit) {
     return parseFloat(value) >= limit;
@@ -281,7 +285,7 @@ export class Iodine {
 
   /**
    * Determine if the given value string length is less than or equal to the maximum limit.
-   * 
+   *
    */
   isMaxLength(value, limit) {
     if (typeof value !== "string") return false;
@@ -291,11 +295,11 @@ export class Iodine {
 
   /**
    * Determine if the given value string length is greater than or equal to the minimum limit.
-   * 
+   *
    */
   isMinLength(value, limit) {
     if (typeof value !== "string") return false;
-  
+
     return value.length >= limit;
   }
 
