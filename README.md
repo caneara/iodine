@@ -139,15 +139,28 @@ Iodine.getErrorMessage('minimum:7');  // string
 Iodine.getErrorMessage('minimum', 7); // string
 ```
 
+If you want the field name to appear within the error message, you can pass an object as the second parameter to the `getErrorMessage` method.
+
+```js
+Iodine.getErrorMessage('minimum:7', { field: ''}); // string
+Iodine.getErrorMessage('minimum', { field: '', param: 7}); // string
+```
+
 ## Custom messages (localisation)
 
 You can easily replace the default error messages with your own via the `setErrorMessages` method. This method requires a single parameter, which is an `object` containing the messages. See the [_defaultMessages](src/iodine.js) method for an example of this.
 
-Iodine will automatically swap `[PARAM]` placeholders with the parameters supplied in the `getErrorMessage` method. As such, you should insert this placeholder at the appropriate position in your new error message e.g.
+Iodine will automatically swap the `[FIELD]` and `[PARAM]` placeholders with the parameters supplied in the `getErrorMessage` method. As such, you should insert this placeholder at the appropriate position in your new error message e.g.
 
 ```js
 Iodine.setErrorMessages({ same: `Field must be '[PARAM]'` });   // English
 Iodine.setErrorMessages({ same: `Champ doit être '[PARAM]'` }); // French
+```
+
+If no field name is provided when calling `getErrorMessage`, by default it will be replaced with "Value". You can change this by calling `setDefaultFieldName`
+
+```js
+Iodine.setDefaultFieldName('Valeur');
 ```
 
 You can also add or update a single error
@@ -216,7 +229,7 @@ You can also add error messages for your custom rules e.g.
 
 ```js
 Iodine.addRule('equals', (value, param) => value == param);
-Iodine.setErrorMessages({ equals : `Value must be equal to '[PARAM]'` });
+Iodine.setErrorMessages({ equals : `[FIELD] must be equal to '[PARAM]'` });
 ```
 
 ## Contributing
