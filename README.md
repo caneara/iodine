@@ -21,7 +21,7 @@ Iodine.js is a micro client-side validation library. It has no dependencies and 
 The easiest way to pull Iodine into your project is via a CDN:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/mattkingshott/iodine@3/dist/iodine.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/mattkingshott/iodine/dist/iodine.min.js" defer></script>
 ```
 
 You can also pull Iodine into your project via NPM:
