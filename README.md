@@ -94,8 +94,8 @@ Some rules require extra parameters e.g.
 let item_1 = 7;
 let item_2 = 4;
 
-Iodine.isMinimum(item_1, 5); // true
-Iodine.isMinimum(item_2, 5); // false
+Iodine.isMin(item_1, 5); // true
+Iodine.isMin(item_2, 5); // false
 ```
 
 For multiple checks, you can supply the parameters by appending them to the rule with a semicolon separator e.g.
@@ -104,8 +104,8 @@ For multiple checks, you can supply the parameters by appending them to the rule
 let item_1 = 7;
 let item_2 = 4;
 
-Iodine.is(item_1, ['required', 'integer', 'minimum:5']); // true
-Iodine.is(item_2, ['required', 'integer', 'minimum:5']); // string - 'minimum:5'
+Iodine.is(item_1, ['required', 'integer', 'min:5']); // true
+Iodine.is(item_2, ['required', 'integer', 'min:5']); // string - 'min:5'
 ```
 
 ## Optional values
@@ -135,15 +135,15 @@ Iodine.getErrorMessage('array'); // string
 When dealing with rules that have parameters, the `getErrorMessage` method allows you to supply the rule either as a combined `string` or as two arguments (the rule and parameter) e.g.
 
 ```js
-Iodine.getErrorMessage('minimum:7');  // string
-Iodine.getErrorMessage('minimum', 7); // string
+Iodine.getErrorMessage('min:7');  // string
+Iodine.getErrorMessage('min', 7); // string
 ```
 
 If you want the field name to appear within the error message, you can pass an object as the second parameter to the `getErrorMessage` method.
 
 ```js
-Iodine.getErrorMessage('minimum:7', { field: ''}); // string
-Iodine.getErrorMessage('minimum', { field: '', param: 7}); // string
+Iodine.getErrorMessage('min:7', { field: ''}); // string
+Iodine.getErrorMessage('min', { field: '', param: 7}); // string
 ```
 
 ## Custom messages (localisation)
@@ -188,8 +188,10 @@ The following validation rules are available:
 | isIn(array)                   | Verify that the item is within the given `array`
 | isInteger                     | Verify that the item is an `integer`
 | isJson                         | Verify that the item is a parsable JSON object `string`
-| isMaximum(limit)              | Verify that the item does not exceed the given limit (number or char length)
-| isMinimum(limit)              | Verify that the item is not under the given limit (number or char length)
+| isMaxLength(limit)              | Verify that the item's character length does not exceed the given limit
+| isMinLength(limit)              | Verify that the item's character length is not under the given limit
+| isMax(limit)                  | Verify that the item's numerical value does not exceed the given limit
+| isMinLength(limit)              | Verify that the item's numberical value is not under the given limit
 | isNotIn(array)                   | Verify that the item is not within the given `array`
 | isNumeric                     | Verify that the item is `number` or a numeric `string`
 | isOptional                    | Allow for optional values (only for use with multiple checks)
@@ -203,6 +205,16 @@ The following validation rules are available:
 | isUuid                        | Verify that the item is a `UUID`
 
 Examine the tests for examples of how to use each rule.
+
+## Deprecated Rules
+
+The following rules are deprecated and should not be used:
+
+| Rule                          | Description                                                                     | Replacement                                                 |
+| ----------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| isMaximum(limit)              | Verify that the item does not exceed the given limit (number or char length)    | isMax for numerical value. isMaxLength for character length
+| isMinimum(limit)              | Verify that the item is not under the given limit (number or char length)       | isMin for numerical value. isMinLength for character length
+
 
 ## Custom rules
 
