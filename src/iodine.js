@@ -421,10 +421,42 @@ export class Iodine {
 
   /**
    * Determine whether the given value meets the given rules.
+   *
+   **/
+  async asyncIs(value, rules = []) {
+    if (!rules.length) return true;
+
+    if (rules[0] === "optional" && this.isOptional(value)) return true;
+
+    for (let index in rules) {
+      if (rules[index] === "optional") continue;
+
+      const chunks = rules[index].split(":");
+      const ruleName = chunks.shift();
+      let rule = ruleName[0].toUpperCase() + ruleName.slice(1);
+
+      let result = await this[`is${rule}`].apply(this, [value, chunks.join(":")]);
+
+      if (!result) return await rules[index];
+    }
+
+    return true;
+  }
+
+  /**
+   * Determine whether the given value meets the given rules.
    * @returns true if the item passes every rule, otherwise returns false
    **/
   isValid(value, rules = []) {
     return this.is(value, rules) === true;
+  }
+
+  /**
+   * Determine whether the given value meets the given rules.
+   * @returns true if the item passes every rule, otherwise returns false
+   **/
+  async asyncIsValid(value, rules = []) {
+    return await this.asyncIs(value, rules) === true;
   }
 
   /**

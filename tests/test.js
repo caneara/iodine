@@ -679,4 +679,23 @@ describe("custom rules", () => {
       `Value must be equal to '2'`
     );
   });
+  
+  /**
+   * Confirm that the 'addRule' method works correctly for async rules.
+   *
+   **/
+  test("it can add async custom rules", async () => {
+	Iodine.addRule("timeoutEquals", (value, param) => { return new Promise(resolve => setTimeout(resolve(value == param), 10));});
+    Iodine.setErrorMessages({ timeoutEquals: `Value must be equal to '[PARAM]' after 10ms` });
+	expect(await Iodine.isTimeoutEquals(1, 1)).toBe(true);
+	expect(await Iodine.isTimeoutEquals(1, 2)).toBe(false);
+	expect(await Iodine.asyncIs(1, ["required", "timeoutEquals:1"])).toBe(true);
+	expect(await Iodine.asyncIs(1, ["required", "timeoutEquals:2"])).toBe("timeoutEquals:2");
+	expect(
+      await Iodine.asyncIsValid(1, ["required", "integer", "timeoutEquals:1"])
+    ).toBe(true);
+    expect(
+      await Iodine.asyncIsValid(1, ["required", "integer", "timeoutEquals:2"])
+    ).toBe(false);
+  });
 });
