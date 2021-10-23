@@ -5,7 +5,6 @@
 
 <!-- Badges -->
 <p align="center">
-  <img src="resources/size.svg" alt="Size">
   <img src="resources/build.svg" alt="Build">
   <img src="resources/coverage.svg" alt="Coverage">
   <img src="resources/version.svg" alt="Version">
@@ -123,6 +122,40 @@ Iodine.is(item_3, ['optional', 'integer']); // string - 'integer'
 ```
 
 **IMPORTANT**: If you wish to allow for optional values, then you must supply `'optional'` as the first rule in the list.
+
+## Asynchronous rules
+
+Iodine supports the use of asynchronous custom rules using `async / await`.
+
+To add an asynchronous rule, simply create a custom rule that returns a `Promise` e.g:
+
+```js
+Iodine.addRule('timeoutEquals', (value, param) => new Promise(resolve => setTimeout(resolve(value == param), 10)));
+```
+
+You may then test a value against the rule by using the `await` keyword:
+
+```js
+let result = await Iodine.isTimeoutEquals(1, 1);
+```
+
+You can also use multiple asynchronous rules when testing a value, or mix and match synchronous and asynchronous rules. One thing to keep in mind though, is that if any of the rules you want to use are asynchronous, then you must use the `asyncIs` or `asyncIsValid` methods e.g.
+
+```js
+// Right
+await Iodine.asyncIs(1, ['required', 'timeoutEquals:1']));
+await Iodine.asyncIsValid(1, ['required', 'integer', 'timeoutEquals:1']));
+
+// Wrong
+await Iodine.Is(1, ['required', 'timeoutEquals:1']));
+await Iodine.IsValid(1, ['required', 'integer', 'timeoutEquals:1']));
+
+// Wrong
+Iodine.Is(1, ['required', 'timeoutEquals:1']));
+Iodine.IsValid(1, ['required', 'integer', 'timeoutEquals:1']));
+```
+
+> None of the standard rules included in the library are asynchronous, so unless you want to use Promise-based rules, then you can safely ignore this section on asynchronous rules.
 
 ## Error messages
 
