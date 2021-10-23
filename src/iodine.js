@@ -17,7 +17,7 @@ export class Iodine {
 
     this.messages = this._defaultMessages();
 
-    this.defaultFieldName = 'Value';
+    this.defaultFieldName = "Value";
   }
 
   /**
@@ -29,12 +29,12 @@ export class Iodine {
 
     if (!this.isDate(second) && !this.isInteger(second)) return false;
 
-    second = typeof second === 'number' ? second : second.getTime();
+    second = typeof second === "number" ? second : second.getTime();
 
-    if (type === 'less' && equals) return first.getTime() <= second;
-    if (type === 'less' && !equals) return first.getTime() < second;
-    if (type === 'more' && equals) return first.getTime() >= second;
-    if (type === 'more' && !equals) return first.getTime() > second;
+    if (type === "less" && equals) return first.getTime() <= second;
+    if (type === "less" && !equals) return first.getTime() < second;
+    if (type === "more" && equals) return first.getTime() >= second;
+    if (type === "more" && !equals) return first.getTime() > second;
   }
 
   /**
@@ -43,35 +43,35 @@ export class Iodine {
    */
   _defaultMessages() {
     return {
-      after         : `The date must be after: '[PARAM]'`,
-      afterOrEqual  : `The date must be after or equal to: '[PARAM]'`,
-      array         : `[FIELD] must be an array`,
-      before        : `The date must be before: '[PARAM]'`,
-      beforeOrEqual : `The date must be before or equal to: '[PARAM]'`,
-      boolean       : `[FIELD] must be true or false`,
-      date          : `[FIELD] must be a date`,
-      different     : `[FIELD] must be different to '[PARAM]'`,
-      endingWith    : `[FIELD] must end with '[PARAM]'`,
-      email         : `[FIELD] must be a valid email address`,
-      falsy         : `[FIELD] must be a falsy value (false, 'false', 0 or '0')`,
-      in            : `[FIELD] must be one of the following options: [PARAM]`,
-      integer       : `[FIELD] must be an integer`,
-      json          : `[FIELD] must be a parsable JSON object string`,
-      max           : `[FIELD] must be less than or equal to [PARAM]`,
-      min           : `[FIELD] must be greater than or equal to [PARAM]`,
-      maxLength     : `[FIELD] must not be greater than '[PARAM]' in character length`,
-      minLength     : `[FIELD] must not be less than '[PARAM]' character length`,
-      notIn         : `[FIELD] must not be one of the following options: [PARAM]`,
-      numeric       : `[FIELD] must be numeric`,
-      optional      : `[FIELD] is optional`,
-      regexMatch    : `[FIELD] must satisify the regular expression: [PARAM]`,
-      required      : `[FIELD] must be present`,
-      same          : `[FIELD] must be '[PARAM]'`,
-      startingWith  : `[FIELD] must start with '[PARAM]'`,
-      string        : `[FIELD] must be a string`,
-      truthy        : `[FIELD] must be a truthy value (true, 'true', 1 or '1')`,
-      url           : `[FIELD] must be a valid url`,
-      uuid          : `[FIELD] must be a valid UUID`,
+      after: `The date must be after: '[PARAM]'`,
+      afterOrEqual: `The date must be after or equal to: '[PARAM]'`,
+      array: `[FIELD] must be an array`,
+      before: `The date must be before: '[PARAM]'`,
+      beforeOrEqual: `The date must be before or equal to: '[PARAM]'`,
+      boolean: `[FIELD] must be true or false`,
+      date: `[FIELD] must be a date`,
+      different: `[FIELD] must be different to '[PARAM]'`,
+      endingWith: `[FIELD] must end with '[PARAM]'`,
+      email: `[FIELD] must be a valid email address`,
+      falsy: `[FIELD] must be a falsy value (false, 'false', 0 or '0')`,
+      in: `[FIELD] must be one of the following options: [PARAM]`,
+      integer: `[FIELD] must be an integer`,
+      json: `[FIELD] must be a parsable JSON object string`,
+      max: `[FIELD] must be less than or equal to [PARAM]`,
+      min: `[FIELD] must be greater than or equal to [PARAM]`,
+      maxLength: `[FIELD] must not be greater than '[PARAM]' in character length`,
+      minLength: `[FIELD] must not be less than '[PARAM]' character length`,
+      notIn: `[FIELD] must not be one of the following options: [PARAM]`,
+      numeric: `[FIELD] must be numeric`,
+      optional: `[FIELD] is optional`,
+      regexMatch: `[FIELD] must satisify the regular expression: [PARAM]`,
+      required: `[FIELD] must be present`,
+      same: `[FIELD] must be '[PARAM]'`,
+      startingWith: `[FIELD] must start with '[PARAM]'`,
+      string: `[FIELD] must be a string`,
+      truthy: `[FIELD] must be a truthy value (true, 'true', 1 or '1')`,
+      url: `[FIELD] must be a valid url`,
+      uuid: `[FIELD] must be a valid UUID`,
     };
   }
 
@@ -79,22 +79,25 @@ export class Iodine {
    * @internal.
    *
    */
-  _prepare(value, rules = [])
-  {
+  _prepare(value, rules = []) {
     if (!rules.length) return [];
 
-    if (rules[0] === 'optional' && this.isOptional(value)) return [];
+    if (rules[0] === "optional" && this.isOptional(value)) return [];
 
-    return rules.filter(rule => rule !== 'optional')
-                .map(rule => [rule, this._titleCase(rule.split(':').shift()), rule.split(':').slice(1)]);
+    return rules
+      .filter((rule) => rule !== "optional")
+      .map((rule) => [
+        rule,
+        this._titleCase(rule.split(":").shift()),
+        rule.split(":").slice(1),
+      ]);
   }
 
   /**
    * @internal.
    *
    */
-  _titleCase(value)
-  {
+  _titleCase(value) {
     return `${value[0].toUpperCase()}${value.slice(1)}`;
   }
 
@@ -111,8 +114,13 @@ export class Iodine {
    *
    */
   async asyncIs(value, rules = []) {
-    for (let index in rules = this._prepare(value, rules)) {
-      if (!await this[`is${rules[index][1]}`].apply(this, [value, rules[index][2].join(':')])) {
+    for (let index in (rules = this._prepare(value, rules))) {
+      if (
+        !(await this[`is${rules[index][1]}`].apply(this, [
+          value,
+          rules[index][2].join(":"),
+        ]))
+      ) {
         return await rules[index][0];
       }
     }
@@ -125,7 +133,7 @@ export class Iodine {
    *
    */
   async asyncIsValid(value, rules = []) {
-    return await this.asyncIs(value, rules) === true;
+    return (await this.asyncIs(value, rules)) === true;
   }
 
   /**
@@ -133,32 +141,33 @@ export class Iodine {
    *
    */
   getErrorMessage(rule, args = undefined) {
-    let { param, field } = typeof args === 'object' ? args : { param: args, field: undefined };
+    let { param, field } =
+      typeof args === "object" ? args : { param: args, field: undefined };
 
-    const chunks = rule.split(':');
+    const chunks = rule.split(":");
 
     let key = chunks.shift();
 
-    param = param || chunks.join(':');
+    param = param || chunks.join(":");
 
-    if (['after', 'afterOrEqual', 'before', 'beforeOrEqual'].includes(key)) {
+    if (["after", "afterOrEqual", "before", "beforeOrEqual"].includes(key)) {
       param = new Date(parseInt(param)).toLocaleTimeString(this.locale, {
-        year   : 'numeric',
-        month  : 'short',
-        day    : 'numeric',
-        hour   : '2-digit',
-        minute : 'numeric',
-        hour12 : false,
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "numeric",
+        hour12: false,
       });
     }
 
-    let message = [null, undefined, ''].includes(param)
+    let message = [null, undefined, ""].includes(param)
       ? this.messages[key]
-      : this.messages[key].replace('[PARAM]', param);
+      : this.messages[key].replace("[PARAM]", param);
 
-    return [null, undefined, ''].includes(field)
-      ? message.replace('[FIELD]', this.defaultFieldName)
-      : message.replace('[FIELD]', field);
+    return [null, undefined, ""].includes(field)
+      ? message.replace("[FIELD]", this.defaultFieldName)
+      : message.replace("[FIELD]", field);
   }
 
   /**
@@ -166,7 +175,7 @@ export class Iodine {
    *
    */
   isAfter(value, after) {
-    return this._dateCompare(value, after, 'more', false);
+    return this._dateCompare(value, after, "more", false);
   }
 
   /**
@@ -174,7 +183,7 @@ export class Iodine {
    *
    */
   isAfterOrEqual(value, after) {
-    return this._dateCompare(value, after, 'more', true);
+    return this._dateCompare(value, after, "more", true);
   }
 
   /**
@@ -190,7 +199,7 @@ export class Iodine {
    *
    */
   isBefore(value, before) {
-    return this._dateCompare(value, before, 'less', false);
+    return this._dateCompare(value, before, "less", false);
   }
 
   /**
@@ -198,7 +207,7 @@ export class Iodine {
    *
    */
   isBeforeOrEqual(value, before) {
-    return this._dateCompare(value, before, 'less', true);
+    return this._dateCompare(value, before, "less", true);
   }
 
   /**
@@ -214,7 +223,11 @@ export class Iodine {
    *
    */
   isDate(value) {
-    return (value && Object.prototype.toString.call(value) === '[object Date]' && !isNaN(value));
+    return (
+      value &&
+      Object.prototype.toString.call(value) === "[object Date]" &&
+      !isNaN(value)
+    );
   }
 
   /**
@@ -238,7 +251,9 @@ export class Iodine {
    *
    */
   isEmail(value) {
-    return new RegExp("^\\S+@\\S+[\\.][0-9a-z]+$").test(String(value).toLowerCase());
+    return new RegExp("^\\S+@\\S+[\\.][0-9a-z]+$").test(
+      String(value).toLowerCase()
+    );
   }
 
   /**
@@ -246,7 +261,7 @@ export class Iodine {
    *
    */
   isFalsy(value) {
-    return [0, '0', false, 'false'].includes(value);
+    return [0, "0", false, "false"].includes(value);
   }
 
   /**
@@ -254,7 +269,9 @@ export class Iodine {
    *
    */
   isIn(value, options) {
-    return (typeof options === 'string' ? options.split(',') : options).includes(value);
+    return (
+      typeof options === "string" ? options.split(",") : options
+    ).includes(value);
   }
 
   /**
@@ -262,7 +279,9 @@ export class Iodine {
    *
    */
   isInteger(value) {
-    return Number.isInteger(value) && parseInt(value).toString() === value.toString();
+    return (
+      Number.isInteger(value) && parseInt(value).toString() === value.toString()
+    );
   }
 
   /**
@@ -271,7 +290,7 @@ export class Iodine {
    */
   isJson(value) {
     try {
-      return typeof JSON.parse(value) === 'object';
+      return typeof JSON.parse(value) === "object";
     } catch (e) {
       return false;
     }
@@ -298,7 +317,7 @@ export class Iodine {
    *
    */
   isMaxLength(value, limit) {
-    return typeof value === 'string' ? value.length <= limit : false;
+    return typeof value === "string" ? value.length <= limit : false;
   }
 
   /**
@@ -306,7 +325,7 @@ export class Iodine {
    *
    */
   isMinLength(value, limit) {
-    return typeof value === 'string' ? value.length >= limit : false;
+    return typeof value === "string" ? value.length >= limit : false;
   }
 
   /**
@@ -330,7 +349,7 @@ export class Iodine {
    *
    */
   isOptional(value) {
-    return [null, undefined, ''].includes(value);
+    return [null, undefined, ""].includes(value);
   }
 
   /**
@@ -370,7 +389,7 @@ export class Iodine {
    *
    */
   isString(value) {
-    return typeof value === 'string';
+    return typeof value === "string";
   }
 
   /**
@@ -378,7 +397,7 @@ export class Iodine {
    *
    */
   isTruthy(value) {
-    return [1, '1', true, 'true'].includes(value);
+    return [1, "1", true, "true"].includes(value);
   }
 
   /**
@@ -386,7 +405,8 @@ export class Iodine {
    *
    */
   isUrl(value) {
-    let regex = "^(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*(\\?[;&a-z\\d%_.~+=-]*)?(\\#[-a-z\\d_]*)?$";
+    let regex =
+      "^(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*(\\?[;&a-z\\d%_.~+=-]*)?(\\#[-a-z\\d_]*)?$";
 
     return new RegExp(regex).test(String(value).toLowerCase());
   }
@@ -396,7 +416,8 @@ export class Iodine {
    *
    */
   isUuid(value) {
-    let regex = "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$";
+    let regex =
+      "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$";
 
     return new RegExp(regex).test(String(value).toLowerCase());
   }
@@ -406,8 +427,13 @@ export class Iodine {
    *
    */
   is(value, rules = []) {
-    for (let index in rules = this._prepare(value, rules)) {
-      if (!this[`is${rules[index][1]}`].apply(this, [value, rules[index][2].join(':')])) {
+    for (let index in (rules = this._prepare(value, rules))) {
+      if (
+        !this[`is${rules[index][1]}`].apply(this, [
+          value,
+          rules[index][2].join(":"),
+        ])
+      ) {
         return rules[index][0];
       }
     }
