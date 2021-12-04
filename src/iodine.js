@@ -457,6 +457,6 @@ export class Iodine {
  * Create an instance of the library.
  *
  */
-if(typeof window !== undefined) {
+if(typeof window !== 'undefined') {
   window.Iodine = new Iodine();
 }
