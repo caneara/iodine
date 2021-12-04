@@ -1,3 +1,8 @@
+/**
+ * @jest-environment jsdom
+ *
+ */
+
 import { Iodine as Library } from '../src/iodine';
 
 window.Iodine = new Library();
