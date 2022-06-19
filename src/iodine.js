@@ -422,6 +422,29 @@ export class Iodine {
   }
 
   /**
+   * Determine whether the given dictionary of values meets the given schema.
+   *
+   */
+  isValidSchema(values = {}, schema = {}) {
+    const keys = Object.keys(schema);
+
+    if(keys.length === 0) return true;
+
+    for(let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+
+        if(!values.hasOwnProperty(key)) return false;
+
+        const value = values[key];
+        const rules = schema[key];
+
+        if (!this.isValid(value, rules)) return false;
+    }
+
+    return true;
+  }
+
+  /**
    * Replace the default error messages with a new set.
    *
    */
