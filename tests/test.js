@@ -398,6 +398,53 @@ test('return true/false', () => {
 });
 
 /**
+ * Confirm that the 'isValidSchema' method returns the right value against multiple schemas.
+ *
+ */
+test('schema validation', () => {
+
+  expect(
+    Iodine.isValidSchema(
+        { },
+        {
+            website: [ 'required' , 'url' ],
+            ping: [ 'required' , 'integer' ],
+        }
+    )
+  ).toBe(false);
+
+  expect(
+    Iodine.isValidSchema(
+        { email: 'welcome@to.iodine', password: 'abcdefgh', fullname: 'John Doe' },
+        {
+            email: [ 'required' , 'email' ],
+            password: [ 'required' , 'minLength:6' ],
+            fullname: [ 'required' , 'minLength:3' ]
+        }
+    )
+  ).toBe(true);
+
+  expect(
+    Iodine.isValidSchema(
+        { website: 'https://iodine.is', ping: 'ninety' },
+        {
+            website: [ 'required' , 'url' ],
+        }
+    )
+  ).toBe(true);
+
+  expect(
+    Iodine.isValidSchema(
+        { website: 'https://iodine.io', ping: 'ninety' },
+        {
+            website: [ 'required' , 'url' ],
+            ping: [ 'required' , 'integer' ],
+        }
+    )
+  ).toBe(false);
+});
+
+/**
  * Confirm that the 'is' method can handle rules that contain semicolons.
  *
  */
