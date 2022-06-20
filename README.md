@@ -91,14 +91,15 @@ Iodine.isValid(item_2, ['required', 'integer']); // false
 If you want to compare an object against a schema. In other words, you want to run a list of checks against a list of values, then you can use the `isValidSchema` helper method. **Note** : This method uses `isValid`under the hood, hence it returns a `boolean`.
 
 ```js
-Iodine.isValidSchema(
-	{ email: 'welcome@to.iodine', password: 'abcdefgh', fullname: 'John Doe' },
-	{
-	  email: [ 'required' , 'email' ],
-	  password: [ 'required' , 'minLength:6' ],
-	  fullname: [ 'required' , 'minLength:3' ]
-	}
-); // true
+Iodine.isValidSchema({
+    email    : 'welcome@to.iodine',
+    password : 'abcdefgh',
+    fullname : 'John Doe',
+}, {
+    email    : ['required', 'email'],
+    password : ['required', 'minLength:6'],
+    fullname : ['required', 'minLength:3'],
+}); // true
 ```
 
 ## Additional parameters
