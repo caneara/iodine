@@ -10,8 +10,7 @@ import Iodine from '../src/iodine';
  */
 afterEach(() =>
 {
-    window.Iodine.setErrorMessages(new Iodine()._defaultMessages());
-    window.Iodine.setDefaultFieldName(new Iodine()._defaultFieldName());
+    window.Iodine = new Iodine();
 });
 
 /**
@@ -26,7 +25,7 @@ test('after date values', () =>
     expect(window.Iodine.assertAfter(new Date(year + 1, 12, 17), Date.now())).toBe(true);
     expect(window.Iodine.assertAfter(new Date(`December 18, ${year + 1} 03:24:00`), new Date(year, 12, 18))).toBe(true);
     expect(window.Iodine.assertAfter(new Date(year - 1, 12, 17), Date.now())).toBe(false);
-    expect(window.Iodine.assertAfter(new Date(year - 1, 12, 17), "now")).toBe(false);
+    expect(window.Iodine.assertAfter(new Date(year - 1, 12, 17), 'now')).toBe(false);
     expect(window.Iodine.assertAfter('now', new Date(year - 1, 12, 17))).toBe(false);
     expect(window.Iodine.assertAfter('now', 'now')).toBe(false);
 });
@@ -203,8 +202,8 @@ test('json values', () =>
 {
     expect(window.Iodine.assertJson('{}')).toBe(true);
     expect(window.Iodine.assertJson('{"a" : 3}')).toBe(true);
-    expect(window.Iodine.assertJson("1")).toBe(false);
-    expect(window.Iodine.assertJson("")).toBe(false);
+    expect(window.Iodine.assertJson('1')).toBe(false);
+    expect(window.Iodine.assertJson('')).toBe(false);
 });
 
 /**
@@ -396,7 +395,7 @@ test('UUID values', () =>
 });
 
 /**
- * Confirm that the 'getErrorMessage' method works correctly.
+ * Confirm that the '_error' method works correctly.
  *
  */
 test('it retrieves formatted error messages for rules', () =>
@@ -407,16 +406,16 @@ test('it retrieves formatted error messages for rules', () =>
 
     let hour = new Date(parseInt(time)).getHours();
 
-    expect(window.Iodine.getErrorMessage('array')).toBe('Value must be an array');
-    expect(window.Iodine.getErrorMessage('endsWith')).toBe(`Value must end with '[PARAM]'`);
-    expect(window.Iodine.getErrorMessage('endsWith:world')).toBe(`Value must end with 'world'`);
-    expect(window.Iodine.getErrorMessage('endsWith', 'world')).toBe(`Value must end with 'world'`);
-    expect(window.Iodine.getErrorMessage('endsWith', { field : 'Song title' })).toBe(`Song title must end with '[PARAM]'`);
-    expect(window.Iodine.getErrorMessage('endsWith:world', { field : 'Song title' })).toBe(`Song title must end with 'world'`);
-    expect(window.Iodine.getErrorMessage('endsWith', { field : 'Song title', param : 'world'})).toBe(`Song title must end with 'world'`);
-    expect(window.Iodine.getErrorMessage('endsWith', { param : 'world' })).toBe(`Value must end with 'world'`);
-    expect(window.Iodine.getErrorMessage(`after:${time}`)).toBe(`The date must be after: 'May 2, 2020, ${hour}:17'`);
-    expect(window.Iodine.getErrorMessage(`after`, time)).toBe(`The date must be after: 'May 2, 2020, ${hour}:17'`);
+    expect(window.Iodine._error('array')).toBe('Value must be an array');
+    expect(window.Iodine._error('endsWith')).toBe(`Value must end with '[PARAM]'`);
+    expect(window.Iodine._error('endsWith:world')).toBe(`Value must end with 'world'`);
+    expect(window.Iodine._error('endsWith', 'world')).toBe(`Value must end with 'world'`);
+    expect(window.Iodine._error('endsWith', { field : 'Song title' })).toBe(`Song title must end with '[PARAM]'`);
+    expect(window.Iodine._error('endsWith:world', { field : 'Song title' })).toBe(`Song title must end with 'world'`);
+    expect(window.Iodine._error('endsWith', { field : 'Song title', param : 'world'})).toBe(`Song title must end with 'world'`);
+    expect(window.Iodine._error('endsWith', { param : 'world' })).toBe(`Value must end with 'world'`);
+    expect(window.Iodine._error(`after:${time}`)).toBe(`The date must be after: 'May 2, 2020, ${hour}:17'`);
+    expect(window.Iodine._error(`after`, time)).toBe(`The date must be after: 'May 2, 2020, ${hour}:17'`);
 });
 
 /**
@@ -426,21 +425,21 @@ test('it retrieves formatted error messages for rules', () =>
 test('it can replace the default error messages', () =>
 {
     window.Iodine.setErrorMessages({
-        array      : "Hello world",
-        endsWith   : "Hello, [PARAM]",
+        array      : 'Hello world',
+        endsWith   : 'Hello, [PARAM]',
         startsWith : "[FIELD]: [PARAM] says, 'hello'",
     });
 
-    expect(window.Iodine.getErrorMessage('array')).toBe('Hello world');
-    expect(window.Iodine.getErrorMessage('endsWith:John')).toBe('Hello, John');
-    expect(window.Iodine.getErrorMessage('endsWith', 'John')).toBe('Hello, John');
-    expect(window.Iodine.getErrorMessage('endsWith', { param : 'John' })).toBe('Hello, John');
-    expect(window.Iodine.getErrorMessage('endsWith', 'John')).toBe('Hello, John');
-    expect(window.Iodine.getErrorMessage('startsWith:Paul')).toBe(`Value: Paul says, 'hello'`);
-    expect(window.Iodine.getErrorMessage('startsWith', 'Paul')).toBe(`Value: Paul says, 'hello'`);
-    expect(window.Iodine.getErrorMessage('startsWith', { param : 'Paul' })).toBe(`Value: Paul says, 'hello'`);
-    expect(window.Iodine.getErrorMessage('startsWith:Paul', { field : 'Name' })).toBe(`Name: Paul says, 'hello'`);
-    expect(window.Iodine.getErrorMessage('startsWith', { field : 'Name', param : 'Paul' })).toBe(`Name: Paul says, 'hello'`);
+    expect(window.Iodine._error('array')).toBe('Hello world');
+    expect(window.Iodine._error('endsWith:John')).toBe('Hello, John');
+    expect(window.Iodine._error('endsWith', 'John')).toBe('Hello, John');
+    expect(window.Iodine._error('endsWith', { param : 'John' })).toBe('Hello, John');
+    expect(window.Iodine._error('endsWith', 'John')).toBe('Hello, John');
+    expect(window.Iodine._error('startsWith:Paul')).toBe(`Value: Paul says, 'hello'`);
+    expect(window.Iodine._error('startsWith', 'Paul')).toBe(`Value: Paul says, 'hello'`);
+    expect(window.Iodine._error('startsWith', { param : 'Paul' })).toBe(`Value: Paul says, 'hello'`);
+    expect(window.Iodine._error('startsWith:Paul', { field : 'Name' })).toBe(`Name: Paul says, 'hello'`);
+    expect(window.Iodine._error('startsWith', { field : 'Name', param : 'Paul' })).toBe(`Name: Paul says, 'hello'`);
 });
 
 /**
@@ -451,10 +450,10 @@ test('it can replace the default field name', () =>
 {
     window.Iodine.setDefaultFieldName('Input');
 
-    expect(window.Iodine.getErrorMessage('array')).toBe('Input must be an array');
-    expect(window.Iodine.getErrorMessage('endsWith')).toBe(`Input must end with '[PARAM]'`);
-    expect(window.Iodine.getErrorMessage('endsWith:world')).toBe(`Input must end with 'world'`);
-    expect(window.Iodine.getErrorMessage('endsWith', { param : 'world' })).toBe(`Input must end with 'world'`);
+    expect(window.Iodine._error('array')).toBe('Input must be an array');
+    expect(window.Iodine._error('endsWith')).toBe(`Input must end with '[PARAM]'`);
+    expect(window.Iodine._error('endsWith:world')).toBe(`Input must end with 'world'`);
+    expect(window.Iodine._error('endsWith', { param : 'world' })).toBe(`Input must end with 'world'`);
 });
 
 /**
@@ -463,13 +462,13 @@ test('it can replace the default field name', () =>
  */
 test('it can replace a default error message', () =>
 {
-    const messagesCount = Object.keys(window.Iodine.messages).length;
+    const total = Object.keys(window.Iodine.messages).length;
 
-    window.Iodine.setErrorMessage('email', "Does not look like a valid email");
+    window.Iodine.setErrorMessage('email', 'Does not look like a valid email');
 
-    expect(window.Iodine.getErrorMessage('email')).toBe('Does not look like a valid email');
-    expect(Object.keys(window.Iodine.messages).length).toEqual(messagesCount);
-    expect(window.Iodine.getErrorMessage('date')).toBe('Value must be a date');
+    expect(window.Iodine._error('email')).toBe('Does not look like a valid email');
+    expect(Object.keys(window.Iodine.messages).length).toEqual(total);
+    expect(window.Iodine._error('date')).toBe('Value must be a date');
 });
 
 /**
@@ -478,103 +477,205 @@ test('it can replace a default error message', () =>
  */
 test('it can add an error message to the set', () =>
 {
-    const messagesCount = Object.keys(window.Iodine.messages).length;
+    const total = Object.keys(window.Iodine.messages).length;
 
-    window.Iodine.setErrorMessage('passwordConfirmation', "Password confirmation needs to match");
+    window.Iodine.setErrorMessage('passwordConfirmation', 'Password confirmation needs to match');
 
-    expect(window.Iodine.getErrorMessage('passwordConfirmation')).toBe('Password confirmation needs to match');
-    expect(Object.keys(window.Iodine.messages).length).toEqual(messagesCount + 1);
+    expect(window.Iodine._error('passwordConfirmation')).toBe('Password confirmation needs to match');
+    expect(Object.keys(window.Iodine.messages).length).toEqual(total + 1);
 });
 
 /**
- * Confirm that the 'validate' method works correctly.
+ * Confirm that the 'assert' method works correctly.
  *
  */
-test('it can validate input against multiple rules', () => {
-  expect(window.Iodine.validate('5', ['required', 'string', 'min:1', 'max:5'])).toBe(true);
-  expect(window.Iodine.validate(5, ['required', 'integer', 'min:7', 'max:10'])).toBe('min:7');
-  expect(window.Iodine.validate(5, ['optional', 'integer', 'min:7', 'max:10'])).toBe('min:7');
-  expect(window.Iodine.validate('', ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
-  expect(window.Iodine.validate(null, ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
-  expect(window.Iodine.validate(undefined, ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
+test('it can validate a single item against multiple rules', () =>
+{
+    let pass = {
+        valid : true,
+        rule  : '',
+        error : '',
+    };
+
+    let fail = {
+        valid : false,
+        rule  : 'min:7',
+        error : 'Value must be greater than or equal to 7',
+    };
+
+    expect(window.Iodine.assert('5', ['required', 'string', 'min:1', 'max:5'])).toStrictEqual(pass);
+    expect(window.Iodine.assert(5, ['required', 'integer', 'min:7', 'max:10'])).toStrictEqual(fail);
+    expect(window.Iodine.assert(5, ['optional', 'integer', 'min:7', 'max:10'])).toStrictEqual(fail);
+    expect(window.Iodine.assert('', ['optional', 'integer', 'min:7', 'max:10'])).toStrictEqual(pass);
+    expect(window.Iodine.assert(null, ['optional', 'integer', 'min:7', 'max:10'])).toStrictEqual(pass);
+    expect(window.Iodine.assert(undefined, ['optional', 'integer', 'min:7', 'max:10'])).toStrictEqual(pass);
 });
 
 /**
- * Confirm that the 'validate' method can handle rules that contain semicolons.
+ * Confirm that the 'assert' method works correctly.
  *
  */
-test('parameter that contains semicolon(":")', () => {
-  expect(window.Iodine.validate(':b', ['required', "regexMatch:^:\\w$"])).toBe(true);
-  expect(window.Iodine.validate('a:b', ['required', "regexMatch:^:\\w$"])).not.toBe(true);
-  expect(window.Iodine.validate(':b', ['required', "regexMatch:^:\\w$"])).toBe(true);
-  expect(window.Iodine.validate('a:b', ['required', "regexMatch:^:\\w$"])).not.toBe(true);
+test('it can validate multiple items against multiple rules', () =>
+{
+    let result_1 = {
+        valid  : false,
+        fields : {
+            website : {
+                valid : false,
+                rule  : 'None',
+                error : 'Rules exist, but no value was provided to check',
+            },
+            ping : {
+                valid : false,
+                rule  : 'None',
+                error : 'Rules exist, but no value was provided to check',
+            },
+        }
+    };
+
+    let result_2 = {
+        valid  : true,
+        fields : {
+            email : {
+                valid : true,
+                rule  : '',
+                error : '',
+            },
+            password : {
+                valid : true,
+                rule  : '',
+                error : '',
+            },
+            name : {
+                valid : true,
+                rule  : '',
+                error : '',
+            },
+        }
+    };
+
+    let result_3 = {
+        valid  : true,
+        fields : {
+            website : {
+                valid : true,
+                rule  : '',
+                error : '',
+            },
+        }
+    };
+
+    let result_4 = {
+        valid  : false,
+        fields : {
+            website : {
+                valid : true,
+                rule  : '',
+                error : '',
+            },
+            ping : {
+                valid : false,
+                rule  : 'integer',
+                error : 'Value must be an integer',
+            },
+        }
+    };
+
+    expect(window.Iodine.assert({ }, { website : ['required', 'url'], ping : ['required' , 'integer'] })).toStrictEqual(result_1);
+    expect(window.Iodine.assert({ email : 'welcome@to.iodine', password : 'abcdefgh', name : 'John Doe' }, { email : ['required', 'email'], password : ['required', 'minLength:6'], name : ['required', 'minLength:3'] })).toStrictEqual(result_2);
+    expect(window.Iodine.assert({ website : 'https://iodine.is', ping : 'ninety' }, { website : ['required', 'url'] })).toStrictEqual(result_3);
+    expect(window.Iodine.assert({ website : 'https://iodine.io', ping : 'ninety' }, { website : ['required', 'url'], ping : ['required', 'integer'] })).toStrictEqual(result_4);
 });
 
 /**
- * Confirm that the 'passes' method returns the right value against multiple rules.
+ * Confirm that the 'assert' method can handle rules that contain semicolons.
  *
  */
-test('it can determine if input is valid', () => {
-  expect(window.Iodine.passes('5', ['required', 'string', 'min:1', 'max:5'])).toBe(true);
-  expect(window.Iodine.passes(5, ['required', 'integer', 'min:7', 'max:10'])).toBe(false);
-  expect(window.Iodine.passes(5, ['optional', 'integer', 'min:7', 'max:10'])).toBe(false);
-  expect(window.Iodine.passes('', ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
-  expect(window.Iodine.passes(null, ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
-  expect(window.Iodine.passes(undefined, ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
+test('parameter that contains semicolon(":")', () =>
+{
+    let pass = {
+        valid : true,
+        rule  : '',
+        error : '',
+    };
+
+    let fail = {
+        valid : false,
+        rule  : "regexMatch:^:\\w$",
+        error : "Value must satisify the regular expression: ^:\\w$",
+    };
+
+    expect(window.Iodine.assert(':b', ['required', "regexMatch:^:\\w$"])).toStrictEqual(pass);
+    expect(window.Iodine.assert('a:b', ['required', "regexMatch:^:\\w$"])).toStrictEqual(fail);
+    expect(window.Iodine.assert(':b', ['required', "regexMatch:^:\\w$"])).toStrictEqual(pass);
+    expect(window.Iodine.assert('a:b', ['required', "regexMatch:^:\\w$"])).toStrictEqual(fail);
 });
 
 /**
- * Confirm that the 'addRule' method works correctly for simple rules.
+ * Confirm that the 'rule' method works correctly for simple rules.
  *
  */
 test('it can add simple custom rules', () =>
 {
-    window.Iodine.addRule('lowerCase', (value) => value === value.toLowerCase());
+    window.Iodine.rule('lowerCase', (value) => value === value.toLowerCase());
 
-    window.Iodine.setErrorMessages({ lowerCase : "Value must be in lower case" });
+    window.Iodine.setErrorMessages({ lowerCase : 'Value must be in lower case' });
+
+    let pass = {
+        valid : true,
+        rule  : '',
+        error : '',
+    };
+
+    let fail = {
+        valid : false,
+        rule  : 'lowerCase',
+        error : 'Value must be in lower case',
+    };
 
     expect(window.Iodine.assertLowerCase('hello')).toBe(true);
     expect(window.Iodine.assertLowerCase('Hello')).toBe(false);
     expect(window.Iodine.assertLowerCase('HELLO')).toBe(false);
-    expect(window.Iodine.validate('hello', ['required', 'lowerCase'])).toBe(true);
-    expect(window.Iodine.validate('Hello', ['required', 'lowerCase'])).toBe('lowerCase');
-    expect(window.Iodine.validate('HELLO', ['required', 'lowerCase'])).toBe('lowerCase');
-    expect(window.Iodine.getErrorMessage('lowerCase')).toBe('Value must be in lower case');
+    expect(window.Iodine.assert('hello', ['required', 'lowerCase'])).toStrictEqual(pass);
+    expect(window.Iodine.assert('Hello', ['required', 'lowerCase'])).toStrictEqual(fail);
+    expect(window.Iodine.assert('HELLO', ['required', 'lowerCase'])).toStrictEqual(fail);
+    expect(window.Iodine._error('lowerCase')).toBe('Value must be in lower case');
 });
 
 /**
- * Confirm that the 'addRule' method works correctly for advanced rules.
+ * Confirm that the 'rule' method works correctly for advanced rules.
  *
  */
 test('it can add advanced custom rules', () =>
 {
-    window.Iodine.addRule('equals', (value, param) => value == param);
+    window.Iodine.rule('equals', (value, param) => value == param);
 
     window.Iodine.setErrorMessages({ equals : "Value must be equal to '[PARAM]'" });
+
+    let pass = {
+        valid : true,
+        rule  : '',
+        error : '',
+    };
+
+    let fail_1 = {
+        valid : false,
+        rule  : 'equals:2',
+        error : "Value must be equal to '2'",
+    };
+
+    let fail_2 = {
+        valid : false,
+        rule  : 'equals:3',
+        error : "Value must be equal to '3'",
+    };
 
     expect(window.Iodine.assertEquals(1, 1)).toBe(true);
     expect(window.Iodine.assertEquals(1, 2)).toBe(false);
     expect(window.Iodine.assertEquals(1, 3)).toBe(false);
-    expect(window.Iodine.validate(1, ['required', 'equals:1'])).toBe(true);
-    expect(window.Iodine.validate(1, ['required', 'equals:2'])).toBe('equals:2');
-    expect(window.Iodine.validate(1, ['required', 'equals:3'])).toBe('equals:3');
-    expect(window.Iodine.getErrorMessage('equals:2')).toBe(`Value must be equal to '2'`);
-    expect(window.Iodine.getErrorMessage('equals', 2)).toBe(`Value must be equal to '2'`);
-});
-
-/**
- * Confirm that the 'addRule' method works correctly for asynchronous rules.
- *
- */
-test('it can add asynchronous custom rules', async () => {
-  window.Iodine.addRule('timeoutEquals', (value, param) => new Promise(resolve => setTimeout(resolve(value == param), 10)));
-
-  window.Iodine.setErrorMessages({ timeoutEquals : "Value must be equal to '[PARAM]' after 10ms" });
-
-  expect(await window.Iodine.assertTimeoutEquals(1, 1)).toBe(true);
-  expect(await window.Iodine.assertTimeoutEquals(1, 2)).toBe(false);
-  expect(await window.Iodine.validateAsync(1, ['required', 'timeoutEquals:1'])).toBe(true);
-  expect(await window.Iodine.validateAsync(1, ['required', 'timeoutEquals:2'])).toBe('timeoutEquals:2');
-  expect(await window.Iodine.passesAsync(1, ['required', 'integer', 'timeoutEquals:1'])).toBe(true);
-  expect(await window.Iodine.passesAsync(1, ['required', 'integer', 'timeoutEquals:2'])).toBe(false);
+    expect(window.Iodine.assert(1, ['required', 'equals:1'])).toStrictEqual(pass);
+    expect(window.Iodine.assert(1, ['required', 'equals:2'])).toStrictEqual(fail_1);
+    expect(window.Iodine.assert(1, ['required', 'equals:3'])).toStrictEqual(fail_2);
+    expect(window.Iodine._error('equals:2')).toBe("Value must be equal to '2'");
+    expect(window.Iodine._error('equals', 2)).toBe("Value must be equal to '2'");
 });

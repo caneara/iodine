@@ -1,4 +1,4 @@
-> WARNING: This readme is for an older version of Iodine. If you are using Iodine in a new project, then review the latest [readme](README.MD) instead. Alternatively, you may wish to consider [upgrading](UPGRADE.MD).
+> WARNING: This readme is for an older version of Iodine. If you are using Iodine in a new project, then review the latest [readme](README.MD) instead.
 
 # Iodine
 
@@ -9,7 +9,7 @@ Iodine.js is a micro client-side validation library. It has no dependencies and 
 The easiest way to pull Iodine into your project is via a CDN:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/mattkingshott/iodine/dist/iodine.min.umd.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@kingshott/iodine@7.0.2/dist/iodine.min.umd.js" defer></script>
 ```
 
 You can also pull Iodine into your project via NPM:

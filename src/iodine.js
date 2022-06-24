@@ -17,45 +17,7 @@ export default class Iodine
     {
         this.locale = undefined;
 
-        this.messages = this._defaultMessages();
-
-        this.defaultFieldName = this._defaultFieldName();
-    }
-
-    /**
-     * @internal.
-     *
-     */
-    _dateCompare(first, second, type, equals = false)
-    {
-        if (! this.assertDate(first)) return false;
-
-        if (! this.assertDate(second) && ! this.assertInteger(second)) return false;
-
-        second = typeof second === 'number' ? second : second.getTime();
-
-        if (type === 'less' && equals)   return first.getTime() <= second;
-        if (type === 'less' && ! equals) return first.getTime() < second;
-        if (type === 'more' && equals)   return first.getTime() >= second;
-        if (type === 'more' && ! equals) return first.getTime() > second;
-    }
-
-    /**
-     * @internal.
-     *
-     */
-    _defaultFieldName()
-    {
-        return 'Value';
-    }
-
-    /**
-     * @internal.
-     *
-     */
-    _defaultMessages()
-    {
-        return {
+        this.messages = {
             after         : "The date must be after: '[PARAM]'",
             afterOrEqual  : "The date must be after or equal to: '[PARAM]'",
             array         : "[FIELD] must be an array",
@@ -92,6 +54,71 @@ export default class Iodine
      * @internal.
      *
      */
+    _compare(first, second, type, equals = false)
+    {
+        if (! this.assertDate(first)) return false;
+
+        if (! this.assertDate(second) && ! this.assertInteger(second)) return false;
+
+        second = typeof second === 'number' ? second : second.getTime();
+
+        if (type === 'less' && equals)   return first.getTime() <= second;
+        if (type === 'less' && ! equals) return first.getTime() < second;
+        if (type === 'more' && equals)   return first.getTime() >= second;
+        if (type === 'more' && ! equals) return first.getTime() > second;
+    }
+
+    /**
+     * @internal.
+     *
+     */
+    _error(rule, args = undefined)
+    {
+        let { param, field } = typeof args === 'object' ? args : { param : args, field : undefined };
+
+        const chunks = rule.split(':');
+
+        let key = chunks.shift();
+
+        param = param || chunks.join(':');
+
+        if (['after', 'afterOrEqual', 'before', 'beforeOrEqual'].includes(key)) {
+            param = new Date(parseInt(param)).toLocaleTimeString(this.locale, {
+                year   : 'numeric',
+                month  : 'short',
+                day    : 'numeric',
+                hour   : '2-digit',
+                minute : 'numeric',
+                hour12 : false,
+            });
+        }
+
+        let message = [null, undefined, ''].includes(param)
+            ? this.messages[key]
+            : this.messages[key].replace('[PARAM]', param);
+
+        return [null, undefined, ''].includes(field)
+            ? message.replace('[FIELD]', this.default_field_name ?? 'Value')
+            : message.replace('[FIELD]', field);
+    }
+
+    /**
+     * @internal.
+     *
+     */
+    _missing()
+    {
+        return {
+            valid : false,
+            rule  : 'None',
+            error : 'Rules exist, but no value was provided to check',
+        };
+    }
+
+    /**
+     * @internal.
+     *
+     */
     _prepare(value, rules = [])
     {
         if (! rules.length) return [];
@@ -99,25 +126,66 @@ export default class Iodine
         if (rules[0] === 'optional' && this.assertOptional(value)) return [];
 
         return rules.filter(rule => rule !== 'optional')
-                    .map(rule => [rule, this._titleCase(rule.split(':').shift()), rule.split(':').slice(1)]);
+                    .map(rule => [rule, this._title(rule.split(':').shift()), rule.split(':').slice(1)]);
     }
 
     /**
      * @internal.
      *
      */
-    _titleCase(value)
+    _title(value)
     {
         return `${value[0].toUpperCase()}${value.slice(1)}`;
     }
 
     /**
-     * Attach a custom validation rule to the library.
+     * @internal.
      *
      */
-    addRule(name, closure)
+    _validate(value, rules)
     {
-        Iodine.prototype[`assert${this._titleCase(name)}`] = closure;
+        for (let index in rules = this._prepare(value, rules)) {
+            if (! this[`assert${rules[index][1]}`].apply(this, [value, rules[index][2].join(':')])) {
+                return {
+                    valid : false,
+                    rule  : rules[index][0],
+                    error : this._error(rules[index][0]),
+                };
+            }
+        }
+
+        return {
+            valid : true,
+            rule  : '',
+            error : '',
+        };
+    }
+
+    /**
+     * Determine if the given content matches the given schema.
+     *
+     */
+    assert(values, schema)
+    {
+        if (Array.isArray(schema)) {
+            return this._validate(values, schema);
+        }
+
+        let keys = Object.keys(schema);
+
+        let result = { valid : true, fields : { } };
+
+        for (let i = 0; i < keys.length; i++) {
+            result.fields[keys[i]] = values.hasOwnProperty(keys[i])
+                ? this._validate(values[keys[i]], schema[keys[i]])
+                : this._missing();
+
+            if (! result.fields[keys[i]].valid) {
+                result.valid = false;
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -126,7 +194,7 @@ export default class Iodine
      */
     assertAfter(value, after)
     {
-        return this._dateCompare(value, after, 'more', false);
+        return this._compare(value, after, 'more', false);
     }
 
     /**
@@ -135,7 +203,7 @@ export default class Iodine
      */
     assertAfterOrEqual(value, after)
     {
-        return this._dateCompare(value, after, 'more', true);
+        return this._compare(value, after, 'more', true);
     }
 
     /**
@@ -153,7 +221,7 @@ export default class Iodine
      */
     assertBefore(value, before)
     {
-        return this._dateCompare(value, before, 'less', false);
+        return this._compare(value, before, 'less', false);
     }
 
     /**
@@ -162,7 +230,7 @@ export default class Iodine
      */
     assertBeforeOrEqual(value, before)
     {
-        return this._dateCompare(value, before, 'less', true);
+        return this._compare(value, before, 'less', true);
     }
 
     /**
@@ -390,55 +458,12 @@ export default class Iodine
     }
 
     /**
-     * Retrieve an error message for the given rule.
+     * Attach a custom validation rule to the library.
      *
      */
-    getErrorMessage(rule, args = undefined)
+    rule(name, closure)
     {
-        let { param, field } = typeof args === 'object' ? args : { param : args, field : undefined };
-
-        const chunks = rule.split(':');
-
-        let key = chunks.shift();
-
-        param = param || chunks.join(':');
-
-        if (['after', 'afterOrEqual', 'before', 'beforeOrEqual'].includes(key)) {
-            param = new Date(parseInt(param)).toLocaleTimeString(this.locale, {
-                year   : 'numeric',
-                month  : 'short',
-                day    : 'numeric',
-                hour   : '2-digit',
-                minute : 'numeric',
-                hour12 : false,
-            });
-        }
-
-        let message = [null, undefined, ''].includes(param)
-            ? this.messages[key]
-            : this.messages[key].replace('[PARAM]', param);
-
-        return [null, undefined, ''].includes(field)
-            ? message.replace('[FIELD]', this.defaultFieldName)
-            : message.replace('[FIELD]', field);
-    }
-
-    /**
-     * Determine whether the given values meet the given schema rules.
-     *
-     */
-    passes(values, schema)
-    {
-        return this.validate(values, schema) === true;
-    }
-
-    /**
-     * Determine whether the given value meets the given asynchronous schema rules.
-     *
-     */
-    async passesAsync(values, schema)
-    {
-        return await this.validateAsync(values, schema) === true;
+        Iodine.prototype[`assert${this._title(name)}`] = closure;
     }
 
     /**
@@ -474,37 +499,7 @@ export default class Iodine
      */
     setDefaultFieldName(fieldName)
     {
-        this.defaultFieldName = fieldName;
-    }
-
-    /**
-     * Determine whether the given value meets the given rules.
-     *
-     */
-    validate(value, rules)
-    {
-        for (let index in rules = this._prepare(value, rules)) {
-            if (! this[`assert${rules[index][1]}`].apply(this, [value, rules[index][2].join(':')])) {
-                return rules[index][0];
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Determine whether the given value meets the given synchronous or asynchronous rules.
-     *
-     */
-    async validateAsync(value, rules)
-    {
-        for (let index in rules = this._prepare(value, rules)) {
-            if (! await this[`assert${rules[index][1]}`].apply(this, [value, rules[index][2].join(':')])) {
-                return await rules[index][0];
-            }
-        }
-
-        return true;
+        this.default_field_name = fieldName;
     }
 }
 
