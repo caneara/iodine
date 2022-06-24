@@ -2,590 +2,579 @@
  * @jest-environment jsdom
  *
  */
-
-import { Iodine as Library } from '../src/iodine';
-
-window.Iodine = new Library();
-
-const defaultMessages = Iodine.messages;
-const defaultFieldName = Iodine.defaultFieldName;
+import Iodine from '../src/iodine';
 
 /**
  * Reset the library after each test.
  *
  */
-afterEach(() => {
-  Iodine.setErrorMessages(defaultMessages);
-  Iodine.setDefaultFieldName(defaultFieldName);
+afterEach(() =>
+{
+    window.Iodine.setErrorMessages(new Iodine()._defaultMessages());
+    window.Iodine.setDefaultFieldName(new Iodine()._defaultFieldName());
 });
 
 /**
- * Confirm that the 'isAfter' method works correctly.
+ * Confirm that the 'assertAfter' method works correctly.
  *
  */
-test('after date values', () => {
-  let year = new Date().getFullYear();
+test('after date values', () =>
+{
+    let year = new Date().getFullYear();
 
-  expect(Iodine.isAfter(new Date(year + 1, 12, 18), new Date(year, 12, 18))).toBe(true);
-  expect(Iodine.isAfter(new Date(year + 1, 12, 17), Date.now())).toBe(true);
-  expect(Iodine.isAfter(new Date(`December 18, ${year + 1} 03:24:00`), new Date(year, 12, 18))).toBe(true);
-  expect(Iodine.isAfter(new Date(year - 1, 12, 17), Date.now())).toBe(false);
-  expect(Iodine.isAfter(new Date(year - 1, 12, 17), "now")).toBe(false);
-  expect(Iodine.isAfter('now', new Date(year - 1, 12, 17))).toBe(false);
-  expect(Iodine.isAfter('now', 'now')).toBe(false);
+    expect(window.Iodine.assertAfter(new Date(year + 1, 12, 18), new Date(year, 12, 18))).toBe(true);
+    expect(window.Iodine.assertAfter(new Date(year + 1, 12, 17), Date.now())).toBe(true);
+    expect(window.Iodine.assertAfter(new Date(`December 18, ${year + 1} 03:24:00`), new Date(year, 12, 18))).toBe(true);
+    expect(window.Iodine.assertAfter(new Date(year - 1, 12, 17), Date.now())).toBe(false);
+    expect(window.Iodine.assertAfter(new Date(year - 1, 12, 17), "now")).toBe(false);
+    expect(window.Iodine.assertAfter('now', new Date(year - 1, 12, 17))).toBe(false);
+    expect(window.Iodine.assertAfter('now', 'now')).toBe(false);
 });
 
 /**
- * Confirm that the 'isAfterOrEqual' method works correctly.
+ * Confirm that the 'assertAfterOrEqual' method works correctly.
  *
  */
-test('after or equal date values', () => {
-  let year = new Date().getFullYear();
+test('after or equal date values', () =>
+{
+    let year = new Date().getFullYear();
 
-  expect(Iodine.isAfterOrEqual(new Date(year + 1, 12, 18), new Date(year, 12, 18))).toBe(true);
-  expect(Iodine.isAfterOrEqual(new Date(year + 1, 12, 17), Date.now())).toBe(true);
-  expect(Iodine.isAfterOrEqual(new Date(`December 18, ${year + 1} 03:24:00`), new Date(year, 12, 18))).toBe(true);
-  expect(Iodine.isAfterOrEqual(new Date(year, 12, 18), new Date(year, 12, 18))).toBe(true);
-  expect(Iodine.isAfterOrEqual(new Date(year - 1, 12, 17), Date.now())).toBe(false);
-  expect(Iodine.isAfterOrEqual(new Date(year - 1, 12, 17), 'now')).toBe(false);
-  expect(Iodine.isAfterOrEqual('now', new Date(year - 1, 12, 17))).toBe(false);
-  expect(Iodine.isAfterOrEqual('now', 'now')).toBe(false);
+    expect(window.Iodine.assertAfterOrEqual(new Date(year + 1, 12, 18), new Date(year, 12, 18))).toBe(true);
+    expect(window.Iodine.assertAfterOrEqual(new Date(year + 1, 12, 17), Date.now())).toBe(true);
+    expect(window.Iodine.assertAfterOrEqual(new Date(`December 18, ${year + 1} 03:24:00`), new Date(year, 12, 18))).toBe(true);
+    expect(window.Iodine.assertAfterOrEqual(new Date(year, 12, 18), new Date(year, 12, 18))).toBe(true);
+    expect(window.Iodine.assertAfterOrEqual(new Date(year - 1, 12, 17), Date.now())).toBe(false);
+    expect(window.Iodine.assertAfterOrEqual(new Date(year - 1, 12, 17), 'now')).toBe(false);
+    expect(window.Iodine.assertAfterOrEqual('now', new Date(year - 1, 12, 17))).toBe(false);
+    expect(window.Iodine.assertAfterOrEqual('now', 'now')).toBe(false);
 });
 
 /**
- * Confirm that the 'isBefore' method works correctly.
+ * Confirm that the 'assertBefore' method works correctly.
  *
  */
-test('before date values', () => {
-  let year = new Date().getFullYear();
+test('before date values', () =>
+{
+    let year = new Date().getFullYear();
 
-  expect(Iodine.isBefore(new Date(year - 1, 12, 18), new Date(year, 12, 18))).toBe(true);
-  expect(Iodine.isBefore(new Date(year - 1, 12, 17), Date.now())).toBe(true);
-  expect(Iodine.isBefore(new Date(`December 18, ${year - 1} 03:24:00`), new Date(year, 12, 18))).toBe(true);
-  expect(Iodine.isBefore(new Date(year + 1, 12, 17), Date.now())).toBe(false);
-  expect(Iodine.isBefore(new Date(year + 1, 12, 17), 'now')).toBe(false);
-  expect(Iodine.isBefore('now', new Date(year + 1, 12, 17))).toBe(false);
-  expect(Iodine.isBefore('now', 'now')).toBe(false);
+    expect(window.Iodine.assertBefore(new Date(year - 1, 12, 18), new Date(year, 12, 18))).toBe(true);
+    expect(window.Iodine.assertBefore(new Date(year - 1, 12, 17), Date.now())).toBe(true);
+    expect(window.Iodine.assertBefore(new Date(`December 18, ${year - 1} 03:24:00`), new Date(year, 12, 18))).toBe(true);
+    expect(window.Iodine.assertBefore(new Date(year + 1, 12, 17), Date.now())).toBe(false);
+    expect(window.Iodine.assertBefore(new Date(year + 1, 12, 17), 'now')).toBe(false);
+    expect(window.Iodine.assertBefore('now', new Date(year + 1, 12, 17))).toBe(false);
+    expect(window.Iodine.assertBefore('now', 'now')).toBe(false);
 });
 
 /**
- * Confirm that the 'isBeforeOrEqual' method works correctly.
+ * Confirm that the 'assertBeforeOrEqual' method works correctly.
  *
  */
-test('before or equal date values', () => {
-  let year = new Date().getFullYear();
+test('before or equal date values', () =>
+{
+    let year = new Date().getFullYear();
 
-  expect(Iodine.isBeforeOrEqual(new Date(year - 1, 12, 18), new Date(year, 12, 18))).toBe(true);
-  expect(Iodine.isBeforeOrEqual(new Date(year - 1, 12, 17), Date.now())).toBe(true);
-  expect(Iodine.isBeforeOrEqual(new Date(`December 18, ${year - 1} 03:24:00`), new Date(year, 12, 18))).toBe(true);
-  expect(Iodine.isBeforeOrEqual(new Date(year, 12, 18), new Date(year, 12, 18))).toBe(true);
-  expect(Iodine.isBeforeOrEqual(new Date(year + 1, 12, 17), Date.now())).toBe(false);
-  expect(Iodine.isBeforeOrEqual(new Date(year + 1, 12, 17), 'now')).toBe(false);
-  expect(Iodine.isBeforeOrEqual('now', new Date(year + 1, 12, 17))).toBe(false);
-  expect(Iodine.isBeforeOrEqual('now', 'now')).toBe(false);
+    expect(window.Iodine.assertBeforeOrEqual(new Date(year - 1, 12, 18), new Date(year, 12, 18))).toBe(true);
+    expect(window.Iodine.assertBeforeOrEqual(new Date(year - 1, 12, 17), Date.now())).toBe(true);
+    expect(window.Iodine.assertBeforeOrEqual(new Date(`December 18, ${year - 1} 03:24:00`), new Date(year, 12, 18))).toBe(true);
+    expect(window.Iodine.assertBeforeOrEqual(new Date(year, 12, 18), new Date(year, 12, 18))).toBe(true);
+    expect(window.Iodine.assertBeforeOrEqual(new Date(year + 1, 12, 17), Date.now())).toBe(false);
+    expect(window.Iodine.assertBeforeOrEqual(new Date(year + 1, 12, 17), 'now')).toBe(false);
+    expect(window.Iodine.assertBeforeOrEqual('now', new Date(year + 1, 12, 17))).toBe(false);
+    expect(window.Iodine.assertBeforeOrEqual('now', 'now')).toBe(false);
 });
 
 /**
- * Confirm that the 'isArray' method works correctly.
+ * Confirm that the 'assertArray' method works correctly.
  *
  */
-test('array values', () => {
-  expect(Iodine.isArray([1, 2, 3])).toBe(true);
-  expect(Iodine.isArray(['1', '2', '3'])).toBe(true);
-  expect(Iodine.isArray(1)).toBe(false);
-  expect(Iodine.isArray('1')).toBe(false);
+test('array values', () =>
+{
+    expect(window.Iodine.assertArray([1, 2, 3])).toBe(true);
+    expect(window.Iodine.assertArray(['1', '2', '3'])).toBe(true);
+    expect(window.Iodine.assertArray(1)).toBe(false);
+    expect(window.Iodine.assertArray('1')).toBe(false);
 });
 
 /**
- * Confirm that the 'isBoolean' method works correctly.
+ * Confirm that the 'assertBoolean' method works correctly.
  *
  */
-test('boolean values', () => {
-  expect(Iodine.isBoolean(true)).toBe(true);
-  expect(Iodine.isBoolean(false)).toBe(true);
-  expect(Iodine.isBoolean(1)).toBe(false);
-  expect(Iodine.isBoolean('1')).toBe(false);
+test('boolean values', () =>
+{
+    expect(window.Iodine.assertBoolean(true)).toBe(true);
+    expect(window.Iodine.assertBoolean(false)).toBe(true);
+    expect(window.Iodine.assertBoolean(1)).toBe(false);
+    expect(window.Iodine.assertBoolean('1')).toBe(false);
 });
 
 /**
- * Confirm that the 'isDate' method works correctly.
+ * Confirm that the 'assertDate' method works correctly.
  *
  */
-test('date values', () => {
-  expect(Iodine.isDate(new Date(1995, 12, 17))).toBe(true);
-  expect(Iodine.isDate(new Date('December 17, 1995 03:24:00'))).toBe(true);
-  expect(Iodine.isDate(1)).toBe(false);
-  expect(Iodine.isDate('1')).toBe(false);
+test('date values', () =>
+{
+    expect(window.Iodine.assertDate(new Date(1995, 12, 17))).toBe(true);
+    expect(window.Iodine.assertDate(new Date('December 17, 1995 03:24:00'))).toBe(true);
+    expect(window.Iodine.assertDate(1)).toBe(false);
+    expect(window.Iodine.assertDate('1')).toBe(false);
 });
 
 /**
- * Confirm that the 'isDifferent' method works correctly.
+ * Confirm that the 'assertDifferent' method works correctly.
  *
  */
-test('different values', () => {
-  expect(Iodine.isDifferent(1, 2)).toBe(true);
-  expect(Iodine.isDifferent('x', 'y')).toBe(true);
-  expect(Iodine.isDifferent(1, 1)).toBe(false);
-  expect(Iodine.isDifferent('x', 'x')).toBe(false);
+test('different values', () =>
+{
+    expect(window.Iodine.assertDifferent(1, 2)).toBe(true);
+    expect(window.Iodine.assertDifferent('x', 'y')).toBe(true);
+    expect(window.Iodine.assertDifferent(1, 1)).toBe(false);
+    expect(window.Iodine.assertDifferent('x', 'x')).toBe(false);
 });
 
 /**
- * Confirm that the 'isEndingWith' method works correctly.
+ * Confirm that the 'assertEndsWith' method works correctly.
  *
  */
-test('a value ends with another value', () => {
-  expect(Iodine.isEndingWith('hello world', 'world')).toBe(true);
-  expect(Iodine.isEndingWith('hello universe', 'world')).toBe(false);
+test('a value ends with another value', () =>
+{
+    expect(window.Iodine.assertEndsWith('hello world', 'world')).toBe(true);
+    expect(window.Iodine.assertEndsWith('hello universe', 'world')).toBe(false);
 });
 
 /**
- * Confirm that the 'isEmail' method works correctly.
+ * Confirm that the 'assertEmail' method works correctly.
  *
  */
-test('email values', () => {
-  expect(Iodine.isEmail('john@example.com')).toBe(true);
-  expect(Iodine.isEmail('m@i.com')).toBe(true);
-  expect(Iodine.isEmail('😃@i.com')).toBe(true);
-  expect(Iodine.isEmail('')).toBe(false);
-  expect(Iodine.isEmail('45454.com')).toBe(false);
-  expect(Iodine.isEmail('sdfsf@')).toBe(false);
+test('email values', () =>
+{
+    expect(window.Iodine.assertEmail('john@example.com')).toBe(true);
+    expect(window.Iodine.assertEmail('m@i.com')).toBe(true);
+    expect(window.Iodine.assertEmail('😃@i.com')).toBe(false);
+    expect(window.Iodine.assertEmail('')).toBe(false);
+    expect(window.Iodine.assertEmail('45454.com')).toBe(false);
+    expect(window.Iodine.assertEmail('sdfsf@')).toBe(false);
 });
 
 /**
- * Confirm that the 'isFalsy' method works correctly.
+ * Confirm that the 'assertFalsy' method works correctly.
  *
  */
-test('falsy values', () => {
-  expect(Iodine.isFalsy(false)).toBe(true);
-  expect(Iodine.isFalsy('false')).toBe(true);
-  expect(Iodine.isFalsy(0)).toBe(true);
-  expect(Iodine.isFalsy('0')).toBe(true);
-  expect(Iodine.isFalsy(true)).toBe(false);
-  expect(Iodine.isFalsy('true')).toBe(false);
-  expect(Iodine.isFalsy(1)).toBe(false);
-  expect(Iodine.isFalsy('1')).toBe(false);
+test('falsy values', () =>
+{
+    expect(window.Iodine.assertFalsy(false)).toBe(true);
+    expect(window.Iodine.assertFalsy('false')).toBe(true);
+    expect(window.Iodine.assertFalsy(0)).toBe(true);
+    expect(window.Iodine.assertFalsy('0')).toBe(true);
+    expect(window.Iodine.assertFalsy(true)).toBe(false);
+    expect(window.Iodine.assertFalsy('true')).toBe(false);
+    expect(window.Iodine.assertFalsy(1)).toBe(false);
+    expect(window.Iodine.assertFalsy('1')).toBe(false);
 });
 
 /**
- * Confirm that the 'isIn' method works correctly.
+ * Confirm that the 'assertIn' method works correctly.
  *
  */
-test('in list values', () => {
-  expect(Iodine.isIn('a', 'a,b,c')).toBe(true);
-  expect(Iodine.isIn('a', ['a', 'b', 'c'])).toBe(true);
-  expect(Iodine.isIn('d', 'a,b,c')).toBe(false);
-  expect(Iodine.isIn('d', ['a', 'b', 'c'])).toBe(false);
+test('in list values', () =>
+{
+    expect(window.Iodine.assertIn('a', 'a,b,c')).toBe(true);
+    expect(window.Iodine.assertIn('a', ['a', 'b', 'c'])).toBe(true);
+    expect(window.Iodine.assertIn('d', 'a,b,c')).toBe(false);
+    expect(window.Iodine.assertIn('d', ['a', 'b', 'c'])).toBe(false);
 });
 
 /**
- * Confirm that the 'isInteger' method works correctly.
+ * Confirm that the 'assertInteger' method works correctly.
  *
  */
-test('integer values', () => {
-  expect(Iodine.isInteger(1)).toBe(true);
-  expect(Iodine.isInteger(1.5)).toBe(false);
-  expect(Iodine.isInteger('1')).toBe(false);
+test('integer values', () =>
+{
+    expect(window.Iodine.assertInteger(1)).toBe(true);
+    expect(window.Iodine.assertInteger(1.5)).toBe(false);
+    expect(window.Iodine.assertInteger('1')).toBe(false);
 });
 
 /**
- * Confirm that the 'isJson' method works correctly.
+ * Confirm that the 'assertJson' method works correctly.
  *
  */
-test('json values', () => {
-  expect(Iodine.isJson('{}')).toBe(true);
-  expect(Iodine.isJson('{"a" : 3}')).toBe(true);
-  expect(Iodine.isJson("1")).toBe(false);
-  expect(Iodine.isJson("")).toBe(false);
+test('json values', () =>
+{
+    expect(window.Iodine.assertJson('{}')).toBe(true);
+    expect(window.Iodine.assertJson('{"a" : 3}')).toBe(true);
+    expect(window.Iodine.assertJson("1")).toBe(false);
+    expect(window.Iodine.assertJson("")).toBe(false);
 });
 
 /**
- * Confirm that the 'isMax' method works correctly.
+ * Confirm that the 'assertMax' method works correctly.
  *
  */
-test('maximum numeric values', () => {
-  expect(Iodine.isMax(1, 5)).toBe(true);
-  expect(Iodine.isMax(5, 5)).toBe(true);
-  expect(Iodine.isMax(6, 5)).toBe(false);
-  expect(Iodine.isMax('1', 5)).toBe(true);
-  expect(Iodine.isMax('5', 5)).toBe(true);
-  expect(Iodine.isMax('6', 5)).toBe(false);
+test('maximum numeric values', () =>
+{
+    expect(window.Iodine.assertMax(1, 5)).toBe(true);
+    expect(window.Iodine.assertMax(5, 5)).toBe(true);
+    expect(window.Iodine.assertMax(6, 5)).toBe(false);
+    expect(window.Iodine.assertMax('1', 5)).toBe(true);
+    expect(window.Iodine.assertMax('5', 5)).toBe(true);
+    expect(window.Iodine.assertMax('6', 5)).toBe(false);
 });
 
 /**
- * Confirm that the 'isMin' method works correctly.
+ * Confirm that the 'assertMin' method works correctly.
  *
  */
-test('minimum numeric values', () => {
-  expect(Iodine.isMin(6, 5)).toBe(true);
-  expect(Iodine.isMin(5, 5)).toBe(true);
-  expect(Iodine.isMin(4, 5)).toBe(false);
-  expect(Iodine.isMin('6', 5)).toBe(true);
-  expect(Iodine.isMin('5', 5)).toBe(true);
-  expect(Iodine.isMin('4', 5)).toBe(false);
+test('minimum numeric values', () =>
+{
+    expect(window.Iodine.assertMin(6, 5)).toBe(true);
+    expect(window.Iodine.assertMin(5, 5)).toBe(true);
+    expect(window.Iodine.assertMin(4, 5)).toBe(false);
+    expect(window.Iodine.assertMin('6', 5)).toBe(true);
+    expect(window.Iodine.assertMin('5', 5)).toBe(true);
+    expect(window.Iodine.assertMin('4', 5)).toBe(false);
 });
 
 /**
- * Confirm that the 'isMaxLength' method works correctly.
+ * Confirm that the 'assertMaxLength' method works correctly.
  *
  */
-test('maximum string length', () => {
-  expect(Iodine.isMaxLength(1, 5)).toBe(false);
-  expect(Iodine.isMaxLength(5, 5)).toBe(false);
-  expect(Iodine.isMaxLength(6, 5)).toBe(false);
-  expect(Iodine.isMaxLength('1', 5)).toBe(true);
-  expect(Iodine.isMaxLength('12345', 5)).toBe(true);
-  expect(Iodine.isMaxLength('123456', 5)).toBe(false);
+test('maximum string length', () =>
+{
+    expect(window.Iodine.assertMaxLength(1, 5)).toBe(false);
+    expect(window.Iodine.assertMaxLength(5, 5)).toBe(false);
+    expect(window.Iodine.assertMaxLength(6, 5)).toBe(false);
+    expect(window.Iodine.assertMaxLength('1', 5)).toBe(true);
+    expect(window.Iodine.assertMaxLength('12345', 5)).toBe(true);
+    expect(window.Iodine.assertMaxLength('123456', 5)).toBe(false);
 });
 
 /**
- * Confirm that the 'isMinLength' method works correctly.
+ * Confirm that the 'assertMinLength' method works correctly.
  *
  */
-test('minimum string length', () => {
-  expect(Iodine.isMinLength(6, 5)).toBe(false);
-  expect(Iodine.isMinLength(5, 5)).toBe(false);
-  expect(Iodine.isMinLength(4, 5)).toBe(false);
-  expect(Iodine.isMinLength('123456', 5)).toBe(true);
-  expect(Iodine.isMinLength('12345', 5)).toBe(true);
-  expect(Iodine.isMinLength('1234', 5)).toBe(false);
+test('minimum string length', () =>
+{
+    expect(window.Iodine.assertMinLength(6, 5)).toBe(false);
+    expect(window.Iodine.assertMinLength(5, 5)).toBe(false);
+    expect(window.Iodine.assertMinLength(4, 5)).toBe(false);
+    expect(window.Iodine.assertMinLength('123456', 5)).toBe(true);
+    expect(window.Iodine.assertMinLength('12345', 5)).toBe(true);
+    expect(window.Iodine.assertMinLength('1234', 5)).toBe(false);
 });
 
 /**
- * Confirm that the 'isNotIn' method works correctly.
+ * Confirm that the 'assertNotIn' method works correctly.
  *
  */
-test('not in list values', () => {
-  expect(Iodine.isNotIn('d', 'a,b,c')).toBe(true);
-  expect(Iodine.isNotIn('d', ['a', 'b', 'c'])).toBe(true);
-  expect(Iodine.isNotIn('a', 'a,b,c')).toBe(false);
-  expect(Iodine.isNotIn('a', ['a', 'b', 'c'])).toBe(false);
+test('not in list values', () =>
+{
+    expect(window.Iodine.assertNotIn('d', 'a,b,c')).toBe(true);
+    expect(window.Iodine.assertNotIn('d', ['a', 'b', 'c'])).toBe(true);
+    expect(window.Iodine.assertNotIn('a', 'a,b,c')).toBe(false);
+    expect(window.Iodine.assertNotIn('a', ['a', 'b', 'c'])).toBe(false);
 });
 
 /**
- * Confirm that the 'isNumeric' method works correctly.
+ * Confirm that the 'assertNumeric' method works correctly.
  *
  */
-test('numeric values', () => {
-  expect(Iodine.isNumeric(1)).toBe(true);
-  expect(Iodine.isNumeric(2.5)).toBe(true);
-  expect(Iodine.isNumeric(3.45)).toBe(true);
-  expect(Iodine.isNumeric('13')).toBe(true);
-  expect(Iodine.isNumeric('14.55')).toBe(true);
-  expect(Iodine.isNumeric('17.0')).toBe(true);
-  expect(Iodine.isNumeric('abc')).toBe(false);
+test('numeric values', () =>
+{
+    expect(window.Iodine.assertNumeric(1)).toBe(true);
+    expect(window.Iodine.assertNumeric(2.5)).toBe(true);
+    expect(window.Iodine.assertNumeric(3.45)).toBe(true);
+    expect(window.Iodine.assertNumeric('13')).toBe(true);
+    expect(window.Iodine.assertNumeric('14.55')).toBe(true);
+    expect(window.Iodine.assertNumeric('17.0')).toBe(true);
+    expect(window.Iodine.assertNumeric('abc')).toBe(false);
 });
 
 /**
- * Confirm that the 'isOptional' method works correctly.
+ * Confirm that the 'assertOptional' method works correctly.
  *
  */
-test('optional values', () => {
-  expect(Iodine.isOptional(1)).toBe(false);
-  expect(Iodine.isOptional('1')).toBe(false);
-  expect(Iodine.isOptional('')).toBe(true);
-  expect(Iodine.isOptional(null)).toBe(true);
-  expect(Iodine.isOptional(undefined)).toBe(true);
+test('optional values', () =>
+{
+    expect(window.Iodine.assertOptional(1)).toBe(false);
+    expect(window.Iodine.assertOptional('1')).toBe(false);
+    expect(window.Iodine.assertOptional('')).toBe(true);
+    expect(window.Iodine.assertOptional(null)).toBe(true);
+    expect(window.Iodine.assertOptional(undefined)).toBe(true);
 });
 
 /**
- * Confirm that the 'isRegexMatch' method works correctly.
+ * Confirm that the 'assertRegexMatch' method works correctly.
  *
  */
-test('regular expression values', () => {
-  expect(Iodine.isRegexMatch('P54655465', "^P\\d{3,}$")).toBe(true);
-  expect(Iodine.isRegexMatch('1234', "^\\S+@\\S+[\\.][0-9a-z]+$")).toBe(false);
-  expect(Iodine.isRegexMatch('john@example.com', "^\\S+@\\S+[\\.][0-9a-z]+$")).toBe(true);
+test('regular expression values', () =>
+{
+    expect(window.Iodine.assertRegexMatch('P54655465', "^P\\d{3,}$")).toBe(true);
+    expect(window.Iodine.assertRegexMatch('1234', "^\\S+@\\S+[\\.][0-9a-z]+$")).toBe(false);
+    expect(window.Iodine.assertRegexMatch('john@example.com', "^\\S+@\\S+[\\.][0-9a-z]+$")).toBe(true);
 });
 
 /**
- * Confirm that the 'isRequired' method works correctly.
+ * Confirm that the 'assertRequired' method works correctly.
  *
  */
-test('required values', () => {
-  expect(Iodine.isRequired(1)).toBe(true);
-  expect(Iodine.isRequired('1')).toBe(true);
-  expect(Iodine.isRequired('')).toBe(false);
-  expect(Iodine.isRequired(null)).toBe(false);
-  expect(Iodine.isRequired(undefined)).toBe(false);
+test('required values', () =>
+{
+    expect(window.Iodine.assertRequired(1)).toBe(true);
+    expect(window.Iodine.assertRequired('1')).toBe(true);
+    expect(window.Iodine.assertRequired('')).toBe(false);
+    expect(window.Iodine.assertRequired(null)).toBe(false);
+    expect(window.Iodine.assertRequired(undefined)).toBe(false);
 });
 
 /**
- * Confirm that the 'isSame' method works correctly.
+ * Confirm that the 'assertSame' method works correctly.
  *
  */
-test('same values', () => {
-  expect(Iodine.isSame(1, 1)).toBe(true);
-  expect(Iodine.isSame('x', 'x')).toBe(true);
-  expect(Iodine.isSame(1, 2)).toBe(false);
-  expect(Iodine.isSame('x', 'y')).toBe(false);
+test('same values', () =>
+{
+    expect(window.Iodine.assertSame(1, 1)).toBe(true);
+    expect(window.Iodine.assertSame('x', 'x')).toBe(true);
+    expect(window.Iodine.assertSame(1, 2)).toBe(false);
+    expect(window.Iodine.assertSame('x', 'y')).toBe(false);
 });
 
 /**
- * Confirm that the 'isStartingWith' method works correctly.
+ * Confirm that the 'assertStartsWith' method works correctly.
  *
  */
-test('a value starts with another value', () => {
-  expect(Iodine.isStartingWith('bye world', 'hello')).toBe(false);
-  expect(Iodine.isStartingWith('hello world', 'hello')).toBe(true);
+test('a value starts with another value', () =>
+{
+    expect(window.Iodine.assertStartsWith('bye world', 'hello')).toBe(false);
+    expect(window.Iodine.assertStartsWith('hello world', 'hello')).toBe(true);
 });
 
 /**
- * Confirm that the 'isString' method works correctly.
+ * Confirm that the 'assertString' method works correctly.
  *
  */
-test('string values', () => {
-  expect(Iodine.isString(1)).toBe(false);
-  expect(Iodine.isString('1')).toBe(true);
+test('string values', () =>
+{
+    expect(window.Iodine.assertString(1)).toBe(false);
+    expect(window.Iodine.assertString('1')).toBe(true);
 });
 
 /**
- * Confirm that the 'isTruthy' method works correctly.
+ * Confirm that the 'assertTruthy' method works correctly.
  *
  */
-test('truthy values', () => {
-  expect(Iodine.isTruthy(true)).toBe(true);
-  expect(Iodine.isTruthy('true')).toBe(true);
-  expect(Iodine.isTruthy(1)).toBe(true);
-  expect(Iodine.isTruthy('1')).toBe(true);
-  expect(Iodine.isTruthy(false)).toBe(false);
-  expect(Iodine.isTruthy('false')).toBe(false);
-  expect(Iodine.isTruthy(0)).toBe(false);
-  expect(Iodine.isTruthy('0')).toBe(false);
+test('truthy values', () =>
+{
+    expect(window.Iodine.assertTruthy(true)).toBe(true);
+    expect(window.Iodine.assertTruthy('true')).toBe(true);
+    expect(window.Iodine.assertTruthy(1)).toBe(true);
+    expect(window.Iodine.assertTruthy('1')).toBe(true);
+    expect(window.Iodine.assertTruthy(false)).toBe(false);
+    expect(window.Iodine.assertTruthy('false')).toBe(false);
+    expect(window.Iodine.assertTruthy(0)).toBe(false);
+    expect(window.Iodine.assertTruthy('0')).toBe(false);
 });
 
 /**
- * Confirm that the 'isUrl' method works correctly.
+ * Confirm that the 'assertUrl' method works correctly.
  *
  */
-test('url values', () => {
-  expect(Iodine.isUrl('1234')).toBe(false);
-  expect(Iodine.isUrl('http://www.google.com')).toBe(true);
+test('url values', () =>
+{
+    expect(window.Iodine.assertUrl('1234')).toBe(false);
+    expect(window.Iodine.assertUrl('http://www.google.com')).toBe(true);
 });
 
 /**
- * Confirm that the 'isUuid' method works correctly.
+ * Confirm that the 'assertUuid' method works correctly.
  *
  */
-test('UUID values', () => {
-  expect(Iodine.isUuid('9034dfa4-49d9-4e3f-9c6d-bc6a0e2233d1')).toBe(true);
-  expect(Iodine.isUuid('XAZLYYZeNu75xkicYcPoBWhAW0AX2HRlbqbK')).toBe(false);
-});
-
-/**
- * Confirm that the 'is' method works correctly.
- *
- */
-test('return true/failed rule', () => {
-  expect(Iodine.is('5', ['required', 'string', 'min:1', 'max:5'])).toBe(true);
-  expect(Iodine.is(5, ['required', 'integer', 'min:7', 'max:10'])).toBe('min:7');
-  expect(Iodine.is(5, ['optional', 'integer', 'min:7', 'max:10'])).toBe('min:7');
-  expect(Iodine.is('', ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
-  expect(Iodine.is(null, ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
-  expect(Iodine.is(undefined, ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
-});
-
-/**
- * Confirm that the 'isValid' method returns the right value against multiple rules.
- *
- */
-test('return true/false', () => {
-  expect(Iodine.isValid('5', ['required', 'string', 'min:1', 'max:5'])).toBe(true);
-  expect(Iodine.isValid(5, ['required', 'integer', 'min:7', 'max:10'])).toBe(false);
-  expect(Iodine.isValid(5, ['optional', 'integer', 'min:7', 'max:10'])).toBe(false);
-  expect(Iodine.isValid('', ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
-  expect(Iodine.isValid(null, ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
-  expect(Iodine.isValid(undefined, ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
-});
-
-/**
- * Confirm that the 'isValidSchema' method returns the right value against multiple schemas.
- *
- */
-test('schema validation', () => {
-
-  expect(
-    Iodine.isValidSchema(
-        { },
-        {
-            website: [ 'required' , 'url' ],
-            ping: [ 'required' , 'integer' ],
-        }
-    )
-  ).toBe(false);
-
-  expect(
-    Iodine.isValidSchema(
-        { email: 'welcome@to.iodine', password: 'abcdefgh', fullname: 'John Doe' },
-        {
-            email: [ 'required' , 'email' ],
-            password: [ 'required' , 'minLength:6' ],
-            fullname: [ 'required' , 'minLength:3' ]
-        }
-    )
-  ).toBe(true);
-
-  expect(
-    Iodine.isValidSchema(
-        { website: 'https://iodine.is', ping: 'ninety' },
-        {
-            website: [ 'required' , 'url' ],
-        }
-    )
-  ).toBe(true);
-
-  expect(
-    Iodine.isValidSchema(
-        { website: 'https://iodine.io', ping: 'ninety' },
-        {
-            website: [ 'required' , 'url' ],
-            ping: [ 'required' , 'integer' ],
-        }
-    )
-  ).toBe(false);
-});
-
-/**
- * Confirm that the 'is' method can handle rules that contain semicolons.
- *
- */
-test('parameter that contains semicolon(":")', () => {
-  expect(Iodine.is(':b', ['required', "regexMatch:^:\\w$"])).toBe(true);
-  expect(Iodine.is('a:b', ['required', "regexMatch:^:\\w$"])).not.toBe(true);
-  expect(Iodine.is(':b', ['required', "regexMatch:^:\\w$"])).toBe(true);
-  expect(Iodine.is('a:b', ['required', "regexMatch:^:\\w$"])).not.toBe(true);
+test('UUID values', () =>
+{
+    expect(window.Iodine.assertUuid('9034dfa4-49d9-4e3f-9c6d-bc6a0e2233d1')).toBe(true);
+    expect(window.Iodine.assertUuid('XAZLYYZeNu75xkicYcPoBWhAW0AX2HRlbqbK')).toBe(false);
 });
 
 /**
  * Confirm that the 'getErrorMessage' method works correctly.
  *
  */
-test('it retrieves formatted error messages for rules', () => {
-  let time = Date.UTC(2020, 4, 2, 10, 17, 0);
+test('it retrieves formatted error messages for rules', () =>
+{
+    let time = Date.UTC(2020, 4, 2, 10, 17, 0);
 
-  Iodine.setLocale('en-US');
+    window.Iodine.setLocale('en-US');
 
-  let hour = new Date(parseInt(time)).getHours();
+    let hour = new Date(parseInt(time)).getHours();
 
-  expect(Iodine.getErrorMessage('array')).toBe('Value must be an array');
-  expect(Iodine.getErrorMessage('endingWith')).toBe(`Value must end with '[PARAM]'`);
-  expect(Iodine.getErrorMessage('endingWith:world')).toBe(`Value must end with 'world'`);
-  expect(Iodine.getErrorMessage('endingWith', 'world')).toBe(`Value must end with 'world'`);
-  expect(Iodine.getErrorMessage('endingWith', { field : 'Song title' })).toBe(`Song title must end with '[PARAM]'`);
-  expect(Iodine.getErrorMessage('endingWith:world', { field : 'Song title' })).toBe(`Song title must end with 'world'`);
-  expect(Iodine.getErrorMessage('endingWith', { field : 'Song title', param : 'world'})).toBe(`Song title must end with 'world'`);
-  expect(Iodine.getErrorMessage('endingWith', { param : 'world' })).toBe(`Value must end with 'world'`);
-  expect(Iodine.getErrorMessage(`after:${time}`)).toBe(`The date must be after: 'May 2, 2020, ${hour}:17'`);
-  expect(Iodine.getErrorMessage(`after`, time)).toBe(`The date must be after: 'May 2, 2020, ${hour}:17'`);
+    expect(window.Iodine.getErrorMessage('array')).toBe('Value must be an array');
+    expect(window.Iodine.getErrorMessage('endsWith')).toBe(`Value must end with '[PARAM]'`);
+    expect(window.Iodine.getErrorMessage('endsWith:world')).toBe(`Value must end with 'world'`);
+    expect(window.Iodine.getErrorMessage('endsWith', 'world')).toBe(`Value must end with 'world'`);
+    expect(window.Iodine.getErrorMessage('endsWith', { field : 'Song title' })).toBe(`Song title must end with '[PARAM]'`);
+    expect(window.Iodine.getErrorMessage('endsWith:world', { field : 'Song title' })).toBe(`Song title must end with 'world'`);
+    expect(window.Iodine.getErrorMessage('endsWith', { field : 'Song title', param : 'world'})).toBe(`Song title must end with 'world'`);
+    expect(window.Iodine.getErrorMessage('endsWith', { param : 'world' })).toBe(`Value must end with 'world'`);
+    expect(window.Iodine.getErrorMessage(`after:${time}`)).toBe(`The date must be after: 'May 2, 2020, ${hour}:17'`);
+    expect(window.Iodine.getErrorMessage(`after`, time)).toBe(`The date must be after: 'May 2, 2020, ${hour}:17'`);
 });
 
 /**
  * Confirm that the default error messages can be replaced.
  *
  */
-test('it can replace the default error messages', () => {
-  Iodine.setErrorMessages({ array : 'Hello world', endingWith : 'Hello, [PARAM]', startingWith : "[FIELD]: [PARAM] says, 'hello'" });
+test('it can replace the default error messages', () =>
+{
+    window.Iodine.setErrorMessages({
+        array      : "Hello world",
+        endsWith   : "Hello, [PARAM]",
+        startsWith : "[FIELD]: [PARAM] says, 'hello'",
+    });
 
-  expect(Iodine.getErrorMessage('array')).toBe('Hello world');
-  expect(Iodine.getErrorMessage('endingWith:John')).toBe('Hello, John');
-  expect(Iodine.getErrorMessage('endingWith', 'John')).toBe('Hello, John');
-  expect(Iodine.getErrorMessage('endingWith', { param : 'John' })).toBe('Hello, John');
-  expect(Iodine.getErrorMessage('endingWith', 'John')).toBe('Hello, John');
-  expect(Iodine.getErrorMessage('startingWith:Paul')).toBe(`Value: Paul says, 'hello'`);
-  expect(Iodine.getErrorMessage('startingWith', 'Paul')).toBe(`Value: Paul says, 'hello'`);
-  expect(Iodine.getErrorMessage('startingWith', { param : 'Paul' })).toBe(`Value: Paul says, 'hello'`);
-  expect(Iodine.getErrorMessage('startingWith:Paul', { field : 'Name' })).toBe(`Name: Paul says, 'hello'`);
-  expect(Iodine.getErrorMessage('startingWith', { field : 'Name', param : 'Paul' })).toBe(`Name: Paul says, 'hello'`);
+    expect(window.Iodine.getErrorMessage('array')).toBe('Hello world');
+    expect(window.Iodine.getErrorMessage('endsWith:John')).toBe('Hello, John');
+    expect(window.Iodine.getErrorMessage('endsWith', 'John')).toBe('Hello, John');
+    expect(window.Iodine.getErrorMessage('endsWith', { param : 'John' })).toBe('Hello, John');
+    expect(window.Iodine.getErrorMessage('endsWith', 'John')).toBe('Hello, John');
+    expect(window.Iodine.getErrorMessage('startsWith:Paul')).toBe(`Value: Paul says, 'hello'`);
+    expect(window.Iodine.getErrorMessage('startsWith', 'Paul')).toBe(`Value: Paul says, 'hello'`);
+    expect(window.Iodine.getErrorMessage('startsWith', { param : 'Paul' })).toBe(`Value: Paul says, 'hello'`);
+    expect(window.Iodine.getErrorMessage('startsWith:Paul', { field : 'Name' })).toBe(`Name: Paul says, 'hello'`);
+    expect(window.Iodine.getErrorMessage('startsWith', { field : 'Name', param : 'Paul' })).toBe(`Name: Paul says, 'hello'`);
 });
 
 /**
  * Confirm the defualt field name can be replaced.
+ *
  */
-test('it can replace the default field name', () => {
-  Iodine.setDefaultFieldName('Input');
+test('it can replace the default field name', () =>
+{
+    window.Iodine.setDefaultFieldName('Input');
 
-  expect(Iodine.getErrorMessage('array')).toBe('Input must be an array');
-  expect(Iodine.getErrorMessage('endingWith')).toBe(`Input must end with '[PARAM]'`);
-  expect(Iodine.getErrorMessage('endingWith:world')).toBe(`Input must end with 'world'`);
-  expect(Iodine.getErrorMessage('endingWith', { param : 'world' })).toBe(`Input must end with 'world'`);
+    expect(window.Iodine.getErrorMessage('array')).toBe('Input must be an array');
+    expect(window.Iodine.getErrorMessage('endsWith')).toBe(`Input must end with '[PARAM]'`);
+    expect(window.Iodine.getErrorMessage('endsWith:world')).toBe(`Input must end with 'world'`);
+    expect(window.Iodine.getErrorMessage('endsWith', { param : 'world' })).toBe(`Input must end with 'world'`);
 });
 
 /**
  * Confirm that a single error message can be replaced.
  *
  */
-test('it can replace a default error message', () => {
-  const messagesCount = Object.keys(Iodine.messages).length;
+test('it can replace a default error message', () =>
+{
+    const messagesCount = Object.keys(window.Iodine.messages).length;
 
-  Iodine.setErrorMessage('email', 'Does not look like a valid email');
+    window.Iodine.setErrorMessage('email', "Does not look like a valid email");
 
-  expect(Iodine.getErrorMessage('email')).toBe('Does not look like a valid email');
-  expect(Object.keys(Iodine.messages).length).toEqual(messagesCount);
-  expect(Iodine.getErrorMessage('date')).toBe('Value must be a date');
+    expect(window.Iodine.getErrorMessage('email')).toBe('Does not look like a valid email');
+    expect(Object.keys(window.Iodine.messages).length).toEqual(messagesCount);
+    expect(window.Iodine.getErrorMessage('date')).toBe('Value must be a date');
 });
 
 /**
  * Confirm that a single error message can be added to the set.
  *
  */
-test('it can add an error message to the set', () => {
-  const messagesCount = Object.keys(Iodine.messages).length;
+test('it can add an error message to the set', () =>
+{
+    const messagesCount = Object.keys(window.Iodine.messages).length;
 
-  Iodine.setErrorMessage('passwordConfirmation', 'Password confirmation needs to match');
+    window.Iodine.setErrorMessage('passwordConfirmation', "Password confirmation needs to match");
 
-  expect(Iodine.getErrorMessage('passwordConfirmation')).toBe('Password confirmation needs to match');
-  expect(Object.keys(Iodine.messages).length).toEqual(messagesCount + 1);
+    expect(window.Iodine.getErrorMessage('passwordConfirmation')).toBe('Password confirmation needs to match');
+    expect(Object.keys(window.Iodine.messages).length).toEqual(messagesCount + 1);
+});
+
+/**
+ * Confirm that the 'validate' method works correctly.
+ *
+ */
+test('it can validate input against multiple rules', () => {
+  expect(window.Iodine.validate('5', ['required', 'string', 'min:1', 'max:5'])).toBe(true);
+  expect(window.Iodine.validate(5, ['required', 'integer', 'min:7', 'max:10'])).toBe('min:7');
+  expect(window.Iodine.validate(5, ['optional', 'integer', 'min:7', 'max:10'])).toBe('min:7');
+  expect(window.Iodine.validate('', ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
+  expect(window.Iodine.validate(null, ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
+  expect(window.Iodine.validate(undefined, ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
+});
+
+/**
+ * Confirm that the 'validate' method can handle rules that contain semicolons.
+ *
+ */
+test('parameter that contains semicolon(":")', () => {
+  expect(window.Iodine.validate(':b', ['required', "regexMatch:^:\\w$"])).toBe(true);
+  expect(window.Iodine.validate('a:b', ['required', "regexMatch:^:\\w$"])).not.toBe(true);
+  expect(window.Iodine.validate(':b', ['required', "regexMatch:^:\\w$"])).toBe(true);
+  expect(window.Iodine.validate('a:b', ['required', "regexMatch:^:\\w$"])).not.toBe(true);
+});
+
+/**
+ * Confirm that the 'passes' method returns the right value against multiple rules.
+ *
+ */
+test('it can determine if input is valid', () => {
+  expect(window.Iodine.passes('5', ['required', 'string', 'min:1', 'max:5'])).toBe(true);
+  expect(window.Iodine.passes(5, ['required', 'integer', 'min:7', 'max:10'])).toBe(false);
+  expect(window.Iodine.passes(5, ['optional', 'integer', 'min:7', 'max:10'])).toBe(false);
+  expect(window.Iodine.passes('', ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
+  expect(window.Iodine.passes(null, ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
+  expect(window.Iodine.passes(undefined, ['optional', 'integer', 'min:7', 'max:10'])).toBe(true);
 });
 
 /**
  * Confirm that the 'addRule' method works correctly for simple rules.
  *
  */
-test('it can add simple custom rules', () => {
-  Iodine.addRule('lowerCase', (value) => value === value.toLowerCase());
+test('it can add simple custom rules', () =>
+{
+    window.Iodine.addRule('lowerCase', (value) => value === value.toLowerCase());
 
-  Iodine.setErrorMessages({ lowerCase: 'Value must be in lower case' });
+    window.Iodine.setErrorMessages({ lowerCase : "Value must be in lower case" });
 
-  expect(Iodine.isLowerCase('hello')).toBe(true);
-  expect(Iodine.isLowerCase('Hello')).toBe(false);
-  expect(Iodine.isLowerCase('HELLO')).toBe(false);
-  expect(Iodine.is('hello', ['required', 'lowerCase'])).toBe(true);
-  expect(Iodine.is('Hello', ['required', 'lowerCase'])).toBe('lowerCase');
-  expect(Iodine.is('HELLO', ['required', 'lowerCase'])).toBe('lowerCase');
-  expect(Iodine.getErrorMessage('lowerCase')).toBe('Value must be in lower case');
+    expect(window.Iodine.assertLowerCase('hello')).toBe(true);
+    expect(window.Iodine.assertLowerCase('Hello')).toBe(false);
+    expect(window.Iodine.assertLowerCase('HELLO')).toBe(false);
+    expect(window.Iodine.validate('hello', ['required', 'lowerCase'])).toBe(true);
+    expect(window.Iodine.validate('Hello', ['required', 'lowerCase'])).toBe('lowerCase');
+    expect(window.Iodine.validate('HELLO', ['required', 'lowerCase'])).toBe('lowerCase');
+    expect(window.Iodine.getErrorMessage('lowerCase')).toBe('Value must be in lower case');
 });
 
 /**
  * Confirm that the 'addRule' method works correctly for advanced rules.
  *
  */
-test('it can add advanced custom rules', () => {
-  Iodine.addRule('equals', (value, param) => value == param);
+test('it can add advanced custom rules', () =>
+{
+    window.Iodine.addRule('equals', (value, param) => value == param);
 
-  Iodine.setErrorMessages({ equals : `Value must be equal to '[PARAM]'` });
+    window.Iodine.setErrorMessages({ equals : "Value must be equal to '[PARAM]'" });
 
-  expect(Iodine.isEquals(1, 1)).toBe(true);
-  expect(Iodine.isEquals(1, 2)).toBe(false);
-  expect(Iodine.isEquals(1, 3)).toBe(false);
-  expect(Iodine.is(1, ['required', 'equals:1'])).toBe(true);
-  expect(Iodine.is(1, ['required', 'equals:2'])).toBe('equals:2');
-  expect(Iodine.is(1, ['required', 'equals:3'])).toBe('equals:3');
-  expect(Iodine.getErrorMessage('equals:2')).toBe(`Value must be equal to '2'`);
-  expect(Iodine.getErrorMessage('equals', 2)).toBe(`Value must be equal to '2'`);
+    expect(window.Iodine.assertEquals(1, 1)).toBe(true);
+    expect(window.Iodine.assertEquals(1, 2)).toBe(false);
+    expect(window.Iodine.assertEquals(1, 3)).toBe(false);
+    expect(window.Iodine.validate(1, ['required', 'equals:1'])).toBe(true);
+    expect(window.Iodine.validate(1, ['required', 'equals:2'])).toBe('equals:2');
+    expect(window.Iodine.validate(1, ['required', 'equals:3'])).toBe('equals:3');
+    expect(window.Iodine.getErrorMessage('equals:2')).toBe(`Value must be equal to '2'`);
+    expect(window.Iodine.getErrorMessage('equals', 2)).toBe(`Value must be equal to '2'`);
 });
 
 /**
- * Confirm that the 'addRule' method works correctly for async rules.
+ * Confirm that the 'addRule' method works correctly for asynchronous rules.
  *
  */
-test('it can add async custom rules', async () => {
-  Iodine.addRule('timeoutEquals', (value, param) => new Promise(resolve => setTimeout(resolve(value == param), 10)));
+test('it can add asynchronous custom rules', async () => {
+  window.Iodine.addRule('timeoutEquals', (value, param) => new Promise(resolve => setTimeout(resolve(value == param), 10)));
 
-  Iodine.setErrorMessages({ timeoutEquals : `Value must be equal to '[PARAM]' after 10ms` });
+  window.Iodine.setErrorMessages({ timeoutEquals : "Value must be equal to '[PARAM]' after 10ms" });
 
-  expect(await Iodine.isTimeoutEquals(1, 1)).toBe(true);
-  expect(await Iodine.isTimeoutEquals(1, 2)).toBe(false);
-  expect(await Iodine.asyncIs(1, ['required', 'timeoutEquals:1'])).toBe(true);
-  expect(await Iodine.asyncIs(1, ['required', 'timeoutEquals:2'])).toBe('timeoutEquals:2');
-  expect(await Iodine.asyncIsValid(1, ['required', 'integer', 'timeoutEquals:1'])).toBe(true);
-  expect(await Iodine.asyncIsValid(1, ['required', 'integer', 'timeoutEquals:2'])).toBe(false);
+  expect(await window.Iodine.assertTimeoutEquals(1, 1)).toBe(true);
+  expect(await window.Iodine.assertTimeoutEquals(1, 2)).toBe(false);
+  expect(await window.Iodine.validateAsync(1, ['required', 'timeoutEquals:1'])).toBe(true);
+  expect(await window.Iodine.validateAsync(1, ['required', 'timeoutEquals:2'])).toBe('timeoutEquals:2');
+  expect(await window.Iodine.passesAsync(1, ['required', 'integer', 'timeoutEquals:1'])).toBe(true);
+  expect(await window.Iodine.passesAsync(1, ['required', 'integer', 'timeoutEquals:2'])).toBe(false);
 });
