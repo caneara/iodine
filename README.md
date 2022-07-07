@@ -34,12 +34,12 @@ npm i @kingshott/iodine
 
 ## Promo
 
-I made [Lumeno](https://lumeno.dev) to help you centralize your IT résumé, project portfolio and blog content. It aids in building a following, allows you to discover other creatives, and helps you to get invited for relevant job vacancies. Best of all, it's core feature set is free! [Get Started...](https://lumeno.dev)
+I made [Lumeno](https://lumeno.dev) to help you centralize your IT résumé, project portfolio and blog content. It aids in building a following, allows you to discover other creatives, and gets you invited to relevant job vacancies that match your personal requirements, such as minimum salary, availability, location, commute distance, and so much more... [sign up for free!](https://lumeno.dev)
 
 <!-- Screenshot -->
 <p align="center">
     <a target="_blank" href="https://lumeno.dev">
-        <img src="resources/promotion.png" alt="Lumeno" style="max-height:350px">
+        <img src="resources/banner.png" alt="Lumeno" style="max-height: 170px">
     </a>
 </p>
 
