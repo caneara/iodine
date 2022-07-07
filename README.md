@@ -34,7 +34,7 @@ npm i @kingshott/iodine
 
 ## Promo
 
-I made [Lumeno](https://lumeno.dev) to help you centralize your IT résumé, project portfolio and blog content. It aids in building a following, allows you to discover other creatives, and gets you invited to relevant job vacancies that match your personal requirements, such as minimum salary, availability, location, commute distance, and so much more... [sign up for free!](https://lumeno.dev)
+I made [Lumeno](https://lumeno.dev) to help you centralize your IT résumé, project portfolio and blog content. It aids in building a following, allows you to discover other creatives, and gets you invited to relevant jobs that match your personal requirements, such as minimum salary, availability, location, commute distance, and much more... [sign up for free!](https://lumeno.dev)
 
 <!-- Screenshot -->
 <p align="center">
