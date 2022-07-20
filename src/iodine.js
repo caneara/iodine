@@ -275,7 +275,9 @@ export default class Iodine
      */
     assertEmail(value)
     {
-        return new RegExp("^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)$").test(String(value).toLowerCase());
+        let regex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
+
+        return new RegExp(regex).test(String(value).toLowerCase());
     }
 
     /**
