@@ -153,6 +153,8 @@ test('email values', () =>
     expect(window.Iodine.assertEmail('m@i.co.uk')).toBe(true);
     expect(window.Iodine.assertEmail('😃@i.com')).toBe(false);
     expect(window.Iodine.assertEmail('')).toBe(false);
+    expect(window.Iodine.assertEmail('john@example.com ')).toBe(false);
+    expect(window.Iodine.assertEmail('john@example.com extra')).toBe(false);
     expect(window.Iodine.assertEmail('45454.com')).toBe(false);
     expect(window.Iodine.assertEmail('sdfsf@')).toBe(false);
 });
