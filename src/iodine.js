@@ -125,8 +125,17 @@ export default class Iodine
 
         if (rules[0] === 'optional' && this.assertOptional(value)) return [];
 
-        return rules.filter(rule => rule !== 'optional')
-                    .map(rule => [rule, this._title(rule.split(':').shift()), rule.split(':').slice(1)]);
+        return rules.filter(rule => rule !== 'optional').map(rule => {
+            if(typeof(rule) === 'string') {
+              return [rule, this._title(rule.split(':').shift()), rule.split(':').slice(1).join(':')]
+            }
+
+           return [
+             `${ rule.rule }:${ rule.param }`,
+             this._title(rule.rule),
+             rule.param
+           ]
+        });
     }
 
     /**
@@ -145,7 +154,7 @@ export default class Iodine
     _validate(value, rules)
     {
         for (let index in rules = this._prepare(value, rules)) {
-            if (! this[`assert${rules[index][1]}`].apply(this, [value, rules[index][2].join(':')])) {
+            if (! this[`assert${rules[index][1]}`].apply(this, [value, rules[index][2]])) {
                 return {
                     valid : false,
                     rule  : rules[index][0],
