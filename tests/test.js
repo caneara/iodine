@@ -516,74 +516,6 @@ test('it can validate a single item against multiple rules', () =>
 });
 
 /**
- * Confirm that the 'assert' method accepts rules as object
- *
- */
-test('it can accept rule objects', () => 
-{
-    let pass = {
-        valid : true,
-        rule  : '',
-        error : '',
-    };
-
-    expect(window.Iodine.assert(8, ['required', {
-      rule: 'min',
-      param: 7
-    }, 'max:10'])).toStrictEqual(pass);
-
-    expect(window.Iodine.assert(2, ['required', {
-      rule: 'min',
-      param: 7
-    }, 'max:10'])).toStrictEqual({
-        valid : false,
-        rule  : 'min:7',
-        error : 'Value must be greater than or equal to 7'
-    });
-
-    expect(window.Iodine.assert(5, ['required', {
-      rule: 'in',
-      param: [ 7, 8, 9 ]
-    }, 'max:10'])).toStrictEqual({
-        valid : false,
-        rule  : 'in:7,8,9',
-        error : 'Value must be one of the following options: 7,8,9'
-    });
-
-    expect(window.Iodine.assert(8, ['required', {
-      rule: 'in',
-      param: [ 7, 8, 9 ]
-    }, 'max:10'])).toStrictEqual(pass);
-
-    expect(window.Iodine.assert({
-      hello: 'string',
-      notvalid: 10
-    }, {
-      hello: ['required', {
-          rule: 'string'
-      }],
-      notvalid: ['required', {
-          rule: 'min',
-          param: 12
-      }]
-    })).toStrictEqual({
-        fields: {
-            hello: {
-                error: '',
-                rule: '',
-                valid: true,
-            },
-            notvalid: {
-                error: 'Value must be greater than or equal to 12',
-                rule: 'min:12',
-                valid: false
-            }
-        },
-        valid: false
-    });
-});
-
-/**
  * Confirm that the 'assert' method works correctly.
  *
  */
@@ -681,6 +613,50 @@ test('parameter that contains semicolon(":")', () =>
     expect(window.Iodine.assert('a:b', ['required', "regexMatch:^:\\w$"])).toStrictEqual(fail);
     expect(window.Iodine.assert(':b', ['required', "regexMatch:^:\\w$"])).toStrictEqual(pass);
     expect(window.Iodine.assert('a:b', ['required', "regexMatch:^:\\w$"])).toStrictEqual(fail);
+});
+
+/**
+ * Confirm that the 'assert' method can accept rules as objects.
+ *
+ */
+test('it can accept rules as objects', () =>
+{
+    let pass = {
+        valid : true,
+        rule  : '',
+        error : '',
+    };
+
+    let fail_1 = {
+        valid : false,
+        rule  : 'min:7',
+        error : 'Value must be greater than or equal to 7'
+    };
+
+    let fail_2 = {
+        valid : false,
+        rule  : 'in:7,8,9',
+        error : 'Value must be one of the following options: 7,8,9'
+    };
+
+    let fail_3 = {
+        valid  : false,
+        fields : {
+            hello     : { error : '', rule : '', valid : true },
+            not_valid : { error : 'Value must be greater than or equal to 12', rule : 'min:12', valid : false },
+        },
+    };
+
+    let rules = {
+        hello     : ['required', { rule : 'string' }],
+        not_valid : ['required', { rule : 'min', param : 12 }]
+    };
+
+    expect(window.Iodine.assert(8, ['required', { rule : 'min', param : 7 }, 'max:10'])).toStrictEqual(pass);
+    expect(window.Iodine.assert(2, ['required', { rule : 'min', param : 7 }, 'max:10'])).toStrictEqual(fail_1);
+    expect(window.Iodine.assert(5, ['required', { rule : 'in', param : [ 7, 8, 9 ] }, 'max:10'])).toStrictEqual(fail_2);
+    expect(window.Iodine.assert(8, ['required', { rule : 'in', param : [ 7, 8, 9 ] }, 'max:10'])).toStrictEqual(pass);
+    expect(window.Iodine.assert({ hello : 'string', not_valid : 10 }, rules)).toStrictEqual(fail_3);
 });
 
 /**

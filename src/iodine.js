@@ -125,17 +125,11 @@ export default class Iodine
 
         if (rules[0] === 'optional' && this.assertOptional(value)) return [];
 
-        return rules.filter(rule => rule !== 'optional').map(rule => {
-            if(typeof(rule) === 'string') {
-              return [rule, this._title(rule.split(':').shift()), rule.split(':').slice(1).join(':')]
-            }
-
-           return [
-             `${ rule.rule }:${ rule.param }`,
-             this._title(rule.rule),
-             rule.param
-           ]
-        });
+        return rules.filter(rule => rule !== 'optional').map(rule =>
+            typeof(rule) === 'string'
+            ? [rule, this._title(rule.split(':').shift()), rule.split(':').slice(1).join(':')]
+            : [`${ rule.rule }:${ rule.param }`, this._title(rule.rule), rule.param]
+        );
     }
 
     /**

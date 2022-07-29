@@ -180,6 +180,12 @@ Iodine.assert(item_1, ['required', 'integer', 'min:5']);
 Iodine.assert(item_2, ['required', 'integer', 'min:5']);
 ```
 
+Or, if you prefer, you can supply the rule as an `object` instead of a `string` separated by a semicolon:
+
+```js
+Iodine.assert(8, ['required', 'integer', { rule : 'min', param : 7 }, 'max:10']);
+```
+
 ## Optional values
 
 For advanced validation, you may wish to allow for optional values. Iodine supports this with the `optional` rule:
