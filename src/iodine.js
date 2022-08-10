@@ -168,7 +168,7 @@ export default class Iodine
      * Determine if the given content matches the given schema.
      *
      */
-    assert(values, schema)
+    assert(values, schema, strictMode = true)
     {
         if (Array.isArray(schema)) {
             return this._validate(values, schema);
@@ -179,7 +179,7 @@ export default class Iodine
         let result = { valid : true, fields : { } };
 
         for (let i = 0; i < keys.length; i++) {
-            result.fields[keys[i]] = values.hasOwnProperty(keys[i])
+            result.fields[keys[i]] = values.hasOwnProperty(keys[i]) || strictMode === false
                 ? this._validate(values[keys[i]], schema[keys[i]])
                 : this._missing();
 

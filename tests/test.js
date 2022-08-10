@@ -727,3 +727,41 @@ test('it can add advanced custom rules', () =>
     expect(window.Iodine._error('equals:2')).toBe("Value must be equal to '2'");
     expect(window.Iodine._error('equals', 2)).toBe("Value must be equal to '2'");
 });
+
+/**
+ * 
+ *
+ */
+test('it can switch on/off the strict mode', () =>
+{
+    expect(window.Iodine.assert({}, { test: ['required' ] })).toStrictEqual({
+      valid: false,
+      fields: {
+        test: {
+          error: 'Rules exist, but no value was provided to check',
+          rule: 'None',
+          valid: false
+        }
+      }
+    });
+    expect(window.Iodine.assert({}, { test: ['required' ] }, true)).toStrictEqual({
+      valid: false,
+      fields: {
+        test: {
+          error: 'Rules exist, but no value was provided to check',
+          rule: 'None',
+          valid: false
+        }
+      }
+    });
+    expect(window.Iodine.assert({}, { test: ['required' ] }, false)).toStrictEqual({
+      valid: false,
+      fields: {
+        test: {
+          error: 'Value must be present',
+          rule: 'required',
+          valid: false
+        }
+      }
+    });
+});
