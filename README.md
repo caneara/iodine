@@ -15,7 +15,7 @@ Iodine.js is a micro client-side validation library. It has no dependencies and 
 
 ## Upgrading
 
-Version 8+ of Iodine involved a major rewrite with numerous breaking changes. It is therefore recommended that existing projects continue to use [version 7](README-LEGACY.MD) (or lower), while version 8 (or higher) should be reserved for newer projects.
+Version 8+ of Iodine involved a major rewrite with numerous breaking changes. It is therefore recommended that existing projects continue to use [version 7](/LEGACY.MD) (or lower), while version 8 (or higher) should be reserved for newer projects.
 
 ## Installation
 
