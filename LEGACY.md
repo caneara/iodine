@@ -1,4 +1,4 @@
-> WARNING: This readme is for an older version of Iodine. If you are using Iodine in a new project, then review the latest [readme](/README.MD) instead.
+> WARNING: This readme is for an older version of Iodine. If you are using Iodine in a new project, then review the latest [readme](README.md) instead.
 
 # Iodine
 
