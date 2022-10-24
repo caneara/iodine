@@ -31,17 +31,6 @@ You can also pull Iodine into your project via NPM:
 npm i @kingshott/iodine
 ```
 
-## Promo
-
-[Lumeno](https://lumeno.dev) centralizes your IT profile (résumé, project portfolio and written articles) so that employers can discover, and invite you to apply for jobs that match your personal requirements, such as tech skills, minimum salary, availability, location, commute distance, and much more... [sign up for free!](https://lumeno.dev)
-
-<!-- Screenshot -->
-<p align="center">
-    <a target="_blank" href="https://lumeno.dev">
-        <img src="resources/banner.png" alt="Lumeno" style="max-height: 170px">
-    </a>
-</p>
-
 ## Usage
 
 Iodine is automatically added to the `window` namespace, making it available anywhere. This is the recommended way to use Iodine if your project does not involve compilation or imports. Even if your project does involve compilation, it is often easier to just use the instance added to the `window` namespace.
