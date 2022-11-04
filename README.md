@@ -11,13 +11,13 @@ Version 8+ of Iodine involved a major rewrite with numerous breaking changes. It
 The easiest way to pull Iodine into your project is via a CDN (be sure to update the build number):
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@kingshott/iodine@8.1.0/dist/iodine.min.umd.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@caneara/iodine@8.1.0/dist/iodine.min.umd.js" defer></script>
 ```
 
 You can also pull Iodine into your project via NPM:
 
 ```js
-npm i @kingshott/iodine
+npm i @caneara/iodine
 ```
 
 ## Usage
@@ -27,7 +27,7 @@ Iodine is automatically added to the `window` namespace, making it available any
 Alternatively, if you are comfortable using imports, or you want to create your own instance, then you can import Iodine like so:
 
 ```js
-import Iodine from '@kingshott/iodine';
+import Iodine from '@caneara/iodine';
 
 const instance = new Iodine();
 ```
