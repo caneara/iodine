@@ -1,14 +1,3 @@
-<!-- Screenshot -->
-<p align="center">
-    <img src="resources/example.png" alt="Code example">
-</p>
-
-<!-- Badges -->
-<p align="center">
-    <img src="https://img.shields.io/npm/v/@kingshott/iodine.svg" alt="Latest Release" />
-    <img src="https://img.shields.io/npm/l/@kingshott/iodine.svg" alt="License" />
-</p>
-
 # Iodine
 
 Iodine.js is a micro client-side validation library. It has no dependencies and can be used in isolation or as part of a framework. Iodine also supports chainable rules, allowing you to verify that a piece (or pieces) of data satisfy multiple criteria.
@@ -304,10 +293,6 @@ To run the tests
 ```bash
 npm run test
 ```
-
-## Support the project
-
-If you'd like to support the development of Iodine, then please consider [sponsoring me](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YBEHLHPF3GUVY&source=url). Thanks so much!
 
 ## License
 
