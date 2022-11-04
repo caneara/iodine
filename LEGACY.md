@@ -1,5 +1,7 @@
 > WARNING: This readme is for an older version of Iodine. If you are using Iodine in a new project, then review the latest [readme](README.md) instead.
 
+> This readme refers to a now deprecated version of Iodine (and includes links that may no longer work).
+
 # Iodine
 
 Iodine.js is a micro client-side validation library. It has no dependencies and can be used in isolation or as part of a framework. Iodine also supports chainable rules, allowing you to verify that a piece of data satisfies multiple criteria.
@@ -296,10 +298,6 @@ To run the tests
 ```bash
 npm run test
 ```
-
-## Support the project
-
-If you'd like to support the development of Iodine, then please consider [sponsoring me](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YBEHLHPF3GUVY&source=url). Thanks so much!
 
 ## License
 
