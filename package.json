@@ -4,7 +4,7 @@
     "description": "A micro client-side validation library",
     "repository": {
         "type": "git",
-        "url": "https://github.com/mattkingshott/iodine.git"
+        "url": "https://github.com/caneara/iodine.git"
     },
     "keywords": [
         "iodine",
@@ -19,7 +19,7 @@
     },
     "main": "dist/iodine.min.js",
     "source": "src/iodine.js",
-    "author": "Matt Kingshott",
+    "author": "Caneara",
     "license": "MIT",
     "devDependencies": {
         "@babel/preset-env": "^7.16.4",
