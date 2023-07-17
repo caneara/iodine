@@ -408,7 +408,7 @@ test('it retrieves formatted error messages for rules', () =>
 
     window.Iodine.setLocale('en-US');
 
-    let hour = new Date(parseInt(time)).getHours();
+    let hour = new Date(parseInt(time)).getHours().toString().padStart(2, '0');
 
     expect(window.Iodine._error('array')).toBe('Value must be an array');
     expect(window.Iodine._error('endsWith')).toBe(`Value must end with '[PARAM]'`);
