@@ -145,14 +145,16 @@ export default class Iodine
      * @internal.
      *
      */
-    _validate(value, rules)
+    _validate(value, rules, errors = null)
     {
         for (let index in rules = this._prepare(value, rules)) {
             if (! this[`assert${rules[index][1]}`].apply(this, [value, rules[index][2]])) {
                 return {
                     valid : false,
                     rule  : rules[index][0],
-                    error : this._error(rules[index][0]),
+                    error : errors 
+                      ? errors[rules[index][0]]
+                      : this._error(rules[index][0]),
                 };
             }
         }
@@ -168,10 +170,10 @@ export default class Iodine
      * Determine if the given content matches the given schema.
      *
      */
-    assert(values, schema)
+    assert(values, schema, errors = null) // Mensagens
     {
         if (Array.isArray(schema)) {
-            return this._validate(values, schema);
+            return this._validate(values, schema, errors);
         }
 
         let keys = Object.keys(schema);
@@ -180,7 +182,7 @@ export default class Iodine
 
         for (let i = 0; i < keys.length; i++) {
             result.fields[keys[i]] = values.hasOwnProperty(keys[i])
-                ? this._validate(values[keys[i]], schema[keys[i]])
+                ? this._validate(values[keys[i]], schema[keys[i]], errors != null ? errors[keys[i]] : null)
                 : this._missing();
 
             if (! result.fields[keys[i]].valid) {
