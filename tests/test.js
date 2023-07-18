@@ -732,27 +732,27 @@ test('it can add advanced custom rules', () =>
  * Confirm that the 'assert' method works correctly with custom errors by field.
  *
  */
-test('it can add custom errors', () =>
+test('it supports custom errors by field', () =>
 {
     let fail = {
         valid : false,
         rule  : 'required',
         error : 'The "Hello" field is required.',
-    }
+    };
 
     let fields = {
       name: '',
-    }
+    };
 
     let rules = {
       name: ['required']
-    }
+    };
 
     let errors = {
       name: {
         required: 'The "Name" field must be present.'
       }
-    }
+    };
 
     let failMultiple = {
       valid  : false,
@@ -765,9 +765,6 @@ test('it can add custom errors', () =>
       },
     };
 
-    expect(window.Iodine.assert('', ['required'], {
-      'required': 'The "Hello" field is required.'
-    })).toStrictEqual(fail)
-
-    expect(window.Iodine.assert(fields, rules, errors)).toStrictEqual(failMultiple)
+    expect(window.Iodine.assert('', ['required'], { 'required': 'The "Hello" field is required.' })).toStrictEqual(fail);
+    expect(window.Iodine.assert(fields, rules, errors)).toStrictEqual(failMultiple);
 });
