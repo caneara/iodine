@@ -11,7 +11,7 @@ Version 8+ of Iodine involved a major rewrite with numerous breaking changes. It
 The easiest way to pull Iodine into your project is via a CDN (be sure to update the build number):
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@caneara/iodine@8.3.0/dist/iodine.min.umd.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@caneara/iodine@8.4.0/dist/iodine.min.umd.js" defer></script>
 ```
 
 You can also pull Iodine into your project via NPM:
