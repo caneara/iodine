@@ -170,7 +170,7 @@ export default class Iodine
      * Determine if the given content matches the given schema.
      *
      */
-    assert(values, schema, errors = null) // Mensagens
+    assert(values, schema, errors = null)
     {
         if (Array.isArray(schema)) {
             return this._validate(values, schema, errors);
