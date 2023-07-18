@@ -199,6 +199,36 @@ In many cases, you won't need to replace all of the error messages. You'll inste
 Iodine.setErrorMessage('passwordConfirmation', 'Does not match password');
 ```
 
+### Custom Errors by Field
+
+Sometimes, it may be necessary to define a specific error message for a field, or you need a label for a field that is different from the name of the variable used.
+
+To achieve this, pass an object to the `assert` method containing the rule as property and the custom error message as a value e.g.
+
+```js
+Iodine.assert(value, ['required'], { 'required' : 'The "Label" must be present.' });
+```
+
+You can also use the same approach for multiple fields e.g.
+
+```js
+let items = {
+    name : '',
+};
+
+let rules = {
+    name : ['required']
+};
+
+let errors = {
+    name : {
+        required : 'The "Label" must be present.'
+    }
+};
+
+Iodine.assert(items, rules, errors);
+```
+
 ### Default field name
 
 Since 'single item checks' don't support field names, Iodine uses the default instead (which is 'Value'). If 'Value' is not suitable, then you can call the `setDefaultFieldName` method and supply an alternative `string` value to use instead e.g.

@@ -408,7 +408,7 @@ test('it retrieves formatted error messages for rules', () =>
 
     window.Iodine.setLocale('en-US');
 
-    let hour = new Date(parseInt(time)).getHours();
+    let hour = new Date(parseInt(time)).getHours().toString().padStart(2, '0');
 
     expect(window.Iodine._error('array')).toBe('Value must be an array');
     expect(window.Iodine._error('endsWith')).toBe(`Value must end with '[PARAM]'`);
@@ -726,4 +726,45 @@ test('it can add advanced custom rules', () =>
     expect(window.Iodine.assert(1, ['required', 'equals:3'])).toStrictEqual(fail_2);
     expect(window.Iodine._error('equals:2')).toBe("Value must be equal to '2'");
     expect(window.Iodine._error('equals', 2)).toBe("Value must be equal to '2'");
+});
+
+/**
+ * Confirm that the 'assert' method works correctly with custom errors by field.
+ *
+ */
+test('it supports custom errors by field', () =>
+{
+    let fail = {
+        valid : false,
+        rule  : 'required',
+        error : 'The "Hello" field is required.',
+    };
+
+    let fields = {
+      name: '',
+    };
+
+    let rules = {
+      name: ['required']
+    };
+
+    let errors = {
+      name: {
+        required: 'The "Name" field must be present.'
+      }
+    };
+
+    let failMultiple = {
+      valid  : false,
+      fields : {
+        name : {
+          valid : false,
+          rule  : 'required',
+          error : 'The "Name" field must be present.',
+        },
+      },
+    };
+
+    expect(window.Iodine.assert('', ['required'], { 'required': 'The "Hello" field is required.' })).toStrictEqual(fail);
+    expect(window.Iodine.assert(fields, rules, errors)).toStrictEqual(failMultiple);
 });
