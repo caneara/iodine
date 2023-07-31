@@ -98,7 +98,7 @@ export default class Iodine
             : this.messages[key].replace('[PARAM]', param);
 
         return [null, undefined, ''].includes(field)
-            ? message.replace('[FIELD]', this.default_field_name ?? 'Value')
+            ? message.replace('[FIELD]', this.default_field_name !== null && this.default_field_name !== void 0 ? this.default_field_name : 'Value')
             : message.replace('[FIELD]', field);
     }
 
